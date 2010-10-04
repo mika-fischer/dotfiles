@@ -124,6 +124,25 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Appearance
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("gui_running")
+
+else
+    if &term =~ '^screen'
+        set titlelen=15
+        set titlestring=%t%(\ %m%)
+        set title
+        set t_ts=k
+        set t_fs=\
+        let &titleold = fnamemodify(&shell, ":t")
+    endif
+    if &t_Co == 256
+        colorscheme zoop
+    endif
+endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
