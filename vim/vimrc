@@ -1,6 +1,121 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Options
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 
+" Pathogen
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 filetype plugin indent on
+
+" Listchars
+set list
+set listchars=tab:»·,trail:·
+
+" Always keep n lines visible above and below the cursor
+set scrolloff=3
+
+" Enable auto-indentation
+set autoindent
+
+" Show incomplete commands
+set showmode
+
+" Indicate matching brackets
+set showmatch
+
+" Hide buffers
+set hidden
+
+" Nicer completion
+set wildmenu
+set wildmode=list:longest
+
+" Don't beep
+set visualbell
+
+" Highlight cursor line
+set cursorline
+
+" Show current position
+set ruler
+
+" Make backspace more powerful
+set backspace=indent,eol,start
+
+" Always display status line
+set laststatus=2
+
+" Don't make backups
+set nobackup
+
+" Remember more recent commands
+set history=50
+
+" Enable incremental search
+set incsearch
+
+" Enable search match highlighting
+set hlsearch
+
+" Display line numbers
+set number
+
+" Terminal mouse support
+set ttymouse=xterm
+set mouse=a
+
+" Use existing windows when jumping to errors etc.
+set switchbuf=useopen
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Key bindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use space bar as leader
+let mapleader=" "
+
+" Disable arrow keys and navigation keys
+nnoremap <up>       <nop>
+nnoremap <down>     <nop>
+nnoremap <left>     <nop>
+nnoremap <right>    <nop>
+nnoremap <pageup>   <nop>
+nnoremap <pagedown> <nop>
+nnoremap <home>     <nop>
+nnoremap <end>      <nop>
+nnoremap <insert>   <nop>
+nnoremap <delete>   <nop>
+inoremap <up>       <nop>
+inoremap <down>     <nop>
+inoremap <left>     <nop>
+inoremap <right>    <nop>
+inoremap <pageup>   <nop>
+inoremap <pagedown> <nop>
+inoremap <home>     <nop>
+inoremap <end>      <nop>
+inoremap <insert>   <nop>
+inoremap <delete>   <nop>
+vnoremap <up>       <nop>
+vnoremap <down>     <nop>
+vnoremap <left>     <nop>
+vnoremap <right>    <nop>
+vnoremap <pageup>   <nop>
+vnoremap <pagedown> <nop>
+vnoremap <home>     <nop>
+vnoremap <end>      <nop>
+vnoremap <insert>   <nop>
+vnoremap <delete>   <nop>
+
+" Disable F1 for help
+inoremap <f1> <nop>
+nnoremap <f1> <nop>
+vnoremap <f1> <nop>
+
+" Switch windows easier
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
