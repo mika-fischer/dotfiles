@@ -1,0 +1,20 @@
+# This bash_profile file is built in a modular fashion. There are several files
+# that are read by it.
+#
+# The following files are read, if they exist:
+# 1: ~/.bash_profile.global
+# 2: ~/.bash_profile.local
+# 3: ~/.bash_profile.$HOSTNAME
+
+# First we need to make sure that $HOSTNAME actually is set to something...
+[ -z "$HOSTNAME" ] && export HOSTNAME=$(hostname)
+
+# Now do the initialization for non-interactive shells
+[ -e "$HOME/.bash_profile.global" ] &&		source "$HOME/.bash_profile.global"
+[ -e "$HOME/.bash_profile.local" ] &&		source "$HOME/.bash_profile.local"
+[ -e "$HOME/.bash_profile.$HOSTNAME" ] &&	source "$HOME/.bash_profile.$HOSTNAME"
+
+# Now source our regular stuff
+[ -e "$HOME/.bashrc" ] &&			source "$HOME/.bashrc"
+
+export BASH_PROFILE_SOURCED=1

@@ -1,0 +1,125 @@
+# This is the global file for non-interactive shells
+#
+# Settings that apply for every machine go in here.
+#
+# Settings that are only relevant for certain machines should go into
+# ~/.bashrc.non-interactive.local or ....$HOSTNAME
+
+# Set various shell options
+shopt -s checkwinsize
+#shopt -s failglob
+
+# Make history more comfortable.
+shopt -s cmdhist
+shopt -s histappend
+HISTCONTROL=ignoredups
+HISTFILESIZE=10000
+HISTSIZE=10000
+
+# enable fancy completion
+if [ -z "$BASH_COMPLETION" ]; then
+	if [ -f /etc/bash_completion ]; then
+		source /etc/bash_completion
+	fi
+fi
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+
+export LC_MESSAGES=C
+
+# make less interpret color escape codes
+export LESS="-FSRX"
+
+# make grep use colors
+export GREP_OPTIONS='--color=auto'
+alias 'cgrep=grep --color=always'
+
+# enable color support of ls and also add handy alias
+if [ "$TERM" != "dumb" ]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+fi
+
+function my_prompt_command
+{
+	# Get exit code
+	local RC=$?
+	if [ $RC -ne 0 ]; then
+		local PROMPT_RC="($RC)"
+	else
+		local PROMPT_RC=""
+	fi
+
+	local RESET="\[\e[00m\]"
+	local BLACK="\[\e[00;30m\]"
+	local GRAY="\[\e[01;30m\]"
+	local RED="\[\e[00;31m\]"
+	local LRED="\[\e[01;31m\]"
+	local GREEN="\[\e[00;32m\]"
+	local LGREEN="\[\e[01;32m\]"
+	local BROWN="\[\e[00;33m\]"
+	local YELLOW="\[\e[01;33m\]"
+	local BLUE="\[\e[00;34m\]"
+	local LBLUE="\[\e[01;34m\]"
+	local PURPLE="\[\e[00;35m\]"
+	local LPURPLE="\[\e[01;35m\]"
+	local CYAN="\[\e[00;36m\]"
+	local LCYAN="\[\e[01;36m\]"
+	local LGRAY="\[\e[00;37m\]"
+	local WHITE="\[\e[01;37m\]"
+
+	# Get color for username
+	local user=$(id -un)
+	if [ $user = "root" ]; then
+		local USER_COLOR=$LRED
+	else
+		local USER_COLOR=$GREEN
+	fi
+
+	# Get truncated path
+	local pwdmaxlen=30
+	local trunc_symbol="..."
+	local PWD2=""
+	[[ "$PWD" == "$HOME" ]] && PWD2="~"
+	[[ -z "$PWD2" ]] && [[ "$PWD" == "$HOME/" ]] && PWD2="~/"
+	[[ -z "$PWD2" ]] && PWD2="${PWD/#$HOME\//~/}"
+	if [ ${#PWD2} -gt $pwdmaxlen ];	then
+		local pwdoffset=$(( ${#PWD2} - $pwdmaxlen ))
+		local PROMPT_PWD=${trunc_symbol}${PWD2:$pwdoffset:$pwdmaxlen}
+	else
+		local PROMPT_PWD=${PWD2}
+	fi
+
+	# Get git branch
+	if declare -F __git_ps1 >/dev/null 2>&1; then
+		local GIT_BRANCH=$(__git_ps1 "[%s]")
+	else
+		local GIT_BRANCH=""
+	fi
+
+	# Set prompt
+	PS1="${USER_COLOR}\u${GREEN}@${CYAN}\h${RESET}:${LBLUE}${PROMPT_PWD}${LRED}${PROMPT_RC}${PURPLE}${GIT_BRANCH}${RESET}\\\$ "
+
+	# Set xterm title and screen title
+	case "$TERM" in
+	xterm*|rxvt*|gnome*|konsole*)
+		echo -ne "\e]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
+		;;
+	screen*)
+		echo -ne "\ek\e\\"
+		;;
+	esac
+
+	# Write new commands to history file
+	history -a
+}
+
+PROMPT_COMMAND='my_prompt_command'
+
+# set other shell variables
+export EDITOR=vim
+export VISUAL=vim
+export EMAIL="mika.fischer@zoopnet.de"
+export DEBFULLNAME="Mika Fischer"
+export DEBEMAIL="mika.fischer@zoopnet.de"

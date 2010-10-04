@@ -1,0 +1,35 @@
+# This bashrc file is built in a modular fashion. There are several files
+# that are read by it.
+#
+# For non-interactive shells the following files are read if they exist:
+# 1: ~/.bashrc.non-interactive.global
+# 2: ~/.bashrc.non-interactive.local
+# 3: ~/.bashrc.non-interactive.$HOSTNAME
+#
+# For interactive shells the following files are read in addition to
+# those above, if they exist:
+# 4: ~/.bashrc.interactive.global
+# 5: ~/.bashrc.interactive.local
+# 6: ~/.bashrc.interactive.$HOSTNAME
+
+# First we need to make sure that $HOSTNAME actually is set to something...
+[ -z "$HOSTNAME" ] && export HOSTNAME=$(hostname -s)
+
+# Now do the initialization for non-interactive shells
+[ -e ~/.bashrc.non-interactive.global ]    && source ~/.bashrc.non-interactive.global
+[ -e ~/.bashrc.non-interactive.local ]     && source ~/.bashrc.non-interactive.local
+[ -e ~/.bashrc.non-interactive.$HOSTNAME ] && source ~/.bashrc.non-interactive.$HOSTNAME
+
+# If we're not interactive we can quit here
+[ -z "$PS1" ] && return
+
+# We're interactive so do more initialization
+[ -e ~/.bashrc.interactive.global ]    && source ~/.bashrc.interactive.global
+[ -e ~/.bashrc.interactive.local ]     && source ~/.bashrc.interactive.local
+[ -e ~/.bashrc.interactive.$HOSTNAME ] && source ~/.bashrc.interactive.$HOSTNAME
+
+export BASHRC_SOURCED=1
+
+# Make sure $? is 0
+true
+
