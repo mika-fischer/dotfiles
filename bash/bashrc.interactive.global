@@ -8,6 +8,7 @@
 # Set various shell options
 shopt -s checkwinsize
 #shopt -s failglob
+set -o vi
 
 # Make history more comfortable.
 shopt -s cmdhist
