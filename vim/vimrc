@@ -69,6 +69,10 @@ set mouse=a
 " Use existing windows when jumping to errors etc.
 set switchbuf=useopen
 
+" Tab settings
+set expandtab
+set shiftwidth=4
+set tabstop=4
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key bindings
