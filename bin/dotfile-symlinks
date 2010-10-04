@@ -1,0 +1,33 @@
+#!/bin/bash
+
+DOTFILES=~/.dotfiles
+REL_DOTFILES=.dotfiles
+
+for dir in $(ls $DOTFILES); do
+	if [[ $dir == "bin" ]]; then continue; fi
+	for file in $(ls $DOTFILES/$dir); do
+		SOURCE=~/.$file
+		TARGET=$REL_DOTFILES/$dir/$file
+		if [[ -L $SOURCE ]]; then
+			rm $SOURCE
+		fi
+		if [[ -e $SOURCE ]]; then
+			echo "ERROR: $SOURCE already exists!"
+		else
+			ln -s $TARGET $SOURCE
+		fi
+	done
+done
+
+for file in $(ls $DOTFILES/bin); do
+	SOURCE=~/bin/$file
+	TARGET=../$REL_DOTFILES/bin/$file
+	if [[ -L $SOURCE ]]; then
+		rm $SOURCE
+	fi
+	if [[ -e $SOURCE ]]; then
+		echo "ERROR: $SOURCE already exists!"
+	else
+		ln -s $TARGET $SOURCE
+	fi
+done
