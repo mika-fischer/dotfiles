@@ -1,1 +1,53 @@
 set editing-mode vi
+
+# Disable arrow anf navigation keys
+set keymap vi-insert
+
+# Arrow keys
+"\eOA": ""
+"\e[A": ""
+"\eOB": ""
+"\e[B": ""
+"\eOC": ""
+"\e[C": ""
+"\eOD": ""
+"\e[D": ""
+
+# Home
+"\eOH": ""
+"\e[1~": ""
+"\e[H": ""
+
+# End
+"\eOF": ""
+"\e[4~": ""
+"\e[F": ""
+
+# Delete
+"\e[3~": ""
+
+
+set keymap vi-command
+
+# Arrow keys
+"\eOA": ""
+"\e[A": ""
+"\eOB": ""
+"\e[B": ""
+"\eOC": ""
+"\e[C": ""
+"\eOD": ""
+"\e[D": ""
+
+# Home
+"\eOH": ""
+"\e[1~": ""
+"\e[H": ""
+
+# End
+"\eOF": ""
+"\e[4~": ""
+"\e[F": ""
+
+# Delete
+"\e[3~": ""
