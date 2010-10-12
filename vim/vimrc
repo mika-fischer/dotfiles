@@ -159,6 +159,7 @@ nnoremap <leader>nt :NERDTree
 nnoremap <leader>nb :NERDTreeBookmark 
 nnoremap <leader>nn :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
+let NERDTreeQuitOnOpen = 1
 
 " OmniCppComplete
 set tags=~/.vim-tags/default
