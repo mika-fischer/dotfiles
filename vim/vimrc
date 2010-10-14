@@ -134,7 +134,13 @@ nnoremap <C-l> <C-w>l
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-
+    set guioptions-=m
+    set guioptions-=L
+    set guioptions-=t
+    set guioptions-=T
+    if has("gui_gtk2")
+        set guifont=Monospace\ 8
+    endif
 else
     if &term =~ '^screen'
         set titlelen=15
