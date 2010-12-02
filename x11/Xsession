@@ -1,6 +1,7 @@
 #!/bin/bash
 
 [ -x /usr/bin/gnome-settings-daemon ]       && /usr/bin/gnome-settings-daemon &
+[ -x /usr/bin/gnome-power-manager ]         && /usr/bin/gnome-power-manager &
 [ -x /usr/bin/gstm ]                        && /usr/bin/gstm &
 [ -x /usr/bin/dropbox ]                     && (sleep 2 && /usr/bin/dropbox start) &
 [ -x /usr/bin/nm-applet ]                   && /usr/bin/nm-applet &
