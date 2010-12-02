@@ -165,6 +165,11 @@ nnoremap <leader>nt :NERDTree
 nnoremap <leader>nb :NERDTreeBookmark 
 nnoremap <leader>nn :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
+let NERDTreeQuitOnOpen = 1
+
+" TagList
+nnoremap <leader>tt :TlistToggle<cr>
+let Tlist_GainFocus_On_ToggleOpen = 1
 
 " OmniCppComplete
 set tags=~/.vim-tags/default
