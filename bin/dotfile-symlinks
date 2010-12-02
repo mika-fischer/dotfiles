@@ -1,12 +1,19 @@
 #!/bin/bash
 
 DOTFILES=~/.dotfiles
-REL_DOTFILES=.dotfiles
 
 for dir in $(ls $DOTFILES); do
-	if [[ $dir == "bin" ]]; then continue; fi
+    REL_DOTFILES=.dotfiles
+    unset PREFIX
+    [[ $dir == "bin" ]] && continue
+    [[ $dir == "awesome" ]] && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
 	for file in $(ls $DOTFILES/$dir); do
-		SOURCE=~/.$file
+        if [[ -z $PREFIX ]]; then
+            SOURCE=~/.$file
+        else
+            SOURCE=${PREFIX}/${file}
+            mkdir -p ${PREFIX}
+        fi
 		TARGET=$REL_DOTFILES/$dir/$file
 		if [[ -L $SOURCE ]]; then
 			rm $SOURCE
@@ -14,6 +21,7 @@ for dir in $(ls $DOTFILES); do
 		if [[ -e $SOURCE ]]; then
 			echo "ERROR: $SOURCE already exists!"
 		else
+			echo ln -s $TARGET $SOURCE
 			ln -s $TARGET $SOURCE
 		fi
 	done
