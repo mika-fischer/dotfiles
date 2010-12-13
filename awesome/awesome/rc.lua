@@ -312,6 +312,9 @@ awful.rules.rules = {
     { rule = { class = "Git-gui" },
       properties = { maximized_horizontal = true,
                      maximized_vertical   = true } },
+    { rule = { class = "Git-citool" },
+      properties = { maximized_horizontal = true,
+                     maximized_vertical   = true } },
 }
 -- }}}
 
