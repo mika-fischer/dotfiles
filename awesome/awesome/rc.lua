@@ -309,6 +309,9 @@ awful.rules.rules = {
     --   properties = { tag = tags[1][2] } },
     { rule = { class = "Skype" },
       properties = { floating = true } },
+    { rule = { class = "Git-gui" },
+      properties = { maximized_horizontal = true,
+                     maximized_vertical   = true } },
 }
 -- }}}
 
