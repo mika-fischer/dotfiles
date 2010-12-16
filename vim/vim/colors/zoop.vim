@@ -230,7 +230,7 @@ if &t_Co == 88 || &t_Co == 256
     call <SID>X("ErrorMsg",         "ffffff",       "ff0000",   "")
     call <SID>X("VertSplit",        "",             "",         "reverse")
     call <SID>X("Folded",           "00008b",       "d3d3d3",   "")
-    call <SID>X("FoldColumn",       "00008b",       "bebebe",   "")
+    call <SID>X("FoldColumn",       "00008b",       "d3d3d3",   "")
     call <SID>X("SignColumn",       "00008b",       "bebebe",   "reverse")
     call <SID>X("IncSearch",        "",             "",         "reverse")
     call <SID>X("LineNr",           "a52a2a",       "",         "")
