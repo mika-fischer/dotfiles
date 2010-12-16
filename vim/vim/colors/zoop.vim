@@ -218,55 +218,85 @@ if &t_Co == 88 || &t_Co == 256
         endif
     endfun
     " }}}
-    call <SID>X("SpecialKey",       "0000ff",       "",         "")
-    call <SID>X("NonText",          "0000ff",       "",         "bold")
+    call <SID>X("Cursor",           "ff0000",       "0000ff",   "")
+    " CursorIME
+    call <SID>X("CursorColumn",     "",             "e5e5e5",   "")
+    call <SID>X("CursorLine",       "",             "e5e5e5",   "NONE")
     call <SID>X("Directory",        "0000ff",       "",         "")
+    call <SID>X("DiffAdd",          "",             "a0ffa0",   "")
+    call <SID>X("DiffChange",       "",             "b0ffff",   "")
+    call <SID>X("DiffDelete",       "000000",       "ffa0a0",   "bold")
+    call <SID>X("DiffText",         "",             "f0e0c0",   "bold")
     call <SID>X("ErrorMsg",         "ffffff",       "ff0000",   "")
+    call <SID>X("VertSplit",        "",             "",         "reverse")
+    call <SID>X("Folded",           "00008b",       "d3d3d3",   "")
+    call <SID>X("FoldColumn",       "00008b",       "bebebe",   "")
+    call <SID>X("SignColumn",       "00008b",       "bebebe",   "reverse")
     call <SID>X("IncSearch",        "",             "",         "reverse")
-    call <SID>X("Search",           "",             "ffff00",   "")
-    call <SID>X("MoreMsg",          "2e8b57",       "",         "bold")
-    call <SID>X("ModeMsg",          "",             "",         "bold")
     call <SID>X("LineNr",           "a52a2a",       "",         "")
+    call <SID>X("MatchParen",       "",             "00ffff",   "")
+    call <SID>X("ModeMsg",          "",             "",         "bold")
+    call <SID>X("MoreMsg",          "2e8b57",       "",         "bold")
+    call <SID>X("NonText",          "0000ff",       "",         "bold")
+    call <SID>X("Normal",           "",             "",         "")
+    call <SID>X("Pmenu",            "",             "ff55ff",   "")
+    call <SID>X("PmenuSel",         "",             "bebebe",   "")
+    call <SID>X("PmenuSbar",        "",             "bebebe",   "")
+    call <SID>X("PmenuThumb",       "",             "",         "reverse")
     call <SID>X("Question",         "2e8b57",       "",         "bold")
+    call <SID>X("Search",           "",             "ffff00",   "")
+    call <SID>X("SpecialKey",       "0000ff",       "",         "")
+    call <SID>X("SpellBad",         "",             "ff0000",   "undercurl")
+    call <SID>X("SpellCap",         "",             "0000ff",   "undercurl")
+    call <SID>X("SpellLocal",       "",             "008b8b",   "undercurl")
+    call <SID>X("SpellRare",        "",             "ff00ff",   "undercurl")
     call <SID>X("StatusLine",       "",             "",         "bold,reverse")
     call <SID>X("StatusLineNC",     "",             "",         "reverse")
-    call <SID>X("VertSplit",        "",             "",         "reverse")
+    call <SID>X("TabLine",          "",             "d3d3d3",   "NONE")
+    call <SID>X("TabLineSel",       "",             "",         "bold")
+    call <SID>X("TabLineFill",      "",             "",         "reverse")
     call <SID>X("Title",            "ff00ff",       "",         "bold")
     call <SID>X("Visual",           "",             "d3d3d3",   "")
     call <SID>X("VisualNOS",        "",             "",         "bold,underline")
     call <SID>X("WarningMsg",       "ff0000",       "",         "")
     call <SID>X("WildMenu",         "000000",       "ffff00",   "")
-    call <SID>X("Folded",           "00008b",       "d3d3d3",   "")
-    call <SID>X("FoldColumn",       "00008b",       "bebebe",   "")
-    call <SID>X("DiffAdd",          "",             "a0ffa0",   "")
-    call <SID>X("DiffDelete",       "000000",       "ffa0a0",   "bold")
-    call <SID>X("DiffChange",       "",             "b0ffff",   "")
-    call <SID>X("DiffText",         "",             "f0e0c0",   "bold")
-    call <SID>X("SignColumn",       "00008b",       "bebebe",   "reverse")
-    call <SID>X("SpellBad",         "",             "ff0000",   "undercurl")
-    call <SID>X("SpellCap",         "",             "0000ff",   "undercurl")
-    call <SID>X("SpellRare",        "",             "ff00ff",   "undercurl")
-    call <SID>X("SpellLocal",       "",             "008b8b",   "undercurl")
-    call <SID>X("Pmenu",            "",             "ff55ff",   "")
-    call <SID>X("PmenuSel",         "",             "bebebe",   "")
-    call <SID>X("PmenuSbar",        "",             "bebebe",   "")
-    call <SID>X("PmenuThumb",       "",             "",         "reverse")
-    call <SID>X("TabLine",          "",             "d3d3d3",   "NONE")
-    call <SID>X("TabLineSel",       "",             "",         "bold")
-    call <SID>X("TabLineFill",      "",             "",         "reverse")
-    call <SID>X("CursorColumn",     "",             "e5e5e5",   "")
-    call <SID>X("CursorLine",       "",             "e5e5e5",   "NONE")
-    call <SID>X("Normal",           "",             "",         "")
-    call <SID>X("Cursor",           "ff0000",       "0000ff",   "")
+    " Menu
+    " Scrollbar
+    " Tooltip
     call <SID>X("lCursor",          "ff0000",       "0000ff",   "")
-    call <SID>X("MatchParen",       "",             "00ffff",   "")
+
+    " Generic syntax highligh groups
     call <SID>X("Comment",          "0000ff",       "",         "")
     call <SID>X("Constant",         "ff00ff",       "",         "")
-    call <SID>X("Special",          "6a5acd",       "",         "")
+    " String
+    " Character
+    " Number
+    " Boolean
+    " Float
     call <SID>X("Identifier",       "008b8b",       "",         "")
+    " Function
     call <SID>X("Statement",        "a52a2a",       "",         "bold")
+    " Conditional
+    " Repeat
+    " Label
+    " Operator
+    " Keyword
+    " Exeption
     call <SID>X("PreProc",          "a020f0",       "",         "")
+    " Include
+    " Define
+    " Macro
+    " PreCondit
     call <SID>X("Type",             "2e8b57",       "",         "bold")
+    " StorageClass
+    " Structure
+    " Typedef
+    call <SID>X("Special",          "6a5acd",       "",         "")
+    " SpecialChar
+    " Tag
+    " Delimiter
+    " SpecialComment
+    " Debug
     call <SID>X("Underlined",       "6a5acd",       "",         "underline")
     call <SID>X("Ignore",           "dfdfdf",       "",         "")
     call <SID>X("Error",            "ffffff",       "ff0000",   "")
