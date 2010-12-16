@@ -13,3 +13,6 @@
 [submodule "vim/vim/bundle/pydoc/plugin"]
 	path = vim/vim/bundle/pydoc/plugin
 	url = git://github.com/fs111/pydoc.vim.git
+[submodule "vim/vim/bundle/clang-complete"]
+	path = vim/vim/bundle/clang-complete
+	url = git://github.com/Rip-Rip/clang_complete.git
