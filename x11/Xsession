@@ -1,13 +1,20 @@
 #!/bin/bash
 
+# Gnome infrastructure
 [ -x /usr/bin/gnome-settings-daemon ]       && /usr/bin/gnome-settings-daemon &
 [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ] && /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 [ -x /usr/bin/gnome-screensaver ]           && /usr/bin/gnome-screensaver &
 [ -x /usr/bin/gnome-power-manager ]         && /usr/bin/gnome-power-manager &
 [ -x /usr/bin/bluetooth-applet ]            && /usr/bin/bluetooth-applet &
 [ -x /usr/bin/update-notifier ]             && /usr/bin/update-notifier &
+[ -x /usr/bin/nm-applet ]                   && /usr/bin/nm-applet &
+
+# Other applications
 [ -x /usr/bin/gstm ]                        && /usr/bin/gstm &
 [ -x /usr/bin/dropbox ]                     && (sleep 2 && /usr/bin/dropbox start) &
-[ -x /usr/bin/nm-applet ]                   && /usr/bin/nm-applet &
+
+# Window manager
 [ -x /usr/bin/awesome ]                     && exec awesome
+
+# Fallback to xterm
 [ -x /usr/bin/xterm ]                       && exec xterm
