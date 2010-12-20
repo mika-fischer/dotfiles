@@ -3,6 +3,9 @@
 # Gnome infrastructure
 [ -x /usr/bin/gnome-settings-daemon ]       && /usr/bin/gnome-settings-daemon &
 [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ] && /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+[ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=pkcs11 &
+[ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=secrets &
+[ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=ssh &
 [ -x /usr/bin/gnome-screensaver ]           && /usr/bin/gnome-screensaver &
 [ -x /usr/bin/gnome-power-manager ]         && /usr/bin/gnome-power-manager &
 [ -x /usr/bin/bluetooth-applet ]            && /usr/bin/bluetooth-applet &
