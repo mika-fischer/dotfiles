@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Low-level things
+[ -x /usr/bin/start-pulseaudio-x11 ]        && /usr/bin/start-pulseaudio-x11 &
+
 # Gnome infrastructure
 [ -x /usr/bin/gnome-settings-daemon ]       && /usr/bin/gnome-settings-daemon &
 [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ] && /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
