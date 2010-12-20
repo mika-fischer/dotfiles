@@ -17,7 +17,7 @@
 [ -x /usr/bin/system-config-printer-applet ] && /usr/bin/system-config-printer-applet &
 
 # Other applications
-[ -x /usr/bin/gstm ]                        && /usr/bin/gstm &
+[ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
 [ -x /usr/bin/dropbox ]                     && (sleep 2 && /usr/bin/dropbox start) &
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
 
