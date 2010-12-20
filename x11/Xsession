@@ -11,6 +11,7 @@
 [ -x /usr/bin/bluetooth-applet ]            && /usr/bin/bluetooth-applet &
 [ -x /usr/bin/update-notifier ]             && /usr/bin/update-notifier &
 [ -x /usr/bin/nm-applet ]                   && /usr/bin/nm-applet &
+[ -x /usr/bin/system-config-printer-applet ] && /usr/bin/system-config-printer-applet &
 
 # Other applications
 [ -x /usr/bin/gstm ]                        && /usr/bin/gstm &
