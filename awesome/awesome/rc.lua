@@ -1,33 +1,27 @@
--- Standard awesome library
+-- {{{ Libraries
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
--- Theme handling library
 require("beautiful")
--- Notification library
 require("naughty")
-
--- Load Debian menu entries
 require("debian.menu")
+--- }}}
 
 -- {{{ Variable definitions
--- Themes define colours, icons, and wallpapers
--- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+-- Theme
 beautiful.init("/home/mfischer/.dotfiles/awesome/awesome/themes/zoop/theme.lua")
 
--- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
+-- Shortcuts
+local altkey        = "Mod1"
+local modkey        = "Mod4"
+local home          = os.getenv("HOME")
+local exec          = awful.util.spawn
+local sexec         = awful.util.spawn_with_shell
+local terminal      = "gnome-terminal"
+local editor        = "vim"
+local editor_cmd    = terminal .. " -e " .. editor
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
-
--- Table of layouts to cover with awful.layout.inc, order matters.
+-- Layouts
 layouts =
 {
     awful.layout.suit.floating,
@@ -74,11 +68,11 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
--- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
 
--- Create a systray
+-- {{{ Systray
 mysystray = widget({ type = "systray" })
+-- }}}
 
 -- Create a wibox for each screen and add it
 mywibox = {}
