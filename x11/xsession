@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Custom xsession starting..."
+
 # Low-level things
 [ -x /usr/bin/start-pulseaudio-x11 ]        && /usr/bin/start-pulseaudio-x11 &
 
