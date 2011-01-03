@@ -6,8 +6,21 @@ echo "Custom xsession starting..."
 [ -x /usr/bin/start-pulseaudio-x11 ]        && /usr/bin/start-pulseaudio-x11 &
 
 # Gnome infrastructure
-[ -x /usr/bin/gnome-settings-daemon ]       && /usr/bin/gnome-settings-daemon &
-[ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ] && /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+
+# Settings daemon
+if [ -x /usr/bin/gnome-settings-daemon ]; then
+    /usr/bin/gnome-settings-daemon &
+elif [ -x /usr/lib/gnome-settings-daemon/gnome-settings-daemon ]; then
+    /usr/lib/gnome-settings-daemon/gnome-settings-daemon &
+fi
+
+# Policykit authentication agent
+if [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
+    /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+elif [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]; then
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
+
 [ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=pkcs11 &
 [ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=secrets &
 [ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=ssh &
