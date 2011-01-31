@@ -1,6 +1,9 @@
 #!/bin/bash
 
 echo "Custom xsession starting..."
+if [ -e /etc/SuSE-release ]; then
+    OPENSUSE=1
+fi
 
 # Low-level things
 [ -x /usr/bin/start-pulseaudio-x11 ]        && /usr/bin/start-pulseaudio-x11 &
@@ -37,8 +40,12 @@ fi
 [ -x /usr/bin/dropbox ]                     && (sleep 2 && /usr/bin/dropbox start) &
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
 
+if [[ $OPENSUSE == 1 ]]; then
+    PREPEND="ssh-agent"
+fi
+
 # Window manager
-[ -x /usr/bin/awesome ]                     && exec awesome
+[ -x /usr/bin/awesome ]                     && exec $PREPEND awesome
 
 # Fallback to xterm
-[ -x /usr/bin/xterm ]                       && exec xterm
+[ -x /usr/bin/xterm ]                       && exec $PREPEND xterm
