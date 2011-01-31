@@ -4,7 +4,6 @@ require("awful.autofocus")
 require("awful.rules")
 require("beautiful")
 require("naughty")
-require("debian.menu")
 --- }}}
 
 -- {{{ Variable definitions
@@ -58,7 +57,6 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal }
                                   }
                         })
