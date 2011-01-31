@@ -4,6 +4,7 @@ echo "Custom xsession starting..."
 
 # Low-level things
 [ -x /usr/bin/start-pulseaudio-x11 ]        && /usr/bin/start-pulseaudio-x11 &
+[ -f $HOME/etc/synergy.conf ] && [ -x /usr/bin/synergys ] && /usr/bin/synergys -c $HOME/etc/synergy.conf
 
 # Gnome infrastructure
 
