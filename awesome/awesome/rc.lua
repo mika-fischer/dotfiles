@@ -307,6 +307,8 @@ awful.rules.rules = {
     { rule = { class = "Git-citool" },
       properties = { maximized_horizontal = true,
                      maximized_vertical   = true } },
+    { rule = { class = "Pidgin" },
+      properties = { floating = true } },
 }
 -- }}}
 
