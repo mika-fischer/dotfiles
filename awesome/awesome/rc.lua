@@ -13,6 +13,8 @@ beautiful.init("/home/mfischer/.dotfiles/awesome/awesome/themes/zoop/theme.lua")
 -- Shortcuts
 local altkey        = "Mod1"
 local modkey        = "Mod4"
+local shiftkey      = "Shift"
+local ctrlkey       = "Control"
 local home          = os.getenv("HOME")
 local exec          = awful.util.spawn
 local sexec         = awful.util.spawn_with_shell
@@ -191,9 +193,6 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ "Mod1", "Control" }, "l",     function () awful.util.spawn("gnome-screensaver-command --lock") end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -206,6 +205,12 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+
+    -- Session control
+    awful.key({ modkey, ctrlkey, shiftkey }, "r",   awesome.restart),
+    awful.key({ modkey, ctrlkey, shiftkey }, "l",   function () awful.util.spawn("gnome-screensaver-command --lock") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "q",   function () awful.util.spawn("gnome-session-save --logout-dialog") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "w",   function () awful.util.spawn("gnome-session-save --shutdown-dialog") end),
 
     awful.key({ modkey }, "x",
               function ()
