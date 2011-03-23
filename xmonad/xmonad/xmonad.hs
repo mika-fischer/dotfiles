@@ -18,16 +18,11 @@ main = withConnection Session $ \ dbus -> do
   getWellKnownName dbus
   xmonad $ gnomeConfig {
     modMask            = mod4Mask
-  , focusedBorderColor = "DarkBlue"
-  , borderWidth        = 3
   , manageHook         = manageHook gnomeConfig <+> composeAll managementHooks
   , logHook            = dynamicLogWithPP (myPrettyPrinter dbus)
-  , startupHook        = startupHook gnomeConfig >> liftIO startNitrogen
   , layoutHook         = layoutHook gnomeConfig ||| Accordion ||| Grid
   }
     `removeKeysP`     ["M-p"]
-    `additionalKeysP` [("M-m",runRDeskPrompt defaultXPConfig)]
-
 
 -- -----------------------------------------------------------------------------
 
@@ -48,19 +43,6 @@ managementHooks = [
   ]
 
 -- -----------------------------------------------------------------------------
-
-data RDesk = RDesk
-
-instance XPrompt RDesk where
-  showXPrompt     RDesk = "Remote desktop to:"
-  commandToComplete _ c = c
-  nextCompletion      _ = getNextCompletion
-
-runRDeskPrompt :: XPConfig -> X ()
-runRDeskPrompt c = mkXPrompt RDesk c (mkComplFunFromList targs) run
- where
-  targs = ["pane.galois.com","porthole.galois.com"]
-  run s = spawn ("/usr/bin/rdesktop -u GALOIS\\\\awick -g 1250x750 " ++ s)
 
 -- This retry is really awkward, but sometimes DBus won't let us get our
 -- name unless we retry a couple times.
@@ -96,11 +78,3 @@ pangoSanitize = foldr sanitize ""
   sanitize '\"' acc = "&quot;" ++ acc
   sanitize '&'  acc = "&amp;" ++ acc
   sanitize x    acc = x:acc
-
-startNitrogen :: IO ()
-startNitrogen = do
-  threadDelay (5 * 1000 * 1000)
-  try_ $ rawSystem "nitrogen" ["--restore"]
-
-try_ :: MonadIO m => IO a -> m ()
-try_ action = liftIO $ try action >> return ()
