@@ -1,0 +1,3 @@
+xterm*scrollBar:        false
+xterm*background:       white
+xterm*termName:         xterm-256color
