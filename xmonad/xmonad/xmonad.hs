@@ -18,6 +18,7 @@ main = withConnection Session $ \ dbus -> do
   getWellKnownName dbus
   xmonad $ gnomeConfig {
     modMask            = mod4Mask
+  , terminal           = "xterm"
   , manageHook         = manageHook gnomeConfig <+> composeAll managementHooks
   , logHook            = dynamicLogWithPP (myPrettyPrinter dbus)
   , layoutHook         = layoutHook gnomeConfig ||| Accordion ||| Grid
