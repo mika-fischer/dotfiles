@@ -1,3 +1,35 @@
 xterm*scrollBar:        false
 xterm*background:       white
 xterm*termName:         xterm-256color
+
+! Black
+xterm*color0:  #2E3436
+xterm*color8:  #555753
+
+! Red
+xterm*color1:  #CC0000
+xterm*color9:  #EF2929
+
+! Green
+xterm*color2:  #4E9A06
+xterm*color10: #8AE234
+
+! Yellow
+xterm*color3:  #C4A000
+xterm*color11: #FCE94F
+
+! Blue
+xterm*color4:  #3465A4
+xterm*color12: #729FCF
+
+! Purple
+xterm*color5:  #75507B
+xterm*color13: #AD7FA8
+
+! Cyan
+xterm*color6:  #06989A
+xterm*color14: #34E2E2
+
+! White
+xterm*color7:  #D3D7CF
+xterm*color15: #EEEEEC
