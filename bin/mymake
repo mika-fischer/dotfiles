@@ -1,0 +1,136 @@
+#!/bin/bash
+set -e
+
+###############################################################################
+# Default values
+###############################################################################
+MODULE_DIRS="$HOME/src"
+BUILD_DEBUG=
+BUILD_RELEASE=1
+BUILD_MODULES=
+
+###############################################################################
+# Configuration file
+###############################################################################
+if [ -e $HOME/.mymakerc ]; then
+    source $HOME/.mymakerc
+fi
+
+###############################################################################
+# Command line parsing
+###############################################################################
+if [[ "$1" == "both" ]]; then
+    BUILD_DEBUG=1
+    BUILD_RELEASE=1
+    shift
+elif [[ "$1" == "debug" ]]; then
+    BUILD_DEBUG=1
+    BUILD_RELEASE=
+    shift
+elif [[ "$1" == "release" ]]; then
+    BUILD_DEBUG=
+    BUILD_RELEASE=1
+    shift
+fi
+
+# Modules
+function find_module()
+{
+    local mod=$1
+    if [[ -z "$mod" ]]; then
+        return 1
+    fi
+
+    if [[ $BUILD_MODULES =~ $mod ]]; then
+        echo Module $mod already in list, skipping
+        return 0
+    fi
+
+    local dir
+    for dir in $MODULE_DIRS; do
+        if [[ -d $dir/$mod ]]; then
+            local mod_clean=${mod//[.-]/_}
+            eval ${mod_clean}_PATH="$dir/$mod"
+            local deps=$(eval echo \${${mod_clean}_DEPS})
+            for dep in ${deps}; do
+                find_module $dep
+            done
+            if [[ -z "$BUILD_MODULES" ]]; then
+                BUILD_MODULES="${mod}"
+            else
+                BUILD_MODULES="${BUILD_MODULES} ${mod}"
+            fi
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Find modules given on command line
+while find_module "$1"; do
+    shift
+done
+
+# Find module based on current directory
+if [[ -z "$BUILD_MODULES" ]]; then
+    for dir in $MODULE_DIRS; do
+        if [[ "$PWD" =~ "${dir}/" ]]; then
+            mod="$( echo $PWD | sed "s#${dir}/\([^/]\+\).*#\1#" )"
+            mod_clean=${mod//[.-]/_}
+            eval ${mod_clean}_PATH="$dir/$mod"
+            deps=$(eval echo \${${mod_clean}_DEPS})
+            for dep in ${deps}; do
+                find_module $dep
+            done
+            if [[ -z "$BUILD_MODULES" ]]; then
+                BUILD_MODULES="${mod}"
+            else
+                BUILD_MODULES="${BUILD_MODULES} ${mod}"
+            fi
+            break
+        fi
+    done
+fi
+
+###############################################################################
+# Building
+###############################################################################
+
+echo -ne "Building: $BUILD_MODULES ["
+[[ -n $BUILD_DEBUG   ]] && echo -ne " debug"
+[[ -n $BUILD_RELEASE ]] && echo -ne " release"
+echo " ]"
+
+for mod in $BUILD_MODULES; do
+    VAR=$(eval echo ${mod//[.-]/_}_PATH)
+    SRC_DIR=$(eval echo \${$VAR})
+    VAR=$(eval echo ${mod//[.-]/_}_EXTRA_OPTS)
+    EXTRA_OPTS=$(eval echo \${$VAR})
+
+    if [[ -z "$BUILD_BASE" ]]; then
+        BUILD_B=$SRC_DIR/build.
+    else
+        BUILD_B=$BUILD_BASE/$mod/
+    fi
+
+    if [[ -n "$BUILD_RELEASE" ]]; then
+        BUILD_DIR=${BUILD_B}release
+        if [[ ! -e $BUILD_DIR ]]; then
+            ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+                -DCMAKE_BUILD_TYPE:STRING=Release \
+                $SRC_DIR )
+        fi
+        ( cd $BUILD_DIR && make $EXTRA_OPTS "$@" )
+    fi
+
+    if [[ -n "$BUILD_DEBUG" ]]; then
+        BUILD_DIR=${BUILD_B}debug
+        if [[ ! -e $BUILD_DIR ]]; then
+            ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+                -DCMAKE_BUILD_TYPE:STRING=Debug \
+                $SRC_DIR )
+        fi
+        ( cd $BUILD_DIR && make $EXTRA_OPTS "$@" )
+    fi
+done
+
