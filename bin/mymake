@@ -19,6 +19,8 @@
 #     e.g.: BUILD_BASE=~/build/$(hostname)
 # - ${project}_EXTRA_OPTS: Arguments to make that are always used when
 #     compiling ${project}.
+# - ${project}_CMAKE_OPTS: Arguments to cmake that are used when the build
+#     directory for compiling ${project} is first initialized.
 # - ${project}_DEPS: Other projects (space-separated), that ${project} depends
 #     on. They will be built by mymake before ${project}.
 #
@@ -141,6 +143,8 @@ for mod in $BUILD_MODULES; do
     SRC_DIR=$(eval echo \${$VAR})
     VAR=$(eval echo ${mod//[.-]/_}_EXTRA_OPTS)
     EXTRA_OPTS=$(eval echo \${$VAR})
+    VAR=$(eval echo ${mod//[.-]/_}_CMAKE_OPTS)
+    CMAKE_OPTS=$(eval echo \${$VAR})
 
     if [[ -z "$BUILD_BASE" ]]; then
         BUILD_B=$SRC_DIR/build.
@@ -152,7 +156,7 @@ for mod in $BUILD_MODULES; do
         BUILD_DIR=${BUILD_B}release
         if [[ ! -e $BUILD_DIR ]]; then
             ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
-                -DCMAKE_BUILD_TYPE:STRING=Release \
+                -DCMAKE_BUILD_TYPE:STRING=Release $CMAKE_OPTS \
                 $SRC_DIR )
         fi
         ( cd $BUILD_DIR && make $EXTRA_OPTS "$@" )
@@ -162,7 +166,7 @@ for mod in $BUILD_MODULES; do
         BUILD_DIR=${BUILD_B}debug
         if [[ ! -e $BUILD_DIR ]]; then
             ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
-                -DCMAKE_BUILD_TYPE:STRING=Debug \
+                -DCMAKE_BUILD_TYPE:STRING=Debug $CMAKE_OPTS \
                 $SRC_DIR )
         fi
         ( cd $BUILD_DIR && make $EXTRA_OPTS "$@" )
