@@ -10,7 +10,8 @@
 #
 # The following variables can be set:
 #
-# - MODULE_DIRS: The directories to search for projects (default: ~/src)
+# - MODULE_DIRS: The directories to search for projects. Can be multiple,
+#     space-separated paths. (default: ~/src)
 # - BUILD_BASE: If this is empty (the default), then the build directory will
 #     be a subdirectory of the source directory, called build.{debug,release}.
 #     Otherwise the build directory will be $BUILD_BASE/{project}/{debug,release}.
