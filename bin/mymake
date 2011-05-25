@@ -1,4 +1,32 @@
 #!/bin/bash
+###############################################################################
+# MyMake
+#
+# This script is supposed to make compiling several inter-dependent projects
+# very easy.
+#
+# The script can be configured using a configuration file ~/.mymakerc which is
+# just sourced and can contain shell code.
+#
+# The following variables can be set:
+#
+# - MODULE_DIRS: The directories to search for projects (default: ~/src)
+# - BUILD_BASE: If this is empty (the default), then the build directory will
+#     be a subdirectory of the source directory, called build.{debug,release}.
+#     Otherwise the build directory will be $BUILD_BASE/{project}/{debug,release}.
+#     Since the config file is just a bash script, the variable can be set
+#     according to environment variables or the output of an external script.
+#     e.g.: BUILD_BASE=~/build/$(hostname)
+# - ${project}_EXTRA_OPTS: Arguments to make that are always used when
+#     compiling ${project}.
+# - ${project}_DEPS: Other projects (space-separated), that ${project} depends
+#     on. They will be built by mymake before ${project}.
+#
+# Note that due to the shell syntax ${project} may not exactly be the same as
+# the actual name of the project. In particular, "." and "-" are replaced by
+# "_", since they are illegal in variable names.
+###############################################################################
+
 set -e
 
 ###############################################################################
@@ -90,6 +118,13 @@ if [[ -z "$BUILD_MODULES" ]]; then
             break
         fi
     done
+fi
+
+if [[ -z "$BUILD_MODULES" ]]; then
+    echo "Usage: ${0##*/} [debug|release|both] [project1 project2 ...] [make options]"
+    echo "Error: No project was found. Please provide one on the command line or"
+    echo "       call this script from within a source directory"
+    exit 1
 fi
 
 ###############################################################################
