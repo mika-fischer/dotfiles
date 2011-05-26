@@ -1,3 +1,6 @@
+" Set compiler for correct handling of error messages
+compiler gcc
+
 " MyMake
 function! MyMake()
     ccl
