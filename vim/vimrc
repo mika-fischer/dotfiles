@@ -153,7 +153,7 @@ else
         let &titleold = fnamemodify(&shell, ":t")
     endif
     if &t_Co == 256
-        colorscheme zoop
+        colorscheme darkzoop
     endif
 endif
 
