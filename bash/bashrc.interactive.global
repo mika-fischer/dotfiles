@@ -121,7 +121,6 @@ PROMPT_COMMAND='my_prompt_command'
 # set other shell variables
 export EDITOR=vim
 export VISUAL=vim
-export EMAIL="mika.fischer@zoopnet.de"
 export DEBFULLNAME="Mika Fischer"
 export DEBEMAIL="mika.fischer@zoopnet.de"
 

@@ -5,6 +5,7 @@
 # Settings that are only relevant for certain machines should go into
 # ~/.bashrc.non-interactive.local or ....$HOSTNAME
 
+export EMAIL="mika.fischer@zoopnet.de"
 export GIT_CEILING_DIRECTORIES="/home"
 
 [ -d "$HOME/soft/bin" ] &&			export PATH="$HOME/soft/bin:$PATH"
