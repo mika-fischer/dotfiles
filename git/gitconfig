@@ -1,0 +1,27 @@
+[user]
+	name = Mika Fischer
+
+[core]
+	excludesfile = ~/.gitignore
+
+[color]
+	ui = auto
+
+[alias]
+	co = checkout
+	st = status
+
+[merge]
+	tool = vimdiff
+
+[status]
+	submodulesummary = true
+
+[http]
+	sslVerify = false
+
+[gui]
+	fontui = -family \"DejaVu Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"DejaVu Sans Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
+	spellingdictionary = en_US
+
