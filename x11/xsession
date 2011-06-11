@@ -1,51 +1,46 @@
 #!/bin/bash
 
-echo "Custom xsession starting..."
-if [ -e /etc/SuSE-release ]; then
-    OPENSUSE=1
+# GPG/SSH agent
+if [ -z "$SSH_AUTH_SOCK" ] && [ -x /usr/bin/ssh-agent ]; then
+    PREPEND="$PREPEND ssh-agent"
 fi
 
-# Low-level things
-[ -x /usr/bin/start-pulseaudio-x11 ]        && /usr/bin/start-pulseaudio-x11 &
-[ -f $HOME/etc/synergy.conf ] && [ -x /usr/bin/synergys ] && /usr/bin/synergys -c $HOME/etc/synergy.conf
-
-# Gnome infrastructure
-
-# Settings daemon
-if [ -x /usr/bin/gnome-settings-daemon ]; then
-    /usr/bin/gnome-settings-daemon &
-elif [ -x /usr/lib/gnome-settings-daemon/gnome-settings-daemon ]; then
-    /usr/lib/gnome-settings-daemon/gnome-settings-daemon &
+# DBus
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && [ -x /usr/bin/dbus-launch ]; then
+    PREPEND="$PREPEND dbus-launch --exit-with-session"
 fi
 
-# Policykit authentication agent
-if [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
-    /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
-elif [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]; then
-    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# If we have to prepend something, restart
+if [ -z "$XSESSION_RESTARTED" ]; then
+    export XSESSION_RESTARTED=1
+    exec $PREPEND bash $0 "$@"
 fi
 
-[ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=pkcs11 &
-[ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=secrets &
-[ -x /usr/bin/gnome-keyring-daemon ]        && /usr/bin/gnome-keyring-daemon --start --components=ssh &
-[ -x /usr/bin/gnome-screensaver ]           && /usr/bin/gnome-screensaver &
-[ -x /usr/bin/gnome-power-manager ]         && /usr/bin/gnome-power-manager &
-[ -x /usr/bin/bluetooth-applet ]            && /usr/bin/bluetooth-applet &
-[ -x /usr/bin/update-notifier ]             && /usr/bin/update-notifier &
-[ -x /usr/bin/nm-applet ]                   && /usr/bin/nm-applet &
-[ -x /usr/bin/system-config-printer-applet ] && /usr/bin/system-config-printer-applet &
+# X resources
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+
+# Keyboard setup
+setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
+
+# Other X settings
+xset b off
+xset dpms 300 600 900
+xset m 1 0
+xset r rate 200 40
+xset s off
+
+# Add SSH key
+if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
+    [ -z "$SSH_ASKPASS" ] && [ -x /usr/lib/openssh/ssh-askpass ] && export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass
+    [ -n "$SSH_ASKPASS" ] && (sleep 1 && ssh-add ~/.ssh/id_rsa < /dev/null) &
+fi
 
 # Other applications
 [ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
-[ -x /usr/bin/dropbox ]                     && (sleep 2 && /usr/bin/dropbox start) &
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
 
-if [[ $OPENSUSE == 1 ]]; then
-    PREPEND="ssh-agent"
-fi
-
 # Window manager
-[ -x /usr/bin/awesome ]                     && exec $PREPEND awesome
+[ -x /usr/bin/awesome ]                     && exec awesome
 
 # Fallback to xterm
-[ -x /usr/bin/xterm ]                       && exec $PREPEND xterm
+[ -x /usr/bin/xterm ]                       && exec xterm
