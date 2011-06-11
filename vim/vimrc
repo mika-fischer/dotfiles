@@ -2,6 +2,7 @@
 " Options
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
+syntax on
 
 " Pathogen
 filetype off
