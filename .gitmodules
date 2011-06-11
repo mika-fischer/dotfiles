@@ -42,3 +42,6 @@
 	path = vim/vim/bundle/yankring
 	url = git://github.com/vim-scripts/YankRing.vim.git
 	ignore = untracked
+[submodule "vim/vim/bundle/pyflakes-vim"]
+	path = vim/vim/bundle/pyflakes-vim
+	url = git://github.com/kevinw/pyflakes-vim.git
