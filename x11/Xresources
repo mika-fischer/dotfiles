@@ -41,7 +41,8 @@ xterm*color15: #EEEEEC
 !! URxvt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 URxvt.reverseVideo: true
-URxvt.scrollBar: false
+URxvt.scrollBar:    false
+URxvt.visualBell:   false
 
 ! Black
 URxvt.color0:  #2E3436
