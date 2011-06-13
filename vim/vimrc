@@ -174,7 +174,9 @@ let NERDTreeQuitOnOpen = 1
 nnoremap <leader>tt :TlistToggle<cr>
 let Tlist_GainFocus_On_ToggleOpen = 1
 
-" automatically open and close the popup menu / preview window
+" LustyJuggler + LustyExplorer
+let g:LustyExplorerSuppressRubyWarning = 1
+let g:LustyJugglerSuppressRubyWarning = 1
 
 " YankRing
 let g:yankring_history_file = '.vim_yankring_history'
