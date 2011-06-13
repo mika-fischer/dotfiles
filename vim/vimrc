@@ -36,7 +36,7 @@ set wildmode=list:longest
 set visualbell
 
 " Highlight cursor line
-set cursorline
+"set cursorline
 
 " Show current position
 set ruler
@@ -160,6 +160,9 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Disable matchparen, as it's often slow
+let loaded_matchparen = 1
 
 " NERDTree
 nnoremap <leader>nt :NERDTree 
