@@ -53,7 +53,7 @@ end
 mytextclock = awful.widget.textclock({ align = "right" })
 
 -- {{{ Systray
--- mysystray = widget({ type = "systray" })
+mysystray = widget({ type = "systray" })
 -- }}}
 
 -- Create a wibox for each screen and add it
@@ -87,8 +87,8 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright
         },
         mylayoutbox[s],
-        -- mytextclock,
-        -- s == 1 and mysystray or nil,
+        mytextclock,
+        s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
