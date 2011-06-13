@@ -20,7 +20,7 @@ local editor        = "vim"
 local editor_cmd    = terminal .. " -e " .. editor
 
 -- Theme
-beautiful.init(home .. "/.config/awesome/themes/zoop/theme.lua")
+beautiful.init(home .. "/.config/awesome/themes/darkzoop/theme.lua")
 
 -- Layouts
 layouts =
