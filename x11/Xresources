@@ -43,6 +43,7 @@ xterm*color15: #EEEEEC
 URxvt.reverseVideo: true
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
+URxvt.urgentOnBell: true
 
 ! Black
 URxvt.color0:  #2E3436
