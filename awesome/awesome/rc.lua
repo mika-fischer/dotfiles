@@ -15,7 +15,7 @@ local ctrlkey       = "Control"
 local home          = os.getenv("HOME")
 local exec          = awful.util.spawn
 local sexec         = awful.util.spawn_with_shell
-local terminal      = "gnome-terminal"
+local terminal      = "urxvt"
 local editor        = "vim"
 local editor_cmd    = terminal .. " -e " .. editor
 
