@@ -1,11 +1,9 @@
 " Vim color file
 
 set background=dark
-if version > 580
-    hi clear
-    if exists("syntax_on")
-        syntax reset
-    endif
+hi clear
+if exists("syntax_on")
+    syntax reset
 endif
 let g:colors_name="darkzoop"
 
@@ -223,18 +221,18 @@ if &t_Co == 88 || &t_Co == 256
     call <SID>X("CursorColumn",     "",             "e5e5e5",   "")
     call <SID>X("CursorLine",       "",             "404040",   "NONE")
     call <SID>X("Directory",        "5050ff",       "",         "")
-    call <SID>X("DiffAdd",          "",             "a0ffa0",   "")
-    call <SID>X("DiffChange",       "",             "b0ffff",   "")
-    call <SID>X("DiffDelete",       "000000",       "ffa0a0",   "bold")
-    call <SID>X("DiffText",         "",             "f0e0c0",   "bold")
+    call <SID>X("DiffAdd",          "",             "008000",   "NONE")
+    call <SID>X("DiffChange",       "",             "008080",   "NONE")
+    call <SID>X("DiffDelete",       "",             "800000",   "NONE")
+    call <SID>X("DiffText",         "",             "806060",   "NONE")
     call <SID>X("ErrorMsg",         "ffffff",       "ff0000",   "")
-    call <SID>X("VertSplit",        "",             "",         "reverse")
+    call <SID>X("VertSplit",        "000000",       "b0b0b0",   "NONE")
     call <SID>X("Folded",           "00008b",       "",         "")
     call <SID>X("FoldColumn",       "00008b",       "",         "")
     call <SID>X("SignColumn",       "",             "",         "")
     call <SID>X("IncSearch",        "",             "",         "reverse")
     call <SID>X("LineNr",           "808080",       "",         "")
-    call <SID>X("MatchParen",       "",             "00ffff",   "")
+    call <SID>X("MatchParen",       "00FFFF",       "000000",   "bold")
     call <SID>X("ModeMsg",          "",             "",         "bold")
     call <SID>X("MoreMsg",          "2e8b57",       "",         "bold")
     call <SID>X("NonText",          "0000ff",       "",         "bold")
@@ -246,12 +244,12 @@ if &t_Co == 88 || &t_Co == 256
     call <SID>X("Question",         "2e8b57",       "",         "bold")
     call <SID>X("Search",           "",             "a0a000",   "")
     call <SID>X("SpecialKey",       "9090ff",       "",         "")
-    call <SID>X("SpellBad",         "",             "ff0000",   "undercurl")
+    call <SID>X("SpellBad",         "",             "800000",   "undercurl")
     call <SID>X("SpellCap",         "",             "0000ff",   "undercurl")
     call <SID>X("SpellLocal",       "",             "008b8b",   "undercurl")
     call <SID>X("SpellRare",        "",             "ff00ff",   "undercurl")
-    call <SID>X("StatusLine",       "",             "",         "bold,reverse")
-    call <SID>X("StatusLineNC",     "",             "",         "reverse")
+    call <SID>X("StatusLine",       "000000",       "ffff80",   "bold")
+    call <SID>X("StatusLineNC",     "000000",       "b0b0b0",   "NONE")
     call <SID>X("TabLine",          "",             "d3d3d3",   "NONE")
     call <SID>X("TabLineSel",       "",             "",         "bold")
     call <SID>X("TabLineFill",      "",             "",         "reverse")
