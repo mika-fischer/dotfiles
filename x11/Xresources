@@ -40,7 +40,9 @@ xterm*color15: #EEEEEC
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! URxvt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-URxvt.reverseVideo: true
+URxvt.reverseVideo: false
+URxvt.foreground:   White
+URxvt.background:   Black
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
 URxvt.urgentOnBell: true
