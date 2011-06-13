@@ -24,6 +24,11 @@ print "*    available combination\n";
 print "*\n";
 print "**************************\n";
 
+print "[00mStandard colors:\n";
+print "[00;30m  0: black [00;31m  1: red [00;32m  2: green [00;33m  3: brown [00;34m  4: blue [00;35m  5: purple [00;36m  6: cyan [00;37m  7: gray\n";
+print "[00mStrong colors:\n";
+print "[01;30m  8: black [01;31m  9: red [01;32m 10: green [01;33m 11: brown [01;34m 12: blue [01;35m 13: purple [01;36m 14: cyan [01;37m 15: gray\n\n";
+
 if( $ARGV[0] eq "-w" || $ARGV[1] eq "-w" || $ARGV[2] eq "-w" ) {
     push(@arr, [(  "[38;5;16m 16:  00/00/00",     "[38;5;17m 17:  00/00/5f",     "[38;5;18m 18:  00/00/87",     "[38;5;19m 19:  00/00/af",     "[38;5;20m 20:  00/00/d7",     "[38;5;21m 21:  00/00/ff")] );  
     push(@arr, [(  "[38;5;22m 22:  00/5f/00",     "[38;5;23m 23:  00/5f/5f",     "[38;5;24m 24:  00/5f/87",     "[38;5;25m 25:  00/5f/af",     "[38;5;26m 26:  00/5f/d7",     "[38;5;27m 27:  00/5f/ff")] );  
