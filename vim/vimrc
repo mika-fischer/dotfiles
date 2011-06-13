@@ -136,6 +136,7 @@ nnoremap <C-l> <C-w>l
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+colorscheme darkzoop
 if has("gui_running")
     set guioptions-=m
     set guioptions-=L
@@ -145,16 +146,13 @@ if has("gui_running")
         set guifont=Monospace\ 8
     endif
 else
+    set titlestring=[%t]%(\%m%r%)
+    set titlelen=15
+    set title
     if &term =~ '^screen'
-        set titlelen=15
-        set titlestring=%t%(\ %m%)
-        set title
         set t_ts=k
         set t_fs=\
-        let &titleold = fnamemodify(&shell, ":t")
-    endif
-    if &t_Co == 256
-        colorscheme darkzoop
+        " let &titleold = fnamemodify(&shell, ":t")
     endif
 endif
 
