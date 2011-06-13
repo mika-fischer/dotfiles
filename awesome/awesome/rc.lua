@@ -138,8 +138,7 @@ globalkeys = awful.util.table.join(
     -- Session control
     awful.key({ modkey, ctrlkey, shiftkey }, "r",   awesome.restart),
     awful.key({ modkey, ctrlkey, shiftkey }, "l",   function () awful.util.spawn("gnome-screensaver-command --lock") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "q",   function () awful.util.spawn("gnome-session-save --logout-dialog") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "w",   function () awful.util.spawn("gnome-session-save --shutdown-dialog") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "q",   awesome.quit),
 
     -- Prompt
     awful.key({ modkey }, "r",                      function () mypromptbox[mouse.screen]:run() end),
