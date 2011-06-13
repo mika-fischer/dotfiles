@@ -128,13 +128,13 @@ function my_prompt_command
 	fi
     
     # Get username
-    if [[ $USER != "mfischer" ]] && [[ $USER != "mika" ]]; then
-        local PROMPT_USER="\\u"
+    if [[ $user != "mfischer" ]] && [[ $user != "mika" ]]; then
+        local PROMPT_USER="$user"
     fi
 
     # Get hostname
     if [[ -n "$SSH_CONNECTION" ]]; then
-        local PROMPT_HOSTNAME="\\h"
+        local PROMPT_HOSTNAME="$HOSTNAME"
     fi
 
     # Get AT
@@ -169,7 +169,7 @@ function my_prompt_command
 	fi
 
 	# Set prompt
-	PS1="${USER_COLOR}${PROMPT_USER}${GREEN}${PROMPT_AT}${CYAN}${PROMPR_HOSTNAME}${RESET}${PROMPT_COLON}${LBLUE}${PROMPT_PWD}${LRED}${PROMPT_RC}${PURPLE}${GIT_BRANCH}${RESET}\\\$ "
+	PS1="${USER_COLOR}${PROMPT_USER}${GREEN}${PROMPT_AT}${CYAN}${PROMPT_HOSTNAME}${RESET}${PROMPT_COLON}${LBLUE}${PROMPT_PWD}${LRED}${PROMPT_RC}${PURPLE}${GIT_BRANCH}${RESET}\\\$ "
 
 	# Set xterm title and screen title
     settitle "${PROMPT_USER}${PROMPT_AT}${PROMPT_HOSTNAME}${PROMPT_COLON}${PROMPT_PWD}"
