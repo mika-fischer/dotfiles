@@ -42,16 +42,65 @@ if [ "$TERM" != "dumb" ]; then
     alias ls='ls --color=auto'
 fi
 
+function truncate_start
+{
+    local trunc_symbol="..."
+    local maxlength="$1"
+    shift
+    local string="$@"
+    local length="${#string}"
+    if [[ "$length" -gt "$maxlength" ]]; then
+        local offset=$(( $length - $maxlength ))
+        echo -ne "${trunc_symbol}${string:$offset:$maxlength}"
+    else
+        echo -ne "${string}"
+    fi
+}
+
+function truncate_end
+{
+    local trunc_symbol="..."
+    local maxlength="$1"
+    shift
+    local string="$@"
+    local length="${#string}"
+    if [[ "$length" -gt "$maxlength" ]]; then
+        echo -ne "${string:0:$maxlength}${trunc_symbol}"
+    else
+        echo -ne "${string}"
+    fi
+}
+
+function settitle
+{
+    local str="${@}"
+    case "$TERM" in
+        xterm*|rxvt*|gnome*|konsole*)
+        echo -ne "\e]0;${str}\007"
+        ;;
+    screen*)
+        echo -ne "\ek${str}\e\\"
+        ;;
+    esac
+}
+
+function settitle_pipe
+{
+    export PREV_COMMAND="${PREV_COMMAND}${@}"
+    local cmd=$(truncate_end 30 "$PREV_COMMAND")
+    case "$TERM" in
+        xterm*|rxvt*|gnome*|konsole*)
+        echo -ne "\e]0;${cmd}\007"
+        ;;
+    screen*)
+        echo -ne "\ek${cmd}\e\\"
+        ;;
+    esac
+    export PREV_COMMAND="${PREV_COMMAND} | "
+}
+
 function my_prompt_command
 {
-	# Get exit code
-	local RC=$?
-	if [ $RC -ne 0 ]; then
-		local PROMPT_RC="($RC)"
-	else
-		local PROMPT_RC=""
-	fi
-
 	local RESET="\[\e[00m\]"
 	local BLACK="\[\e[00;30m\]"
 	local GRAY="\[\e[01;30m\]"
@@ -77,20 +126,40 @@ function my_prompt_command
 	else
 		local USER_COLOR=$GREEN
 	fi
+    
+    # Get username
+    if [[ $USER != "mfischer" ]] && [[ $USER != "mika" ]]; then
+        local PROMPT_USER="\\u"
+    fi
+
+    # Get hostname
+    if [[ -n "$SSH_CONNECTION" ]]; then
+        local PROMPT_HOSTNAME="\\h"
+    fi
+
+    # Get AT
+    if [[ -n "$PROMPT_USER" ]] && [[ -n "$PROMPT_HOSTNAME" ]]; then
+        local PROMPT_AT="@"
+    fi
+
+    # Get COLON
+    if [[ -n "$PROMPT_USER" ]] || [[ -n "$PROMPT_HOSTNAME" ]]; then
+        local PROMPT_COLON=":"
+    fi
+
+	# Get exit code
+	local RC=$?
+	if [ $RC -ne 0 ]; then
+		local PROMPT_RC="($RC)"
+	else
+		local PROMPT_RC=""
+	fi
 
 	# Get truncated path
-	local pwdmaxlen=30
-	local trunc_symbol="..."
-	local PWD2=""
-	[[ "$PWD" == "$HOME" ]] && PWD2="~"
-	[[ -z "$PWD2" ]] && [[ "$PWD" == "$HOME/" ]] && PWD2="~/"
-	[[ -z "$PWD2" ]] && PWD2="${PWD/#$HOME\//~/}"
-	if [ ${#PWD2} -gt $pwdmaxlen ];	then
-		local pwdoffset=$(( ${#PWD2} - $pwdmaxlen ))
-		local PROMPT_PWD=${trunc_symbol}${PWD2:$pwdoffset:$pwdmaxlen}
-	else
-		local PROMPT_PWD=${PWD2}
-	fi
+	[[ "$PWD" == "$HOME" ]] && local PWD2="~"
+	[[ -z "$PWD2" ]] && [[ "$PWD" == "$HOME/" ]] && local PWD2="~/"
+	[[ -z "$PWD2" ]] && local PWD2="${PWD/#$HOME\//~/}"
+    local PROMPT_PWD=$(truncate_start 30 "$PWD2")
 
 	# Get git branch
 	if declare -F __git_ps1 >/dev/null 2>&1; then
@@ -100,30 +169,26 @@ function my_prompt_command
 	fi
 
 	# Set prompt
-	PS1="${USER_COLOR}\u${GREEN}@${CYAN}\h${RESET}:${LBLUE}${PROMPT_PWD}${LRED}${PROMPT_RC}${PURPLE}${GIT_BRANCH}${RESET}\\\$ "
+	PS1="${USER_COLOR}${PROMPT_USER}${GREEN}${PROMPT_AT}${CYAN}${PROMPR_HOSTNAME}${RESET}${PROMPT_COLON}${LBLUE}${PROMPT_PWD}${LRED}${PROMPT_RC}${PURPLE}${GIT_BRANCH}${RESET}\\\$ "
 
 	# Set xterm title and screen title
-	case "$TERM" in
-	xterm*|rxvt*|gnome*|konsole*)
-		echo -ne "\e]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
-		;;
-	screen*)
-		echo -ne "\ek\e\\"
-		;;
-	esac
+    settitle "${PROMPT_USER}${PROMPT_AT}${PROMPT_HOSTNAME}${PROMPT_COLON}${PROMPT_PWD}"
 
 	# Write new commands to history file
 	history -a
+
+    export PREV_COMMAND=""
 }
 
 PROMPT_COMMAND='my_prompt_command'
+
+trap 'settitle_pipe "$BASH_COMMAND"' DEBUG
 
 # set other shell variables
 export EDITOR=vim
 export VISUAL=vim
 export DEBFULLNAME="Mika Fischer"
 export DEBEMAIL="mika.fischer@zoopnet.de"
-
 
 # Aliases
 alias cpptags="ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++"
