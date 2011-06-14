@@ -47,6 +47,26 @@ URxvt.scrollBar:    false
 URxvt.visualBell:   false
 URxvt.urgentOnBell: true
 
+! Plugins
+URxvt.perl-lib:        .urxvt/perl
+URxvt.perl-ext-common: url-select,keyboard-select,clipboard
+
+! URL selection plugin
+URxvt.keysym.M-u:      perl:url-select:select_next
+URxvt.urlLauncher:     firefox
+URxvt.underlineURLs:   true
+URvxt.urlButton:       2
+
+! Text selection plugin
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+
+! Clipboard plugin
+URxvt.keysym.M-c:      perl:clipboard:copy
+URxvt.keysym.M-v:      perl:clipboard:paste
+URxvt.keysym.M-C-v:    perl:clipboard:paste_escaped
+URxvt.copyCommand:     xsel -ib
+URxvt.pasteCommand:    xsel -ob
+
 ! Black
 URxvt.color0:  #2E3436
 URxvt.color8:  #555753
