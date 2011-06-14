@@ -46,6 +46,8 @@ URxvt.background:   Black
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
 URxvt.urgentOnBell: true
+URxvt.iso14755:     false
+URxvt.iso14755_52:  false
 
 ! Plugins
 URxvt.perl-lib:        .urxvt/perl
