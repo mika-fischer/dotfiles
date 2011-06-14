@@ -41,7 +41,7 @@ xterm*color15: #EEEEEC
 !! URxvt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 URxvt.reverseVideo: false
-URxvt.foreground:   White
+URxvt.foreground:   #C0C0C0
 URxvt.background:   Black
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
@@ -76,8 +76,8 @@ URxvt.color6:  #06989A
 URxvt.color14: #34E2E2
 
 ! White
-URxvt.color7:  #D3D7CF
-URxvt.color15: #EEEEEC
+URxvt.color7:  #C0C0C0
+URxvt.color15: #E0E0E0
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! Fonts
