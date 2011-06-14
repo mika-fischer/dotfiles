@@ -67,6 +67,11 @@ URxvt.keysym.M-C-v:    perl:clipboard:paste_escaped
 URxvt.copyCommand:     xsel -ib
 URxvt.pasteCommand:    xsel -ob
 
+! Transparency
+URxvt.transparent:  true
+URxvt.tintColor:    White
+URxvt.shading:      5
+
 ! Black
 URxvt.color0:  #2E3436
 URxvt.color8:  #555753
