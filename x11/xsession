@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# ConsoleKit
+if [ -x /usr/bin/ck-launch-session ]; then
+    PREPEND="$PREPEND /usr/bin/ck-launch-session"
+fi
+
 # GPG/SSH agent
 if [ -z "$SSH_AUTH_SOCK" ] && [ -x /usr/bin/ssh-agent ]; then
     PREPEND="$PREPEND ssh-agent"
