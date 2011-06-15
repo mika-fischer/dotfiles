@@ -19,6 +19,12 @@ local terminal      = "urxvt"
 local editor        = "vim"
 local editor_cmd    = terminal .. " -e " .. editor
 
+local lock_cmd      = "slimlock"
+local consolekit    = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" "
+                      .. "/org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
+local suspend_cmd   = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" "
+                      .. "/org/freedesktop/UPower org.freedesktop.UPower.Suspend"
+
 -- Theme
 beautiful.init(home .. "/.config/awesome/themes/darkzoop/theme.lua")
 
@@ -133,12 +139,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
 
     -- Standard programs
-    awful.key({ modkey }, "Return",                 function () awful.util.spawn(terminal) end),
+    awful.key({ modkey }, "Return",                 function () exec(terminal) end),
 
     -- Session control
-    awful.key({ modkey, ctrlkey, shiftkey }, "r",   awesome.restart),
-    awful.key({ modkey, ctrlkey, shiftkey }, "l",   function () awful.util.spawn("gnome-screensaver-command --lock") end),
+    awful.key({ modkey,          shiftkey }, "r",   awesome.restart),
     awful.key({ modkey, ctrlkey, shiftkey }, "q",   awesome.quit),
+    awful.key({ modkey, ctrlkey, shiftkey }, "l",   function () exec(lock_cmd) end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "h",   function () exec(consolekit .. "Stop") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "r",   function () exec(consolekit .. "Restart") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () exec(suspend) end),
 
     -- Prompt
     awful.key({ modkey }, "r",                      function () mypromptbox[mouse.screen]:run() end),
