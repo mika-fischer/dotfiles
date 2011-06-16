@@ -48,3 +48,6 @@
 [submodule "urxvt/urxvt/ext/urxvt-perls"]
 	path = urxvt/urxvt/ext/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls.git
+[submodule "awesome/awesome/vicious"]
+	path = awesome/awesome/vicious
+	url = http://git.sysphere.org/vicious

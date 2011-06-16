@@ -15,6 +15,7 @@ require("awful.rules")
 require("beautiful")
 beautiful.init(home .. "/.config/awesome/themes/darkzoop/theme.lua")
 require("naughty")
+require("vicious")
 --- }}}
 
 -- {{{ Shortcuts
@@ -63,6 +64,14 @@ mysystray = widget({ type = "systray" })
 
 require("volume")
 
+cpuwidget = awful.widget.graph()
+cpuwidget:set_width(50)
+cpuwidget:set_background_color("#494B4F")
+cpuwidget:set_color("#FF5656")
+cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+cpuwidget:set_gradient_angle(0)
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 1)
+
 -- Create a wibox for each screen and add it
 mywibox     = {}
 mypromptbox = {}
@@ -83,10 +92,11 @@ for s = 1, screen.count() do
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
         },
+        mylayoutbox[s],
         mytextclock,
         volume_widget,
+        cpuwidget,
         s == 1 and mysystray or nil,
-        mylayoutbox[s],
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
