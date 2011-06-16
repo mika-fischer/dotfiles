@@ -1,34 +1,33 @@
+-- {{{ Important variables
+local home          = os.getenv("HOME")
+local altkey        = "Mod1"
+local modkey        = "Mod4"
+local shiftkey      = "Shift"
+local ctrlkey       = "Control"
+local terminal      = "urxvt"
+local editor        = "vim"
+-- }}}
+
 -- {{{ Libraries
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
 require("beautiful")
+beautiful.init(home .. "/.config/awesome/themes/darkzoop/theme.lua")
 require("naughty")
 --- }}}
 
--- {{{ Variable definitions
--- Shortcuts
-local altkey        = "Mod1"
-local modkey        = "Mod4"
-local shiftkey      = "Shift"
-local ctrlkey       = "Control"
-local home          = os.getenv("HOME")
+-- {{{ Shortcuts
 local exec          = awful.util.spawn
 local sexec         = awful.util.spawn_with_shell
-local terminal      = "urxvt"
-local editor        = "vim"
 local editor_cmd    = terminal .. " -e " .. editor
-
 local lock_cmd      = "slimlock"
 local consolekit    = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" "
                       .. "/org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
 local suspend_cmd   = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" "
                       .. "/org/freedesktop/UPower org.freedesktop.UPower.Suspend"
 
--- Theme
-beautiful.init(home .. "/.config/awesome/themes/darkzoop/theme.lua")
-
--- Layouts
+-- {{{ Layouts
 layouts =
 {
     awful.layout.suit.floating,
@@ -56,45 +55,38 @@ end
 -- }}}
 
 -- {{{ Wibox
-mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = awful.widget.textclock()
 
 -- {{{ Systray
 mysystray = widget({ type = "systray" })
 -- }}}
 
+require("volume")
+
 -- Create a wibox for each screen and add it
-mywibox = {}
+mywibox     = {}
 mypromptbox = {}
 mylayoutbox = {}
-mytaglist = {}
-mytasklist = {}
+mytaglist   = {}
+mytasklist  = {}
 
 for s = 1, screen.count() do
-    -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
-    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
     mylayoutbox[s] = awful.widget.layoutbox(s)
-    -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all)
+    mytaglist[s]   = awful.widget.taglist(s, awful.widget.taglist.label.all)
+    mytasklist[s]  = awful.widget.tasklist(function(c) return awful.widget.tasklist.label.currenttags(c, s) end)
 
-    -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(function(c)
-                                              return awful.widget.tasklist.label.currenttags(c, s)
-                                          end)
-
-    -- Create the wibox
     mywibox[s] = awful.wibox({ position = "bottom", screen = s })
-    -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
             mytaglist[s],
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
         },
-        mylayoutbox[s],
         mytextclock,
+        volume_widget,
         s == 1 and mysystray or nil,
+        mylayoutbox[s],
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -148,6 +140,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, ctrlkey, shiftkey }, "h",   function () exec(consolekit .. "Stop") end),
     awful.key({ modkey, ctrlkey, shiftkey }, "r",   function () exec(consolekit .. "Restart") end),
     awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () exec(suspend) end),
+
+    -- Multimedia
+    awful.key({ modkey, altkey            }, "=",   function () exec(home .. "/bin/volume.sh up") end),
+    awful.key({ modkey, altkey            }, "-",   function () exec(home .. "/bin/volume.sh down") end),
+    awful.key({ modkey, altkey            }, "0",   function () exec(home .. "/bin/volume.sh mute") end),
 
     -- Prompt
     awful.key({ modkey }, "r",                      function () mypromptbox[mouse.screen]:run() end),
