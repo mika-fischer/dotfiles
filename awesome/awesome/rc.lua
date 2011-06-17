@@ -56,21 +56,31 @@ end
 -- }}}
 
 -- {{{ Wibox
-mytextclock = awful.widget.textclock()
 
--- {{{ Systray
+spacer       = widget({ type = "textbox"})
+spacer.width = 2
+
+mytextclock = awful.widget.textclock()
 mysystray = widget({ type = "systray" })
--- }}}
 
 require("volume")
 
+graph_width = 50
+graph_bg    = "#000000"
+
 cpuwidget = awful.widget.graph()
-cpuwidget:set_width(50)
-cpuwidget:set_background_color("#494B4F")
-cpuwidget:set_color("#FF5656")
-cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+cpuwidget:set_width(graph_width)
+cpuwidget:set_background_color(graph_bg)
+cpuwidget:set_color("#FF4040")
+cpuwidget:set_gradient_colors({ "#FF4040", "#FFFF40", "#40FF40" })
 cpuwidget:set_gradient_angle(0)
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 1)
+
+memwidget = awful.widget.graph()
+memwidget:set_width(graph_width)
+memwidget:set_background_color(graph_bg)
+memwidget:set_color("#4040FF")
+vicious.register(memwidget, vicious.widgets.mem, "$1", 1)
 
 -- Create a wibox for each screen and add it
 mywibox     = {}
@@ -93,9 +103,14 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright
         },
         mylayoutbox[s],
-        mytextclock,
-        volume_widget,
-        cpuwidget,
+        s == 1 and mytextclock or nil,
+        s == 1 and spacer or nil,
+        s == 1 and volume_widget.widget or nil,
+        s == 1 and spacer or nil,
+        s == 1 and memwidget.widget or nil,
+        s == 1 and spacer or nil,
+        s == 1 and cpuwidget.widget or nil,
+        s == 1 and spacer or nil,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft

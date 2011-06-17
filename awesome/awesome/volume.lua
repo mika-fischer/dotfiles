@@ -1,6 +1,6 @@
 volume_widget = awful.widget.progressbar()
 volume_widget:set_width(8)
-volume_widget:set_background_color(beautiful.bg_normal)
+volume_widget:set_background_color("#000000")
 volume_widget:set_color(beautiful.fg_normal)
 volume_widget:set_vertical(true)
 volume_widget:set_max_value(1)
@@ -12,7 +12,7 @@ function update_volume_widget(widget)
     local volume = tonumber(string.match(status, "(%d?%d?%d)%%")) / 100
     local mute_state = string.match(status, "%[(o[^%]]*)%]")
     if string.find(mute_state, "on", 1, true) then
-        widget:set_background_color(beautiful.bg_normal)
+        widget:set_background_color("#000000")
         widget:set_value(volume)
     else
         widget:set_background_color('#A06060')
