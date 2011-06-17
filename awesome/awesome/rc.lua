@@ -140,6 +140,20 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
 
+    -- unminimize all
+    awful.key({ modkey, "Shift"   }, "n",
+        function ()
+            local allclients = client.get(mouse.screen)
+            for _,c in ipairs(allclients) do
+                if c.minimized and c:tags()[mouse.screen] == awful.tag.selected(mouse.screen) then
+                    c.minimized = false
+                    client.focus = c
+                    c:raise()
+                    return
+                end
+            end
+        end),
+
     -- Standard programs
     awful.key({ modkey }, "Return",                 function () exec(terminal) end),
 
