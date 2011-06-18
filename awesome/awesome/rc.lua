@@ -25,8 +25,8 @@ local editor_cmd    = terminal .. " -e " .. editor
 local lock_cmd      = "slimlock"
 local consolekit    = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" "
                       .. "/org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
-local suspend_cmd   = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" "
-                      .. "/org/freedesktop/UPower org.freedesktop.UPower.Suspend"
+local upower        = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" "
+                      .. "/org/freedesktop/UPower org.freedesktop.UPower."
 
 -- {{{ Layouts
 layouts =
@@ -176,9 +176,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,          shiftkey }, "r",   awesome.restart),
     awful.key({ modkey, ctrlkey, shiftkey }, "q",   awesome.quit),
     awful.key({ modkey, ctrlkey, shiftkey }, "l",   function () exec(lock_cmd) end),
+    awful.key({ }, "XF86ScreenSaver",               function () exec(lock_cmd) end),
+
+    -- Power control
     awful.key({ modkey, ctrlkey, shiftkey }, "h",   function () exec(consolekit .. "Stop") end),
     awful.key({ modkey, ctrlkey, shiftkey }, "r",   function () exec(consolekit .. "Restart") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () exec(suspend) end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () exec(upower .. "Suspend") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "d",   function () exec(upower .. "Hibernate") end),
+    awful.key({ }, "XF86Sleep",                     function () exec(upower .. "Suspend") end),
+    awful.key({ }, "XF86Suspend",                   function () exec(upower .. "Hibernate") end),
 
     -- Multimedia
     awful.key({ modkey, altkey            }, "=",   function () exec(home .. "/bin/volume.sh up") end),
