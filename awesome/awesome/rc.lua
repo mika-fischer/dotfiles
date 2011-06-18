@@ -185,6 +185,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey            }, "-",   function () exec(home .. "/bin/volume.sh down") end),
     awful.key({ modkey, altkey            }, "0",   function () exec(home .. "/bin/volume.sh mute") end),
 
+    -- Squeezebox
+    awful.key({ modkey, altkey            }, "F7",  function () exec(home .. "/bin/squeezebox.sh prev") end),
+    awful.key({ modkey, altkey            }, "F8",  function () exec(home .. "/bin/squeezebox.sh next") end),
+    awful.key({ modkey, altkey            }, "F9",  function () exec(home .. "/bin/squeezebox.sh toggle_play") end),
+    awful.key({ modkey, altkey            }, "F10", function () exec(home .. "/bin/squeezebox.sh toggle") end),
+    awful.key({ modkey, altkey            }, "F11", function () exec(home .. "/bin/squeezebox.sh volume_down") end),
+    awful.key({ modkey, altkey            }, "F12", function () exec(home .. "/bin/squeezebox.sh volume_up") end),
+
     -- Prompt
     awful.key({ modkey }, "r",                      function () mypromptbox[mouse.screen]:run() end),
     awful.key({ modkey }, "x",
