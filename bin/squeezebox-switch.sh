@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CURFILE="$HOME/.mysqueezebox"
-SB="$HOME/bin/squeezebox.sh"
+NAME=$(basename $0)
+PSC_BIN="/usr/bin/pysqueezecenter"
 
 current=$(cat $CURFILE 2>/dev/null)
 
@@ -10,8 +11,8 @@ if [ -z "$MYSQUEEZEBOXSERVER" ]; then
     exit 1
 fi
 
-if ! [ -x $SB ]; then
-    echo "$NAME: Error: squeezebox.sh is not installed!"
+if ! [ -x $PSC_BIN ]; then
+    echo "$NAME: Error: pysqueezecenter is not installed!"
     exit 1
 fi
 
@@ -20,7 +21,7 @@ names=()
 
 OIFS="$IFS"
 IFS=""
-OUTPUT=$($SB -i 2>&1 | grep Player)
+OUTPUT=$($PSC_BIN -s $MYSQUEEZEBOXSERVER -r -q -i 2>&1 | grep Player)
 IFS="
 "
 
@@ -46,7 +47,7 @@ newmac=$(for i in $(seq 0 $(( ${#names[@]} - 1 ))); do
     fi
 done)
 
-if [ -n $newmac ]; then
+if [[ $newmac != "" ]]; then
     echo $newmac > $CURFILE
 fi
 
