@@ -40,6 +40,9 @@ if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
     [ -n "$SSH_ASKPASS" ] && (sleep 1 && ssh-add ~/.ssh/id_rsa < /dev/null) &
 fi
 
+# Hide mouse cursor
+[-x /usr/bin/unclutter ]                    && /usr/bin/unclutter &
+
 # Other applications
 [ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
