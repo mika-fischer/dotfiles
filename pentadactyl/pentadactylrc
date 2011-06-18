@@ -1,5 +1,6 @@
 noremap <F12> :set go!=T<CR>
+noremap <C-t> :tabopen 
 
-set passkeys+='https://mail\.google\.com/':aAbcdefFghiIjklLmnNopqrRsStTuUvwxyz*/?`!#[]{}.&
+set passkeys+='https?://mail.google.com/mail/':aAbcdefFghiIjklLmnNopqrRsStTuUvwxyz*/?`!#[]{}.&
 set passkeys+='https?://www.google.com/reader/view':jkoOJKnpNPXfu/Amv?
 set passkeys+='https?://www.nirvanahq.com/app':1234567890nipdhl!q
