@@ -21,7 +21,6 @@ for dir in $(ls $DOTFILES); do
 		if [[ -e $SOURCE ]]; then
 			echo "ERROR: $SOURCE already exists!"
 		else
-			echo ln -s $TARGET $SOURCE
 			ln -s $TARGET $SOURCE
 		fi
 	done
