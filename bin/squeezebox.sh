@@ -9,7 +9,7 @@ if [ -z "$MYSQUEEZEBOXSERVER" ]; then
     exit 1
 fi
 
-if ! hash $PSC_BIN 2>-; then
+if ! hash $PSC_BIN 2>&-; then
     echo "$NAME: Error: pysqueezecenter is not installed!"
     exit 1
 fi
