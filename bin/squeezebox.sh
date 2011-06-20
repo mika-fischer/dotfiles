@@ -2,14 +2,14 @@
 
 NAME=$(basename $0)
 
-PSC_BIN="/usr/bin/pysqueezecenter"
+PSC_BIN="pysqueezecenter"
 
 if [ -z "$MYSQUEEZEBOXSERVER" ]; then
     echo "$NAME: Error: \$MYSQUEEZEBOXSERVER not defined!"
     exit 1
 fi
 
-if ! [ -x $PSC ]; then
+if ! hash $PSC_BIN 2>-; then
     echo "$NAME: Error: pysqueezecenter is not installed!"
     exit 1
 fi

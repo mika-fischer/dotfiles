@@ -2,7 +2,7 @@
 
 CURFILE="$HOME/.mysqueezebox"
 NAME=$(basename $0)
-PSC_BIN="/usr/bin/pysqueezecenter"
+PSC_BIN="pysqueezecenter"
 
 current=$(cat $CURFILE 2>/dev/null)
 
@@ -11,7 +11,7 @@ if [ -z "$MYSQUEEZEBOXSERVER" ]; then
     exit 1
 fi
 
-if ! [ -x $PSC_BIN ]; then
+if ! hash $PSC_BIN 2>-; then
     echo "$NAME: Error: pysqueezecenter is not installed!"
     exit 1
 fi
