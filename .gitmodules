@@ -45,6 +45,7 @@
 [submodule "vim/vim/bundle/pyflakes-vim"]
 	path = vim/vim/bundle/pyflakes-vim
 	url = git://github.com/kevinw/pyflakes-vim.git
+	ignore = untracked
 [submodule "urxvt/urxvt/ext/urxvt-perls"]
 	path = urxvt/urxvt/ext/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls.git
