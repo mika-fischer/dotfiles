@@ -1,7 +1,8 @@
 volume_widget = awful.widget.progressbar()
 volume_widget:set_width(8)
 volume_widget:set_background_color("#000000")
-volume_widget:set_color(beautiful.fg_normal)
+volume_widget:set_color("#FF4040")
+volume_widget:set_gradient_colors({ "#40FF40", "#FFFF40", "#FF4040", })
 volume_widget:set_vertical(true)
 volume_widget:set_max_value(1)
 
