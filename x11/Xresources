@@ -6,8 +6,8 @@ xterm*background:       white
 xterm*termName:         xterm-256color
 
 ! Black
-xterm*color0:  #2E3436
-xterm*color8:  #555753
+xterm*color0:  #000000
+xterm*color8:  #222222
 
 ! Red
 xterm*color1:  #CC0000
@@ -18,7 +18,7 @@ xterm*color2:  #4E9A06
 xterm*color10: #8AE234
 
 ! Yellow
-xterm*color3:  #C4A000
+xterm*color3:  #F0B050
 xterm*color11: #FCE94F
 
 ! Blue
@@ -75,8 +75,8 @@ URxvt.tintColor:    White
 URxvt.shading:      5
 
 ! Black
-URxvt.color0:  #2E3436
-URxvt.color8:  #555753
+URxvt.color0:  #000000
+URxvt.color8:  #222222
 
 ! Red
 URxvt.color1:  #CC0000
@@ -87,7 +87,7 @@ URxvt.color2:  #4E9A06
 URxvt.color10: #8AE234
 
 ! Yellow
-URxvt.color3:  #C4A000
+URxvt.color3:  #F0B050
 URxvt.color11: #FCE94F
 
 ! Blue
