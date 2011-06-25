@@ -229,7 +229,7 @@ if &t_Co == 88 || &t_Co == 256
     call <SID>X("VertSplit",        "000000",       "b0b0b0",   "NONE")
     call <SID>X("Folded",           "00008b",       "",         "")
     call <SID>X("FoldColumn",       "00008b",       "",         "")
-    call <SID>X("SignColumn",       "",             "",         "")
+    call <SID>X("SignColumn",       "",             "000000",   "")
     call <SID>X("IncSearch",        "",             "",         "reverse")
     call <SID>X("LineNr",           "808080",       "",         "")
     call <SID>X("MatchParen",       "00FFFF",       "000000",   "bold")
