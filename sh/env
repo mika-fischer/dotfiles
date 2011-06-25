@@ -13,12 +13,6 @@ export EMAIL="mika.fischer@zoopnet.de"
 export LC_MESSAGES=C
 export GIT_CEILING_DIRECTORIES="/home"
 
-[ -d "$HOME/soft/bin" ] &&      export PATH="$HOME/soft/bin:$PATH"
-[ -d "$HOME/soft/lib" ] &&      export LIB="$HOME/soft/lib:$LIB"
-[ -d "$HOME/soft/include" ] &&  export INCLUDE="$HOME/soft/include:$INCLUDE"
-[ -d "$HOME/soft/python" ] &&   export PYTHONPATH="$PYTHONPATH:$HOME/soft/python"
-[ -d "$HOME/bin" ] &&           export PATH="$HOME/bin:$PATH"
-
 #----------------------------------------------------------------------------
 # Help bash along a bit
 #----------------------------------------------------------------------------
