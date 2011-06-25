@@ -18,7 +18,11 @@ fi
 # If we have to prepend something, restart
 if [ -z "$XSESSION_RESTARTED" ]; then
     export XSESSION_RESTARTED=1
-    exec $PREPEND bash -l $0 "$@"
+    if shopt -q login_shell; then
+        exec $PREPEND bash $0 "$@"
+    else
+        exec $PREPEND bash -l $0 "$@"
+    fi
 fi
 
 # X resources
