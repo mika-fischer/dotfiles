@@ -1,35 +1,186 @@
-# This bashrc file is built in a modular fashion. There are several files
-# that are read by it.
-#
-# For non-interactive shells the following files are read if they exist:
-# 1: ~/.bashrc.non-interactive.global
-# 2: ~/.bashrc.non-interactive.local
-# 3: ~/.bashrc.non-interactive.$HOSTNAME
-#
-# For interactive shells the following files are read in addition to
-# those above, if they exist:
-# 4: ~/.bashrc.interactive.global
-# 5: ~/.bashrc.interactive.local
-# 6: ~/.bashrc.interactive.$HOSTNAME
+#----------------------------------------------------------------------------
+# ~/.bashrc
+# This file is read for interactive shells.
+#----------------------------------------------------------------------------
 
-# First we need to make sure that $HOSTNAME actually is set to something...
-[ -z "$HOSTNAME" ] && export HOSTNAME=$(hostname -s)
+#----------------------------------------------------------------------------
+# Environment variables
+#----------------------------------------------------------------------------
+[[ -e ~/.bash_env ]] && source ~/.bash_env || true
 
-# Now do the initialization for non-interactive shells
-[ -e ~/.bashrc.non-interactive.global ]    && source ~/.bashrc.non-interactive.global
-[ -e ~/.bashrc.non-interactive.local ]     && source ~/.bashrc.non-interactive.local
-[ -e ~/.bashrc.non-interactive.$HOSTNAME ] && source ~/.bashrc.non-interactive.$HOSTNAME
+#----------------------------------------------------------------------------
+# Aliases
+#----------------------------------------------------------------------------
+[[ -e ~/.aliases ]] && source ~/.aliases || true
 
-# If we're not interactive we can quit here
-[ -z "$PS1" ] && return
+#----------------------------------------------------------------------------
+# Shell options
+#----------------------------------------------------------------------------
+shopt -s checkwinsize
+shopt -s cmdhist
+shopt -s histappend
+set -o vi
 
-# We're interactive so do more initialization
-[ -e ~/.bashrc.interactive.global ]    && source ~/.bashrc.interactive.global
-[ -e ~/.bashrc.interactive.local ]     && source ~/.bashrc.interactive.local
-[ -e ~/.bashrc.interactive.$HOSTNAME ] && source ~/.bashrc.interactive.$HOSTNAME
+#----------------------------------------------------------------------------
+# History
+#----------------------------------------------------------------------------
+HISTCONTROL=ignoredups
+HISTFILESIZE=10000
+HISTSIZE=10000
 
-export BASHRC_SOURCED=1
+#----------------------------------------------------------------------------
+# Completion
+#----------------------------------------------------------------------------
+if [ -z "$BASH_COMPLETION" ]; then
+    if [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion
+    fi
+fi
 
-# Make sure $? is 0
-true
+#----------------------------------------------------------------------------
+# Helper functions
+#----------------------------------------------------------------------------
+function truncate_start
+{
+    local trunc_symbol="..."
+    local maxlength="$1"
+    shift
+    local string="$@"
+    local length="${#string}"
+    if [[ "$length" -gt "$maxlength" ]]; then
+        local offset=$(( $length - $maxlength ))
+        echo -ne "${trunc_symbol}${string:$offset:$maxlength}"
+    else
+        echo -ne "${string}"
+    fi
+}
 
+function truncate_end
+{
+    local trunc_symbol="..."
+    local maxlength="$1"
+    shift
+    local string="$@"
+    local length="${#string}"
+    if [[ "$length" -gt "$maxlength" ]]; then
+        echo -ne "${string:0:$maxlength}${trunc_symbol}"
+    else
+        echo -ne "${string}"
+    fi
+}
+
+function settitle
+{
+    local str="${@}"
+    case "$TERM" in
+        xterm*|rxvt*|gnome*|konsole*)
+        echo -ne "\e]0;${str}\007"
+        ;;
+    screen*)
+        echo -ne "\ek${str}\e\\"
+        ;;
+    esac
+}
+
+function settitle_pipe
+{
+    export PREV_COMMAND="${PREV_COMMAND}${@}"
+    local cmd=$(truncate_end 30 "$PREV_COMMAND")
+    case "$TERM" in
+        xterm*|rxvt*|gnome*|konsole*)
+        echo -ne "\e]0;${cmd}\007"
+        ;;
+    screen*)
+        echo -ne "\ek${cmd}\e\\"
+        ;;
+    esac
+    export PREV_COMMAND="${PREV_COMMAND} | "
+}
+
+#----------------------------------------------------------------------------
+# Prompt
+#----------------------------------------------------------------------------
+RESET="\[\e[00m\]"
+BLACK="\[\e[00;30m\]"
+GRAY="\[\e[01;30m\]"
+RED="\[\e[00;31m\]"
+LRED="\[\e[01;31m\]"
+GREEN="\[\e[00;32m\]"
+LGREEN="\[\e[01;32m\]"
+BROWN="\[\e[00;33m\]"
+YELLOW="\[\e[01;33m\]"
+BLUE="\[\e[00;34m\]"
+LBLUE="\[\e[01;34m\]"
+PURPLE="\[\e[00;35m\]"
+LPURPLE="\[\e[01;35m\]"
+CYAN="\[\e[00;36m\]"
+LCYAN="\[\e[01;36m\]"
+LGRAY="\[\e[00;37m\]"
+WHITE="\[\e[01;37m\]"
+
+if [[ $EUID == 0 || $UID == 0 ]]; then
+    USER_COLOR=$LRED
+else
+    USER_COLOR=$GREEN
+fi
+[[ ! $USER =~ (mfischer|mika) ]] && P_USER="$USER"
+[[ -n $SSH_CONNECTION ]]         && P_HOST="$HOSTNAME"
+[[ -n $P_USER && -n $P_HOST ]]   && P_AT="@"
+[[ -n $P_USER || -n $P_HOST ]]   && P_COLON=":"
+
+PS1="\
+${USER_COLOR}${P_USER}\
+${GREEN}${P_AT}\
+${CYAN}${P_HOST}\
+${RESET}${P_COLON}\
+${LBLUE}\${P_PATH}\
+${LRED}\${P_STATUS}\
+${PURPLE}\${P_VCS}\
+${RESET}\\\$ "
+
+function my_prompt_command
+{
+    # Exit code of last command
+    local RC=$?
+    [[ $RC -ne 0 ]] && P_STATUS="($RC)" || P_STATUS=""
+
+    # Git branch display
+    if declare -F __git_ps1 >/dev/null 2>&1 ]]; then P_VCS=$(__git_ps1 "[%s]"); fi
+
+    # Get truncated path
+    [[ "$PWD" == "$HOME" ]] && local PWD2="~"
+    [[ -z "$PWD2" ]] && [[ "$PWD" == "$HOME/" ]] && local PWD2="~/"
+    [[ -z "$PWD2" ]] && local PWD2="${PWD/#$HOME\//~/}"
+    P_PATH=$(truncate_start 30 "$PWD2")
+
+    # Set xterm title and screen title
+    settitle "${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}"
+
+    # Hack to cut and paste together pipelined commands
+    export PREV_COMMAND=""
+
+    # Write new commands to history file
+    history -a
+}
+PROMPT_COMMAND='my_prompt_command'
+trap 'settitle_pipe "$BASH_COMMAND"' DEBUG
+
+#----------------------------------------------------------------------------
+# Configuration for external tools
+#----------------------------------------------------------------------------
+# Less
+[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
+export LESS="-FSRX"
+
+# Grep
+export GREP_OPTIONS='--color=auto'
+
+# ls
+eval "$(dircolors -b)"
+
+#----------------------------------------------------------------------------
+# Local bash initialization
+#----------------------------------------------------------------------------
+[[ -e ~/.bashrc.local ]] && source ~/.bashrc.local || true
+
+# vim: ft=sh

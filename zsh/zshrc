@@ -1,0 +1,154 @@
+#----------------------------------------------------------------------------
+# ~/.zshrc
+# This file is read after ~/.zshenv (and maybe ~/.zprofile), but only for
+# interactive shells.
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# Aliases
+#----------------------------------------------------------------------------
+[[ -e ~/.aliases ]] && source ~/.aliases || true
+
+#----------------------------------------------------------------------------
+# Shell options
+#----------------------------------------------------------------------------
+# Changing directories
+setopt auto_cd auto_pushd cdable_vars
+# Completion
+setopt complete_in_word
+# Expansion and globbing
+setopt extendedglob nomatch
+# History
+setopt hist_ignore_dups hist_expire_dups_first hist_fcntl_lock \
+       hist_find_no_dups hist_ignore_space hist_no_store inc_append_history
+# Initialisation
+# Input/Output
+setopt correct correct_all no_flow_control
+# Job control
+setopt auto_continue no_bg_nice
+# Prompting
+setopt prompt_subst
+# Scripts and functions
+# Shell emulation
+# Shell state
+# ZLE
+setopt beep vi
+
+#----------------------------------------------------------------------------
+# History
+#----------------------------------------------------------------------------
+HISTFILE=~/.zhistory
+HISTSIZE=10000
+SAVEHIST=10000
+
+#----------------------------------------------------------------------------
+# Key bindings
+#----------------------------------------------------------------------------
+bindkey -M vicmd "^R" history-incremental-search-backward
+bindkey -M vicmd "^S" history-incremental-search-forward
+bindkey -M vicmd "_" insert-last-word
+
+bindkey -M viins -r "^[OA" "^[OB" "^[OC" "^[OD" "^[[A" "^[[B" "^[[C" "^[[D"
+bindkey "^H" backward-delete-char "^?" backward-delete-char
+bindkey -M viins "^R" history-incremental-search-backward
+bindkey -M viins "^S" history-incremental-search-forward
+bindkey -M viins "^[." insert-last-word
+
+#----------------------------------------------------------------------------
+# Completion
+#----------------------------------------------------------------------------
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer        _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' format           '%B%F{green}%d%f%b'
+zstyle ':completion:*' group-name       ''
+zstyle ':completion:*' last-prompt      true
+zstyle ':completion:*' list-colors      ''
+zstyle ':completion:*' list-prompt      '%B%F{yellow}At %p: Hit TAB for more, or the character to insert%f%b'
+zstyle ':completion:*' menu             select=0
+zstyle ':completion:*' select-prompt    '%B%F{yellow}Scrolling active: current selection at %p%f%b'
+zstyle ':completion:*' verbose          true
+autoload -Uz compinit
+compinit
+
+#----------------------------------------------------------------------------
+# Version control info
+#----------------------------------------------------------------------------
+zstyle ':vcs_info:*'              actionformats '%%b%F{magenta}[%F{green}%b%F{green}|%F{red}%a%F{magenta}]'
+zstyle ':vcs_info:*'              formats       '%%b%F{magenta}[%F{green}%b%F{magenta}]'
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat  '%F{red}%b%F{white}:%F{green}%r'
+autoload -Uz vcs_info
+
+#----------------------------------------------------------------------------
+# Open files by calling them
+#----------------------------------------------------------------------------
+autoload -Uz zsh-mime-setup
+zsh-mime-setup
+
+#----------------------------------------------------------------------------
+# Prompt
+#----------------------------------------------------------------------------
+[[ ! $USERNAME =~ (mfischer|mika) ]] && local P_USER="%n"
+[[ -n $SSH_CONNECTION ]]             && local P_HOST="%m"
+[[ -n $P_USER && -n $P_HOST ]]       && local P_AT="@"
+[[ -n $P_USER || -n $P_HOST ]]       && local P_COLON=":"
+                                        local P_PATH="%3~"
+                                        local P_VCS="\${vcs_info_msg_0_}"
+                                        local P_STATUS="%(?..(%?%))"
+PS1="\
+%(#.%F{red}%B.%F{green})${P_USER}\
+%b%F{green}${P_AT}\
+%F{cyan}${P_HOST}\
+%f${P_COLON}\
+%F{blue}%B${P_PATH}\
+${P_VCS}\
+%F{red}${P_STATUS}\
+%b%f%# "
+
+#----------------------------------------------------------------------------
+# Helper functions
+#----------------------------------------------------------------------------
+function settitle
+{
+    case $TERM in
+    xterm*|rxvt*|gnome*|konsole*)
+        print -Pn "\e]0;${@}\007";;
+    screen*)
+        print -Pn "\ek${@}\e\\";;
+    esac
+}
+function my_preexec
+{
+    settitle "$1"
+}
+function my_precmd
+{
+    settitle "${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}"
+}
+
+#----------------------------------------------------------------------------
+# Hooks
+#----------------------------------------------------------------------------
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd vcs_info
+add-zsh-hook precmd my_precmd
+add-zsh-hook preexec my_preexec
+
+#----------------------------------------------------------------------------
+# Configuration for external tools
+#----------------------------------------------------------------------------
+# Less
+[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
+export LESS="-FSRX"
+
+# Grep
+export GREP_OPTIONS='--color=auto'
+
+# ls
+eval "$(dircolors -b)"
+
+#----------------------------------------------------------------------------
+# Local zsh initialization
+#----------------------------------------------------------------------------
+[[ -e ~/.zshrc.local ]] && source ~/.zshrc.local || true
+
+# vim: ft=zsh

@@ -1,20 +1,30 @@
-# This bash_profile file is built in a modular fashion. There are several files
-# that are read by it.
-#
-# The following files are read, if they exist:
-# 1: ~/.bash_profile.global
-# 2: ~/.bash_profile.local
-# 3: ~/.bash_profile.$HOSTNAME
+#----------------------------------------------------------------------------
+# ~/.bash_profile
+# This file is read for login shells.
+#----------------------------------------------------------------------------
 
-# First we need to make sure that $HOSTNAME actually is set to something...
-[ -z "$HOSTNAME" ] && export HOSTNAME=$(hostname)
+#----------------------------------------------------------------------------
+# Environment variables
+#----------------------------------------------------------------------------
+[[ -e ~/.bash_env ]] && source ~/.bash_env || true
 
-# Now do the initialization for non-interactive shells
-[ -e "$HOME/.bash_profile.global" ] &&		source "$HOME/.bash_profile.global"
-[ -e "$HOME/.bash_profile.local" ] &&		source "$HOME/.bash_profile.local"
-[ -e "$HOME/.bash_profile.$HOSTNAME" ] &&	source "$HOME/.bash_profile.$HOSTNAME"
+#----------------------------------------------------------------------------
+# Initialization shared with zsh
+#----------------------------------------------------------------------------
+[[ -e ~/.profile ]] && source ~/.profile || true
 
-# Now source our regular stuff
-[ -e "$HOME/.bashrc" ] &&			source "$HOME/.bashrc"
+#----------------------------------------------------------------------------
+# Bash-specific initialization
+#----------------------------------------------------------------------------
 
-export BASH_PROFILE_SOURCED=1
+#----------------------------------------------------------------------------
+# Local bash-specific variables
+#----------------------------------------------------------------------------
+[[ -e ~/.bash_profile.local ]] && source ~/.bash_profile.local || true
+
+#----------------------------------------------------------------------------
+# Also source bashrc if we're interactive
+#----------------------------------------------------------------------------
+[[ -n $PS1 ]] && [[ -e ~/.bashrc ]] && source ~/.bashrc
+
+# vim: ft=sh

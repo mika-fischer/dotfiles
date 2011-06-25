@@ -1,0 +1,16 @@
+#----------------------------------------------------------------------------
+# ~/.aliases
+# This file is sourced by all interactive shells of bash and zsh.
+#----------------------------------------------------------------------------
+
+alias ls='ls --color=auto'
+alias la='ls -a'
+alias ll='ls -l'
+alias lla='ls -la'
+alias ltr='ls -ltr'
+
+#----------------------------------------------------------------------------
+# Local aliases
+#----------------------------------------------------------------------------
+[[ -e ~/.aliases.local ]] && source ~/.aliases.local || true
+# vim: ft=sh
