@@ -145,7 +145,7 @@ function my_prompt_command
     [[ $RC -ne 0 ]] && P_STATUS="($RC)" || P_STATUS=""
 
     # Git branch display
-    if declare -F __git_ps1 >/dev/null 2>&1 ]]; then P_VCS=$(__git_ps1 "[%s]"); fi
+    if declare -F __git_ps1 >/dev/null 2>&1; then P_VCS=$(__git_ps1 "[%s]"); fi
 
     # Get truncated path
     [[ "$PWD" == "$HOME" ]] && local PWD2="~"
