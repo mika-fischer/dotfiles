@@ -10,6 +10,8 @@
 [alias]
 	co = checkout
 	st = status
+	su = submodule update --init --recursive
+	psu = !git pull && git su
 
 [merge]
 	tool = vimdiff
