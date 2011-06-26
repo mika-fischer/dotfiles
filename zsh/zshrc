@@ -85,7 +85,7 @@ autoload -Uz vcs_info
 [[ -n $SSH_CONNECTION ]]             && local P_HOST="%m"
 [[ -n $P_USER && -n $P_HOST ]]       && local P_AT="@"
 [[ -n $P_USER || -n $P_HOST ]]       && local P_COLON=":"
-                                        local P_PATH="%3~"
+                                        local P_PATH="%30<...<%~%<<"
                                         local P_VCS="\${vcs_info_msg_0_}"
                                         local P_STATUS="%(?..(%?%))"
 PS1="\
