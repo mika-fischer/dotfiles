@@ -29,7 +29,11 @@ fi
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 
 # Keyboard setup
+# US-Intl. AltGr layout, Caps is Ctrl, Menu is Compose
 setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
+# Make useless <> key useful
+xmodmap -e "keycode 94 = Super_L Super_L Super_L"
+xmodmap -e "add mod4 = Super_L"
 
 # Other X settings
 xset b off
