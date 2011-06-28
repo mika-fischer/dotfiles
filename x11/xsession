@@ -38,9 +38,13 @@ xmodmap -e "add mod4 = Super_L"
 # Other X settings
 xset b off
 xset dpms 300 600 900
-xset m 1 0
 xset r rate 200 40
 xset s off
+if [[ -n $LAPTOP ]]; then
+    xset m 2 0
+else
+    xset m 1 0
+fi
 
 # Add SSH key
 if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
@@ -53,6 +57,9 @@ fi
 
 # Media automounting
 [ -x /usr/bin/devmon ]                      && /usr/bin/devmon &
+
+# Wifi
+[ -x /usr/bin/wicd-gtk ]                    && /usr/bin/wicd-gtk &
 
 # Other applications
 [ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
