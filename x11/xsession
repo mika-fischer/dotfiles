@@ -57,6 +57,7 @@ fi
 
 # Media automounting
 [ -x /usr/bin/devmon ]                      && /usr/bin/devmon &
+[ -x /usr/bin/mount-tray ]                  && /usr/bin/mount-tray &
 
 # Wifi
 [ -x /usr/bin/wicd-gtk ]                    && /usr/bin/wicd-gtk &
