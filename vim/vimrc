@@ -127,11 +127,12 @@ inoremap <f1> <nop>
 nnoremap <f1> <nop>
 vnoremap <f1> <nop>
 
-" Switch windows easier
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" Mappings
+nnoremap <C-j> <nop>
+nnoremap <C-k> <nop>
+nnoremap <C-h> <C-w>w
+nnoremap <C-l> <C-w>W
+nnoremap <C-d> <C-w>q
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
@@ -163,6 +164,10 @@ endif
 
 " Disable matchparen, as it's often slow
 let loaded_matchparen = 1
+
+" Latex suite
+" Prevent latex suite from stealing C-j in normal mode
+nnoremap <M-1> <Plug>IMAP_JumpForward
 
 " NERDTree
 nnoremap <leader>nt :NERDTree 
