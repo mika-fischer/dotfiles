@@ -73,6 +73,7 @@ set switchbuf=useopen
 set expandtab
 set shiftwidth=4
 set tabstop=4
+set smarttab
 
 " Insert mode completion behavior
 set completeopt=menuone,menu,longest,preview
