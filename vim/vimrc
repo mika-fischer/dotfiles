@@ -138,6 +138,9 @@ nnoremap <C-h> <C-w>w
 nnoremap <C-l> <C-w>W
 nnoremap <C-d> <C-w>q
 
+nnoremap <leader>h :noh<cr>
+nnoremap <leader>r :redraw!<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
