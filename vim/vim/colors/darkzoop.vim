@@ -259,8 +259,8 @@ if &t_Co == 88 || &t_Co == 256 || has("gui_running")
     call <SID>X('WildMenu',         'ffffff',   '222222',   'NONE')
 
     " Folding
-    call <SID>X('Folded',           'NONE',     '3a3a3a',   'NONE')
-    call <SID>X('FoldColumn',       'NONE',     '3a3a3a',   'NONE')
+    call <SID>X('Folded',           '949494',   '1c1c1c',   'NONE')
+    call <SID>X('FoldColumn',       'afff00',   '1c1c1c',   'NONE')
 
     " Completion
     call <SID>X('Pmenu',            'ffffff',   '444444',   'NONE')
