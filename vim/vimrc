@@ -146,9 +146,10 @@ nnoremap <leader>r :redraw!<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme darkzoop
 if has("gui_running")
+    set guioptions+=c
     set guioptions-=m
     set guioptions-=L
-    set guioptions-=t
+    set guioptions-=r
     set guioptions-=T
     if has("gui_gtk2")
         set guifont=Monospace\ 8
