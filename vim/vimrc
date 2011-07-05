@@ -145,7 +145,7 @@ nnoremap <leader>f zA<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme darkzoop
+colorscheme zoop
 if has("gui_running")
     set guioptions+=c
     set guioptions-=m

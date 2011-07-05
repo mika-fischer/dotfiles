@@ -13,16 +13,16 @@ theme.font          = "sans 8"
 
 -- Colors
 theme.fg_normal     = "#000000"
-theme.bg_normal     = "#ffffff"
+theme.bg_normal     = "#e0e0e0"
 theme.fg_focus      = "#000000"
-theme.bg_focus      = "#d0d0d0"
-theme.fg_urgent     = "#ffffff"
-theme.bg_urgent     = "#ff0000"
+theme.bg_focus      = "#f0b050"
+theme.fg_urgent     = "#000000"
+theme.bg_urgent     = "#ff4040"
 theme.fg_minimize   = "#a0a0a0"
 theme.bg_minimize   = "#ffffff"
-theme.border_width  = "2"
-theme.border_normal = "#ffffff"
-theme.border_focus  = "#606060"
+theme.border_width  = "3"
+theme.border_normal = "#e0e0e0"
+theme.border_focus  = "#f0b050"
 theme.border_marked = "#91231c"
 
 -- Taglist

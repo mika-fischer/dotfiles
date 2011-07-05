@@ -1,18 +1,16 @@
 " Vim color file
 
 set background=light
-if version > 580
-    hi clear
-    if exists("syntax_on")
-        syntax reset
-    endif
+hi clear
+if exists("syntax_on")
+    syntax reset
 endif
 let g:colors_name="zoop"
 
-if &t_Co == 88 || &t_Co == 256
+if &t_Co == 88 || &t_Co == 256 || has("gui_running")
     " functions {{{
     " returns an approximate grey index for the given grey level
-    fun <SID>grey_number(x)
+    fun! <SID>grey_number(x)
         if &t_Co == 88
             if a:x < 23
                 return 0
@@ -51,7 +49,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns the actual grey level represented by the grey index
-    fun <SID>grey_level(n)
+    fun! <SID>grey_level(n)
         if &t_Co == 88
             if a:n == 0
                 return 0
@@ -84,7 +82,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns the palette index for the given grey index
-    fun <SID>grey_color(n)
+    fun! <SID>grey_color(n)
         if &t_Co == 88
             if a:n == 0
                 return 16
@@ -105,7 +103,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns an approximate color index for the given color level
-    fun <SID>rgb_number(x)
+    fun! <SID>rgb_number(x)
         if &t_Co == 88
             if a:x < 69
                 return 0
@@ -132,7 +130,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns the actual color level for the given color index
-    fun <SID>rgb_level(n)
+    fun! <SID>rgb_level(n)
         if &t_Co == 88
             if a:n == 0
                 return 0
@@ -153,7 +151,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns the palette index for the given R/G/B color indices
-    fun <SID>rgb_color(x, y, z)
+    fun! <SID>rgb_color(x, y, z)
         if &t_Co == 88
             return 16 + (a:x * 16) + (a:y * 4) + a:z
         else
@@ -162,7 +160,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns the palette index to approximate the given R/G/B color levels
-    fun <SID>color(r, g, b)
+    fun! <SID>color(r, g, b)
         " get the closest grey
         let l:gx = <SID>grey_number(a:r)
         let l:gy = <SID>grey_number(a:g)
@@ -197,7 +195,7 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " returns the palette index to approximate the 'rrggbb' hex string
-    fun <SID>rgb(rgb)
+    fun! <SID>rgb(rgb)
         let l:r = ("0x" . strpart(a:rgb, 0, 2)) + 0
         let l:g = ("0x" . strpart(a:rgb, 2, 2)) + 0
         let l:b = ("0x" . strpart(a:rgb, 4, 2)) + 0
@@ -206,102 +204,135 @@ if &t_Co == 88 || &t_Co == 256
     endfun
 
     " sets the highlighting for the given group
-    fun <SID>X(group, fg, bg, attr)
-        if a:fg != ""
+    fun! <SID>X(group, fg, bg, attr)
+        " Foreground
+        if a:fg =~ "^[0-9a-fA-F]\\{6\\}$"
             exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
+        elseif a:fg != ""
+            exec "hi " . a:group . " guifg=" . a:fg . " ctermfg=" . a:fg
         endif
-        if a:bg != ""
+
+        " Background
+        if a:bg =~ "^[0-9a-fA-F]\\{6\\}$"
             exec "hi " . a:group . " guibg=#" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
+        elseif a:bg != ""
+            exec "hi " . a:group . " guibg=" . a:bg . " ctermbg=" . a:bg
         endif
+
+        " Attributes
         if a:attr != ""
             exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
         endif
     endfun
     " }}}
-    call <SID>X("Cursor",           "ff0000",       "0000ff",   "")
-    " CursorIME
-    call <SID>X("CursorColumn",     "",             "e5e5e5",   "")
-    call <SID>X("CursorLine",       "",             "e5e5e5",   "NONE")
-    call <SID>X("Directory",        "0000ff",       "",         "")
-    call <SID>X("DiffAdd",          "",             "a0ffa0",   "")
-    call <SID>X("DiffChange",       "",             "b0ffff",   "")
-    call <SID>X("DiffDelete",       "000000",       "ffa0a0",   "bold")
-    call <SID>X("DiffText",         "",             "f0e0c0",   "bold")
-    call <SID>X("ErrorMsg",         "ffffff",       "ff0000",   "")
-    call <SID>X("VertSplit",        "",             "",         "reverse")
-    call <SID>X("Folded",           "00008b",       "d3d3d3",   "")
-    call <SID>X("FoldColumn",       "00008b",       "d3d3d3",   "")
-    call <SID>X("SignColumn",       "",             "ffffff",   "")
-    call <SID>X("IncSearch",        "",             "",         "reverse")
-    call <SID>X("LineNr",           "a52a2a",       "",         "")
-    call <SID>X("MatchParen",       "",             "00ffff",   "")
-    call <SID>X("ModeMsg",          "",             "",         "bold")
-    call <SID>X("MoreMsg",          "2e8b57",       "",         "bold")
-    call <SID>X("NonText",          "0000ff",       "",         "bold")
-    call <SID>X("Normal",           "",             "",         "")
-    call <SID>X("Pmenu",            "",             "ff55ff",   "")
-    call <SID>X("PmenuSel",         "",             "bebebe",   "")
-    call <SID>X("PmenuSbar",        "",             "bebebe",   "")
-    call <SID>X("PmenuThumb",       "",             "",         "reverse")
-    call <SID>X("Question",         "2e8b57",       "",         "bold")
-    call <SID>X("Search",           "",             "ffff00",   "")
-    call <SID>X("SpecialKey",       "0000ff",       "",         "")
-    call <SID>X("SpellBad",         "",             "ff0000",   "undercurl")
-    call <SID>X("SpellCap",         "",             "0000ff",   "undercurl")
-    call <SID>X("SpellLocal",       "",             "008b8b",   "undercurl")
-    call <SID>X("SpellRare",        "",             "ff00ff",   "undercurl")
-    call <SID>X("StatusLine",       "",             "",         "bold,reverse")
-    call <SID>X("StatusLineNC",     "",             "",         "reverse")
-    call <SID>X("TabLine",          "",             "d3d3d3",   "NONE")
-    call <SID>X("TabLineSel",       "",             "",         "bold")
-    call <SID>X("TabLineFill",      "",             "",         "reverse")
-    call <SID>X("Title",            "ff00ff",       "",         "bold")
-    call <SID>X("Visual",           "",             "d3d3d3",   "")
-    call <SID>X("VisualNOS",        "",             "",         "bold,underline")
-    call <SID>X("WarningMsg",       "ff0000",       "",         "")
-    call <SID>X("WildMenu",         "000000",       "ffff00",   "")
-    " Menu
-    " Scrollbar
-    " Tooltip
-    call <SID>X("lCursor",          "ff0000",       "0000ff",   "")
+    " Don't set normal color for terminal, since it will interfere with
+    " transparency
+    hi Normal guifg=#000000 guibg=#f0f0d0
+    hi Cursor guifg=bg      guibg=fg
+    call <SID>X('CursorIM',         '000000',   'ff0000',   'NONE')
 
-    " Generic syntax highligh groups
-    call <SID>X("Comment",          "0000ff",       "",         "")
-    call <SID>X("Constant",         "ff00ff",       "",         "")
-    " String
-    " Character
-    " Number
-    " Boolean
-    " Float
-    call <SID>X("Identifier",       "008b8b",       "",         "")
-    " Function
-    call <SID>X("Statement",        "a52a2a",       "",         "bold")
-    " Conditional
-    " Repeat
-    " Label
-    " Operator
-    " Keyword
-    " Exeption
-    call <SID>X("PreProc",          "a020f0",       "",         "")
-    " Include
-    " Define
-    " Macro
-    " PreCondit
-    call <SID>X("Type",             "2e8b57",       "",         "bold")
-    " StorageClass
-    " Structure
-    " Typedef
-    call <SID>X("Special",          "6a5acd",       "",         "")
-    " SpecialChar
-    " Tag
-    " Delimiter
-    " SpecialComment
-    " Debug
-    call <SID>X("Underlined",       "6a5acd",       "",         "underline")
-    call <SID>X("Ignore",           "dfdfdf",       "",         "")
-    call <SID>X("Error",            "ffffff",       "ff0000",   "")
-    call <SID>X("Todo",             "0000ff",       "ffff00",   "")
+    " Vim UI elements
+    call <SID>X('ColorColumn',      'NONE',     'ff8700',   'NONE')
+    call <SID>X('Conceal',          '',         '',         '')
+    call <SID>X('CursorColumn',     'NONE',     'e5e5e5',   'NONE')
+    call <SID>X('CursorLine',       'NONE',     'e5e5e5',   'NONE')
+    call <SID>X('Directory',        'blue',     '',         'bold')
+    call <SID>X('ErrorMsg',         'ffffff',   'ff0000',   'NONE')
+    call <SID>X('LineNr',           'b0b0b0',   'NONE',     'NONE')
+    call <SID>X('MatchParen',       'NONE',     '00ffff',   'bold')
+    call <SID>X('ModeMsg',          'NONE',     'NONE',     'bold')
+    call <SID>X('MoreMsg',          'ffff00',   'NONE',     'bold')
+    call <SID>X('NonText',          '626262',   'NONE',     'bold')
+    call <SID>X('Question',         'ffff00',   'NONE',     'bold')
+    call <SID>X('SignColumn',       'NONE',     'NONE',     'NONE')
+    call <SID>X('SpecialKey',       '3a3a3a',   'NONE',     'NONE')
+    call <SID>X('StatusLine',       '000000',   'f0b050',   'NONE')
+    call <SID>X('StatusLineNC',     'NONE',     'c0c0c0',   'NONE')
+    call <SID>X('TabLine',          'NONE',     'c0c0c0',   'NONE')
+    call <SID>X('TabLineSel',       '000000',   'f0b050',   'NONE')
+    call <SID>X('TabLineFill',      'NONE',     'c0c0c0',   'NONE')
+    call <SID>X('Title',            'ff00ff',   'NONE',     'bold')
+    call <SID>X('VertSplit',        'c0c0c0',   'c0c0c0',   'NONE')
+    call <SID>X('Visual',           'NONE',     'e0e0e0',   'NONE')
+    call <SID>X('VisualNOS',        'NONE',     'e0e0e0',   'underline')
+    call <SID>X('WarningMsg',       'ff0000',   'NONE',     'NONE')
+    call <SID>X('WildMenu',         '000000',   'ffff00',   'NONE')
 
+    " Folding
+    call <SID>X('Folded',           'NONE',     'e0e0e0',   'NONE')
+    call <SID>X('FoldColumn',       'NONE',     'e0e0e0',   'NONE')
+
+    " Completion
+    call <SID>X('Pmenu',            'ffffff',   '444444',   'NONE')
+    call <SID>X('PmenuSbar',        '585858',   '585858',   'NONE')
+    call <SID>X('PmenuSel',         '000000',   '9e9e9e',   'NONE')
+    call <SID>X('PmenuThumb',       'c6c6c6',   'c6c6c6',   'NONE')
+
+    " Diff
+    call <SID>X('DiffAdd',          'NONE',     'afffaf',   'NONE')
+    call <SID>X('DiffChange',       'NONE',     'd7ffff',   'NONE')
+    call <SID>X('DiffDelete',       '000000',   'ffa0a0',   'bold')
+    call <SID>X('DiffText',         'NONE',     '87ffff',   'bold')
+
+    " Search
+    call <SID>X('IncSearch',        'NONE',     'ffff00',   'NONE')
+    call <SID>X('Search',           'NONE',     'ffff00',   'NONE')
+
+    " Spelling
+    " TODO
+    call <SID>X('SpellBad',         'NONE',     '800000',   'undercurl')
+    call <SID>X('SpellCap',         'NONE',     '0000ff',   'undercurl')
+    call <SID>X('SpellLocal',       'NONE',     '008b8b',   'undercurl')
+    call <SID>X('SpellRare',        'NONE',     'ff00ff',   'undercurl')
+
+    " Generic syntax highlight groups
+    call <SID>X('Comment',          'b0b0b0',   'NONE',     'NONE')
+    call <SID>X('Constant',         '0000af',   'NONE',     'NONE')
+    call <SID>X('Identifier',       '5f8700',   'NONE',     'NONE')
+    call <SID>X('Statement',        'ff005f',   'NONE',     'bold')
+    call <SID>X('PreProc',          'a020f0',   'NONE',     'NONE')
+    call <SID>X('Type',             '2e8b57',   'NONE',     'bold')
+    call <SID>X('Special',          '6a5acd',   'NONE',     'NONE')
+    call <SID>X('Underlined',       'NONE',     'NONE',     'underline')
+    call <SID>X('Ignore',           '262626',   'NONE',     'NONE')
+    call <SID>X('Error',            'ffffff',   'd70000',   'NONE')
+    call <SID>X('Todo',             '0000ff',   'ffff00',   'NONE')
+
+    " Constant specializations
+    call <SID>X('String',           '',         '',         '')
+    call <SID>X('Character',        '',         '',         '')
+    call <SID>X('Number',           '',         '',         '')
+    call <SID>X('Boolean',          '',         '',         '')
+    call <SID>X('Float',            '',         '',         '')
+
+    " Identifier specializations
+    call <SID>X('Function',         'ff5f00',   '',         'bold')
+
+    " Statement specializations
+    call <SID>X('Conditional',      '',         '',         '')
+    call <SID>X('Repeat',           '',         '',         '')
+    call <SID>X('Label',            '',         '',         '')
+    call <SID>X('Operator',         '',         '',         '')
+    call <SID>X('Keyword',          '',         '',         '')
+    call <SID>X('Exception',        '',         '',         '')
+
+    " PreProc specializations
+    call <SID>X('Include',          '',         '',         '')
+    call <SID>X('Define',           '',         '',         '')
+    call <SID>X('Macro',            '',         '',         '')
+    call <SID>X('PreCondit',        '',         '',         '')
+
+    " Type specializations
+    call <SID>X('StorageClass',     '',         '',         '')
+    call <SID>X('Structure',        '',         '',         '')
+    call <SID>X('Typedef',          '',         '',         '')
+
+    " Special specializations
+    call <SID>X('SpecialChar',      '',         '',         '')
+    call <SID>X('Tag',              '',         '',         '')
+    call <SID>X('Delimiter',        '',         '',         '')
+    call <SID>X('SpeicalComment',   '',         '',         '')
+    call <SID>X('Debug',            '',         '',         '')
 
     " delete functions {{{
     delf <SID>X

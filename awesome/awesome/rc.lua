@@ -13,7 +13,7 @@ require("awful")
 require("awful.autofocus")
 require("awful.rules")
 require("beautiful")
-beautiful.init(home .. "/.config/awesome/themes/darkzoop/theme.lua")
+beautiful.init(home .. "/.config/awesome/themes/zoop/theme.lua")
 require("naughty")
 require("vicious")
 --- }}}

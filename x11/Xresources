@@ -41,8 +41,10 @@ xterm*color15: #EEEEEC
 !! URxvt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 URxvt.reverseVideo: false
-URxvt.foreground:   #C0C0C0
-URxvt.background:   Black
+!URxvt.foreground:   #C0C0C0
+!URxvt.background:   Black
+URxvt.foreground:   Black
+URxvt.background:   #F0F0D0
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
 URxvt.urgentOnBell: true
@@ -70,9 +72,10 @@ URxvt.copyCommand:     xsel -ib
 URxvt.pasteCommand:    xsel -ob
 
 ! Transparency
-URxvt.transparent:  true
+URxvt.transparent:  false
 URxvt.tintColor:    White
-URxvt.shading:      5
+!URxvt.shading:      5
+URxvt.shading:      190
 
 ! Black
 URxvt.color0:  #000000
