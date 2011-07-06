@@ -280,7 +280,7 @@ if &t_Co == 88 || &t_Co == 256 || has("gui_running")
 
     " Spelling
     " TODO
-    call <SID>X('SpellBad',         'NONE',     '800000',   'undercurl')
+    call <SID>X('SpellBad',         'NONE',     'f0c0c0',   'undercurl')
     call <SID>X('SpellCap',         'NONE',     '0000ff',   'undercurl')
     call <SID>X('SpellLocal',       'NONE',     '008b8b',   'undercurl')
     call <SID>X('SpellRare',        'NONE',     'ff00ff',   'undercurl')
@@ -289,9 +289,9 @@ if &t_Co == 88 || &t_Co == 256 || has("gui_running")
     call <SID>X('Comment',          'b0b0b0',   'NONE',     'NONE')
     call <SID>X('Constant',         '0000af',   'NONE',     'NONE')
     call <SID>X('Identifier',       '5f8700',   'NONE',     'NONE')
-    call <SID>X('Statement',        'ff005f',   'NONE',     'bold')
+    call <SID>X('Statement',        'ff005f',   'NONE',     'NONE')
     call <SID>X('PreProc',          'a020f0',   'NONE',     'NONE')
-    call <SID>X('Type',             '2e8b57',   'NONE',     'bold')
+    call <SID>X('Type',             '2e8b57',   'NONE',     'NONE')
     call <SID>X('Special',          '6a5acd',   'NONE',     'NONE')
     call <SID>X('Underlined',       'NONE',     'NONE',     'underline')
     call <SID>X('Ignore',           '262626',   'NONE',     'NONE')
@@ -306,7 +306,7 @@ if &t_Co == 88 || &t_Co == 256 || has("gui_running")
     call <SID>X('Float',            '',         '',         '')
 
     " Identifier specializations
-    call <SID>X('Function',         'ff5f00',   '',         'bold')
+    call <SID>X('Function',         'ff5f00',   '',         'NONE')
 
     " Statement specializations
     call <SID>X('Conditional',      '',         '',         '')
