@@ -44,7 +44,7 @@ URxvt.reverseVideo: false
 !URxvt.foreground:   #C0C0C0
 !URxvt.background:   Black
 URxvt.foreground:   Black
-URxvt.background:   #F0F0D0
+URxvt.background:   White
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
 URxvt.urgentOnBell: true
