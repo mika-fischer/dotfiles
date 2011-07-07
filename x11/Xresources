@@ -40,6 +40,8 @@ xterm*color15: #EEEEEC
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! URxvt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+URxvt.font:         xft:DejaVu Sans Mono:size=8
+URxvt.letterSpace:  -1
 URxvt.reverseVideo: false
 !URxvt.foreground:   #C0C0C0
 !URxvt.background:   Black
