@@ -32,9 +32,6 @@ set hidden
 set wildmenu
 set wildmode=list:longest
 
-" Don't beep
-set visualbell
-
 " Highlight cursor line
 "set cursorline
 
