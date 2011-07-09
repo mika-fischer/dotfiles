@@ -7,6 +7,7 @@ for dir in $(ls $DOTFILES); do
     unset PREFIX
     [[ $dir == "bin" ]] && continue
     [[ $dir == "awesome" ]] && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "zathura" ]] && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
 	for file in $(ls $DOTFILES/$dir); do
         if [[ -z $PREFIX ]]; then
             SOURCE=~/.$file
