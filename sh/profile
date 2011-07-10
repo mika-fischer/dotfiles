@@ -8,6 +8,7 @@
 [ -d "$HOME/soft/include" ] &&  export INCLUDE="$HOME/soft/include:$INCLUDE"
 [ -d "$HOME/soft/python" ] &&   export PYTHONPATH="$PYTHONPATH:$HOME/soft/python"
 [ -d "$HOME/bin" ] &&           export PATH="$HOME/bin:$PATH"
+[ -x "$HOME/bin/vimpager" ] &&  export PAGER="$HOME/bin/vimpager"
 
 #----------------------------------------------------------------------------
 # Local initialization
