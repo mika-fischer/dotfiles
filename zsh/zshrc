@@ -23,7 +23,7 @@ setopt hist_ignore_dups hist_expire_dups_first hist_fcntl_lock \
        hist_find_no_dups hist_ignore_space hist_no_store inc_append_history
 # Initialisation
 # Input/Output
-setopt correct correct_all no_flow_control
+setopt correct no_flow_control
 # Job control
 setopt auto_continue no_bg_nice
 # Prompting
