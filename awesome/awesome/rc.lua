@@ -183,10 +183,10 @@ globalkeys = awful.util.table.join(
     -- Power control
     awful.key({ modkey, ctrlkey, shiftkey }, "h",   function () exec(consolekit .. "Stop") end),
     awful.key({ modkey, ctrlkey, shiftkey }, "r",   function () exec(consolekit .. "Restart") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () exec(upower .. "Suspend") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "d",   function () exec(upower .. "Hibernate") end),
-    awful.key({ }, "XF86Sleep",                     function () exec(upower .. "Suspend") end),
-    awful.key({ }, "XF86Suspend",                   function () exec(upower .. "Hibernate") end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () sexec(upower .. "Suspend"   .. "&" .. lock_cmd) end),
+    awful.key({ modkey, ctrlkey, shiftkey }, "d",   function () sexec(upower .. "Hibernate" .. "&" .. lock_cmd) end),
+    awful.key({ }, "XF86Sleep",                     function () sexec(upower .. "Suspend"   .. "&" .. lock_cmd) end),
+    awful.key({ }, "XF86Suspend",                   function () sexec(upower .. "Hibernate" .. "&" .. lock_cmd) end),
 
     -- Multimedia
     awful.key({ modkey,                   }, "=",   function () exec(home .. "/bin/volume.sh up") end),
