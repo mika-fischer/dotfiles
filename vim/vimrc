@@ -207,4 +207,4 @@ let g:clang_exec = 'clang'
 let g:clang_user_options = ''
 let g:clang_auto_user_options = 'path, .clang_complete'
 let g:clang_use_library = 1
-let g:clang_library_path = '/usr/local/lib'
+let g:clang_library_path = '/usr/lib/llvm'
