@@ -275,7 +275,7 @@ if &t_Co == 88 || &t_Co == 256 || has("gui_running")
     call <SID>X('DiffText',         'NONE',     '87ffff',   'bold')
 
     " Search
-    call <SID>X('IncSearch',        'NONE',     'ffff00',   'NONE')
+    call <SID>X('IncSearch',        'NONE',     'cfff80',   'NONE')
     call <SID>X('Search',           'NONE',     'ffff00',   'NONE')
 
     " Spelling
