@@ -62,6 +62,9 @@ fi
 # Wifi
 [ -x /usr/bin/wicd-gtk ]                    && /usr/bin/wicd-gtk &
 
+# Battery
+[ -x /usr/bin/batti ]                       && /usr/bin/bati &
+
 # Other applications
 [ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
