@@ -11,7 +11,17 @@
 [ -x "$HOME/bin/vimpager" ] &&  export PAGER="$HOME/bin/vimpager"
 
 #----------------------------------------------------------------------------
+# System initialization
+#----------------------------------------------------------------------------
+if [ -d /etc/profile.d/ ]; then
+    for i in /etc/profile.d/*.sh; do
+        test -r "$i" && . "$i"
+    done
+fi
+
+#----------------------------------------------------------------------------
 # Local initialization
 #----------------------------------------------------------------------------
-[[ -e ~/.profile.local ]] && source ~/.profile.local || true
+[ -e ~/.profile.local ] && . ~/.profile.local || true
+
 # vim: ft=sh
