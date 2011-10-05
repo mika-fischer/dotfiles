@@ -61,13 +61,13 @@ bindkey -M viins "\e[Z" reverse-menu-complete
 #----------------------------------------------------------------------------
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer        _expand _complete _ignored _correct _approximate
-zstyle ':completion:*' format           '%B%F{green}%d%f%b'
+zstyle ':completion:*' format           '%B%F{magenta}%d%f%b'
 zstyle ':completion:*' group-name       ''
 zstyle ':completion:*' last-prompt      true
 zstyle ':completion:*' list-colors      ''
-zstyle ':completion:*' list-prompt      '%B%F{yellow}At %p: Hit TAB for more, or the character to insert%f%b'
+zstyle ':completion:*' list-prompt      '%B%F{black}%K{yellow}At %p: Hit TAB for more, or the character to insert%f%k%b'
 zstyle ':completion:*' menu             select=0
-zstyle ':completion:*' select-prompt    '%B%F{yellow}Scrolling active: current selection at %p%f%b'
+zstyle ':completion:*' select-prompt    '%B%F{black}%K{yellow}Scrolling active: current selection at %p%f%k%b'
 zstyle ':completion:*' verbose          true
 autoload -Uz compinit
 compinit
