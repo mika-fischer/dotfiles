@@ -11,7 +11,7 @@
 	co = checkout
 	st = status
 	su = submodule update --init
-	sur = su --recursive
+	sur = submodule update --init --recursive
 	sf = submodule foreach
 	psu = !git pull && git su
 	psur = !git pull && git sur
