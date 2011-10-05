@@ -13,7 +13,7 @@
 # Shell options
 #----------------------------------------------------------------------------
 # Changing directories
-setopt auto_cd auto_pushd cdable_vars
+setopt auto_pushd cdable_vars
 # Completion
 setopt complete_in_word
 # Expansion and globbing
