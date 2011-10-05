@@ -12,6 +12,7 @@
 	st = status
 	su = submodule update --init
 	sur = su --recursive
+	sf = submodule foreach
 	psu = !git pull && git su
 	psur = !git pull && git sur
 
