@@ -14,9 +14,21 @@
 # System initialization
 #----------------------------------------------------------------------------
 if [ -d /etc/profile.d/ ]; then
+    if [[ -n "$ZSH_VERSION" ]] && [[ -o nomatch ]]; then
+        NOMATCH=1
+        set +o nomatch
+    fi
+    if [[ -n "$BASH_VERSION" ]] && [[ -o failglob ]]; then
+        FAILGLOB=1
+        set +o failglob
+    fi
     for i in /etc/profile.d/*.sh; do
         test -r "$i" && . "$i"
     done
+    [[ -n "$NOMATCH"  ]] && set -o nomatch
+    [[ -n "$FAILGLOB" ]] && set -o failglob
+    unset NOMATCH
+    unset FAILGLOB
 fi
 
 #----------------------------------------------------------------------------
