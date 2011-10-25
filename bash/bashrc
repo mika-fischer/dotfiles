@@ -166,19 +166,6 @@ PROMPT_COMMAND='my_prompt_command'
 trap 'settitle_pipe "$BASH_COMMAND"' DEBUG
 
 #----------------------------------------------------------------------------
-# Configuration for external tools
-#----------------------------------------------------------------------------
-# Less
-[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
-export LESS="-FSRX"
-
-# Grep
-export GREP_OPTIONS='--color=auto'
-
-# ls
-eval "$(dircolors -b)"
-
-#----------------------------------------------------------------------------
 # Local bash initialization
 #----------------------------------------------------------------------------
 [[ -e ~/.bashrc.local ]] && source ~/.bashrc.local || true

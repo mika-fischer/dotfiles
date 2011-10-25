@@ -130,19 +130,6 @@ add-zsh-hook precmd my_precmd
 add-zsh-hook preexec my_preexec
 
 #----------------------------------------------------------------------------
-# Configuration for external tools
-#----------------------------------------------------------------------------
-# Less
-[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
-export LESS="-FSRX"
-
-# Grep
-export GREP_OPTIONS='--color=auto'
-
-# ls
-eval "$(dircolors -b)"
-
-#----------------------------------------------------------------------------
 # Local zsh initialization
 #----------------------------------------------------------------------------
 [[ -e ~/.zshrc.local ]] && source ~/.zshrc.local || true
