@@ -63,7 +63,7 @@ fi
 [ -x /usr/bin/wicd-gtk ]                    && /usr/bin/wicd-gtk &
 
 # Battery
-[ -x /usr/bin/batti ]                       && /usr/bin/bati &
+[ -x /usr/bin/batti ]                       && /usr/bin/batti &
 
 # Other applications
 [ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
