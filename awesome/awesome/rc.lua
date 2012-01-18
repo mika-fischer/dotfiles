@@ -319,6 +319,8 @@ awful.rules.rules = {
                      maximized_vertical   = true } },
     { rule = { class = "Pidgin" },
       properties = { floating = true } },
+    { rule = { instance = "plugin-container" },
+      properties = { floating = true } },
 }
 -- }}}
 
