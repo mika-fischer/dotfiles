@@ -52,3 +52,6 @@
 [submodule "awesome/awesome/vicious"]
 	path = awesome/awesome/vicious
 	url = http://git.sysphere.org/vicious
+[submodule "awesome/awesome/menubar"]
+	path = awesome/awesome/menubar
+	url = https://github.com/alexander-yakushev/menubar.git

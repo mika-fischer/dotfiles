@@ -16,7 +16,11 @@ require("beautiful")
 beautiful.init(home .. "/.config/awesome/themes/zoop/theme.lua")
 require("naughty")
 require("vicious")
+require("menubar")
 --- }}}
+
+menubar.cache_entries = true
+menubar.app_folders = { "/usr/share/applications/" }
 
 -- {{{ Shortcuts
 local exec          = awful.util.spawn
@@ -134,6 +138,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
+    awful.key({ modkey,           }, "s", function () menubar.show() end),
 
     -- Layout manipulation
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
