@@ -56,7 +56,7 @@ fi
 [ -x /usr/bin/unclutter ]                   && /usr/bin/unclutter &
 
 # Media automounting
-[ -x /usr/bin/devmon ]                      && /usr/bin/devmon &
+[ -x /usr/bin/udiskie ]                     && /usr/bin/udiskie &
 [ -x /usr/bin/mount-tray ]                  && /usr/bin/mount-tray &
 
 # Wifi
