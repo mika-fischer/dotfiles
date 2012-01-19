@@ -13,6 +13,7 @@ alias vi='vim'
 
 alias ss='sudo -s'
 alias se='sudoedit'
+alias sc='sudo systemctl'
 
 alias y='yaourt'
 
