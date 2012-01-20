@@ -34,6 +34,9 @@ setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:men
 # Make useless <> key useful
 xmodmap -e "keycode 94 = Super_L Super_L Super_L"
 xmodmap -e "add mod4 = Super_L"
+# Fix stupid xlock killer anti-feature
+xmodmap -e "keycode 63 = KP_Multiply NoSymbol KP_Multiply NoSymbol"
+xmodmap -e "keycode 106 = KP_Divide NoSymbol KP_Divide NoSymbol"
 
 # Other X settings
 xset b off
