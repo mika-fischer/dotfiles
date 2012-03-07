@@ -73,10 +73,10 @@ fi
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
 
 # Window manager
-[ -x /usr/bin/i3 ]                          && exec i3
+[ -x /usr/bin/awesome ]                     && exec awesome
 
 # Window manager
-[ -x /usr/bin/awesome ]                     && exec awesome
+[ -x /usr/bin/i3 ]                          && exec i3
 
 # Fallback to xterm
 [ -x /usr/bin/xterm ]                       && exec xterm
