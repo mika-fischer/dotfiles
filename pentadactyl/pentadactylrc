@@ -6,3 +6,10 @@ set passkeys+='https?://www.google.com/reader/view':jkoOJKnpNPXfu/Amv?
 set passkeys+='https?://www.nirvanahq.com/app':1234567890nipdhl!q
 set passkeys+='https?://app.nirvanahq.com/':1234567890nipdhl!q
 set passkeys+='https?://www.evernote.com/':abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789*/?`!#[]{}.;&:<SPACE>
+
+set strictfocus+='https?://mail.google.com/':laissez-faire
+set strictfocus+='https?://docs.google.com/':laissez-faire
+set strictfocus+='https?://www.google.com/reader/':
+set strictfocus+='https?://www.nirvanahq.com/app':laissez-faire
+set strictfocus+='https?://app.nirvanahq.com/':laissez-faire
+set strictfocus+='https?://www.evernote.com/':laissez-faire
