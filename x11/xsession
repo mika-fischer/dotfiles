@@ -73,6 +73,9 @@ fi
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
 
 # Window manager
+[ -x /usr/bin/qtile ]                       && exec qtile
+
+# Window manager
 [ -x /usr/bin/awesome ]                     && exec awesome
 
 # Window manager
