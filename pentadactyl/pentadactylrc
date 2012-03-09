@@ -9,7 +9,7 @@ set passkeys+='https?://www.evernote.com/':abcdefghijklmnopqrstuvwxyzABCDEFGHIJK
 
 set strictfocus+='https?://mail.google.com/':laissez-faire
 set strictfocus+='https?://docs.google.com/':laissez-faire
-set strictfocus+='https?://www.google.com/reader/':
+set strictfocus+='https?://www.google.com/reader/':laissez-faire
 set strictfocus+='https?://www.nirvanahq.com/app':laissez-faire
 set strictfocus+='https?://app.nirvanahq.com/':laissez-faire
 set strictfocus+='https?://www.evernote.com/':laissez-faire
