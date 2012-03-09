@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ConsoleKit
-if [ -x /usr/bin/ck-launch-session ]; then
-    PREPEND="$PREPEND /usr/bin/ck-launch-session"
+if [ -z "$XDG_SESSION_COOKIE" ] && [ -x /usr/bin/ck-launch-session ]; then
+    PREPEND="$PREPEND ck-launch-session"
 fi
 
 # GPG/SSH agent
