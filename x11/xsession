@@ -58,6 +58,9 @@ fi
 # Hide mouse cursor
 [ -x /usr/bin/unclutter ]                   && /usr/bin/unclutter &
 
+# Screensaver/locker
+[ -x /usr/bin/xscreensaver ]                && /usr/bin/xscreensaver -nosplash &
+
 # Media automounting
 [ -x /usr/bin/udiskie ]                     && /usr/bin/udiskie &
 [ -x /usr/bin/mount-tray ]                  && /usr/bin/mount-tray &
