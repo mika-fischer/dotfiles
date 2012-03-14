@@ -1,3 +1,4 @@
 Config {
     font = "xft:Sans-8",
+    position = TopW L 90
 }
