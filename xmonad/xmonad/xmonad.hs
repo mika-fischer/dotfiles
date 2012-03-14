@@ -5,7 +5,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -15,7 +15,7 @@ main = do
         logHook = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn barpipe
         }
-    }
+    } `additionalKeysP` myKeys
 
 defaults = defaultConfig {
     terminal           = myTerminal,
@@ -62,3 +62,4 @@ myLogHook = return ()
 myStartupHook = do
     spawn "trayer --edge top --align right --widthtype request --heighttype pixel --height 6 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x000000 --distance -1 --expand true"
 
+myKeys = [("C-M1-l", spawn "xscreensaver-command -lock")]
