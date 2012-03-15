@@ -4,6 +4,7 @@ import System.IO
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
@@ -25,7 +26,7 @@ defaults = defaultConfig {
     workspaces         = myWorkspaces,
     normalBorderColor  = myNormalBorderColor,
     focusedBorderColor = myFocusedBorderColor,
-    layoutHook         = avoidStruts $ myLayout,
+    layoutHook         = avoidStruts $ smartBorders $ myLayout,
     manageHook         = myManageHook,
     handleEventHook    = myEventHook,
     logHook            = myLogHook,
@@ -41,7 +42,7 @@ myWorkspaces         = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#e0e0e0"
 myFocusedBorderColor = "#f0b050"
 
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = tiled ||| Mirror tiled ||| noBorders Full
   where
     tiled   = Tall nmaster delta ratio
     nmaster = 1
