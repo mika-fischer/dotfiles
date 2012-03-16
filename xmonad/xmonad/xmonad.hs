@@ -4,6 +4,7 @@ import System.IO
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
@@ -49,12 +50,13 @@ myLayout = tiled ||| Mirror tiled ||| noBorders Full
     ratio   = 1/2
     delta   = 3/100
 
-myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore
-    , manageDocks ]
+myManageHook = composeOne
+    [ className =? "MPlayer"        -?> doFloat
+    , className =? "Gimp"           -?> doFloat
+    , resource  =? "desktop_window" -?> doIgnore
+    , resource  =? "kdesktop"       -?> doIgnore
+    , isFullscreen                  -?> doFullFloat
+    ] <+> manageDocks
 
 myEventHook = docksEventHook
 
