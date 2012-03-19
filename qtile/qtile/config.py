@@ -1,4 +1,4 @@
-from libqtile.manager import Key, Screen, Group
+from libqtile.manager import Click, Drag, Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget
 
@@ -6,36 +6,68 @@ mod = "mod4"
 terminal = "urxvt"
 
 keys = [
-    Key([mod], "k",
-        lazy.layout.down()),
-    Key([mod], "j",
-        lazy.layout.up()),
-    Key([mod, "control"], "k",
-        lazy.layout.shuffle_down()),
-    Key([mod, "control"], "j",
-        lazy.layout.shuffle_up()),
-    Key([mod], "space",
-        lazy.layout.next()),
-    Key([mod, "shift"], "space",
-        lazy.layout.rotate()),
-    Key([mod, "shift"], "Return",
-        lazy.layout.toggle_split()),
-    Key([mod], "h",
-        lazy.to_screen(1)),
-    Key([mod], "l",
-        lazy.to_screen(0)),
-    Key([mod], "Return",
-        lazy.spawn(terminal)),
-    Key([mod], "Tab",
-        lazy.nextlayout()),
-    Key([mod], 'r',
-        lazy.spawncmd(prompt=':')),
-    Key([mod], "w",
-        lazy.window.kill()),
+    # QTile commands
     Key([mod, "control"], "r",
         lazy.restart()),
     Key([mod, "control"], "q",
         lazy.shutdown()),
+
+    # Screen navigation
+    Key([mod], "h",
+        lazy.to_screen(1)),
+    Key([mod], "l",
+        lazy.to_screen(0)),
+
+    # Window management
+    Key([mod], "w",
+        lazy.window.kill()),
+
+    # Layout management
+    Key([mod], "Tab",
+        lazy.nextlayout()),
+    Key([mod], "k",
+        lazy.layout.up()),
+    Key([mod], "j",
+        lazy.layout.down()),
+    Key([mod, "shift"], "k",
+        lazy.layout.shuffle_up()),
+    Key([mod, "shift"], "j",
+        lazy.layout.shuffle_down()),
+    Key([mod], "i",
+        lazy.layout.grow()),
+    Key([mod], "m",
+        lazy.layout.shrink()),
+    Key([mod], "n",
+        lazy.layout.normalize()),
+    Key([mod], "o",
+        lazy.layout.maximize()),
+    Key([mod, "shift"], "space",
+        lazy.layout.flip()),
+
+    Key([mod], "space",
+        lazy.layout.next()),
+    #Key([mod, "shift"], "space",
+        #lazy.layout.rotate()),
+    Key([mod, "shift"], "Return",
+        lazy.layout.toggle_split()),
+
+    # Lauchers
+    Key([mod], "Return",
+        lazy.spawn(terminal)),
+    Key([mod], 'r',
+        lazy.spawncmd(prompt=':')),
+
+]
+
+mouse = [
+    Drag([mod], "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position()),
+    Drag([mod], "Button3",
+        lazy.window.set_size_floating(),
+        start=lazy.window.get_size()),
+    Click([mod], "Button2",
+        lazy.window.bring_to_front())
 ]
 
 groups = [
@@ -58,8 +90,17 @@ for group in groups:
             lazy.window.togroup(group.name)))
 
 layouts = [
+    layout.MonadTall(),
     layout.Max(),
-    layout.Stack(stacks=2)
+    layout.Stack(stacks=2),
+    layout.Floating(auto_float_types=set([
+        'dialog',
+        'utility',
+        'notification',
+        'toolbar',
+        'splash',
+        ])
+    ),
 ]
 
 sepcolor = "#B0B0B0"
