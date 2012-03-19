@@ -1,10 +1,10 @@
 #!/bin/bash
 
 send_key() {
-    for pid in $(pgrep spotify); do
+    for pid in $(pgrep -u mfischer -x spotify); do
         for win in $(xdotool search --pid $pid 2>/dev/null); do
             if xdotool getwindowname $win | grep -q "Linux Preview"; then
-                # echo "Sending $@ to window $win"
+                #echo "Sending $@ to window $win"
                 xdotool key --window $win "$@"
                 return
             fi
@@ -27,7 +27,7 @@ next() {
 }
 
 case $1 in
-    play|pause|playpause)
+    play|pause|playpause|toggle_play)
         playpause
         ;;
     prev|previous)
