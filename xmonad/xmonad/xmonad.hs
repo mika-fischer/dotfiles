@@ -12,34 +12,28 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 main = do
-    barpipe <- spawnPipe "xmobar"
-    xmonad $ defaults {
-        logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn barpipe
-        }
+    barpipe <- spawnPipe statusbar
+    xmonad $ defaultConfig {
+        terminal           = myTerminal,
+        focusFollowsMouse  = myFocusFollowsMouse,
+        borderWidth        = myBorderWidth,
+        modMask            = myModMask,
+        workspaces         = myWorkspaces,
+        normalBorderColor  = myNormalBorderColor,
+        focusedBorderColor = myFocusedBorderColor,
+        layoutHook         = avoidStruts $ smartBorders $ myLayout,
+        manageHook         = myManageHook,
+        handleEventHook    = myEventHook,
+        logHook            = myLogHook barpipe,
+        startupHook        = myStartupHook
     } `additionalKeysP` myKeys
 
-defaults = defaultConfig {
-    terminal           = myTerminal,
-    focusFollowsMouse  = myFocusFollowsMouse,
-    borderWidth        = myBorderWidth,
-    modMask            = myModMask,
-    workspaces         = myWorkspaces,
-    normalBorderColor  = myNormalBorderColor,
-    focusedBorderColor = myFocusedBorderColor,
-    layoutHook         = avoidStruts $ smartBorders $ myLayout,
-    manageHook         = myManageHook,
-    handleEventHook    = myEventHook,
-    logHook            = myLogHook,
-    startupHook        = myStartupHook
-}
 
 myTerminal           = "urxvt"
-myFocusFollowsMouse  :: Bool
 myFocusFollowsMouse  = False
 myBorderWidth        = 2
 myModMask            = mod4Mask
-myWorkspaces         = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces         = ["1:web","2:shell","3:code","4","5","6","7","8:media","9:chat"]
 myNormalBorderColor  = "#e0e0e0"
 myFocusedBorderColor = "#f0b050"
 
@@ -60,7 +54,10 @@ myManageHook = composeOne
 
 myEventHook = docksEventHook
 
-myLogHook = return ()
+statusbar = "xmobar"
+myLogHook barpipe = dynamicLogWithPP $ xmobarPP
+    { ppOutput  = hPutStrLn barpipe
+    }
 
 myStartupHook = do
     spawn "trayer --edge top --align right --widthtype request --heighttype pixel --height 6 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x000000 --distance -1 --expand true"
