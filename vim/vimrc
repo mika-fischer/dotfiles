@@ -2,11 +2,12 @@
 " Options
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
-syntax on
 
 " Pathogen
 filetype off
-call pathogen#runtime_append_all_bundles()
+runtime bundle/pathogen/autoload/pathogen.vim
+call pathogen#infect()
+syntax on
 filetype plugin indent on
 
 " Listchars

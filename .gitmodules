@@ -55,3 +55,6 @@
 [submodule "awesome/awesome/menubar"]
 	path = awesome/awesome/menubar
 	url = https://github.com/alexander-yakushev/menubar.git
+[submodule "vim/vim/bundle/pathogen"]
+	path = vim/vim/bundle/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
