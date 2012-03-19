@@ -79,11 +79,14 @@ set completeopt=menuone,menu,longest,preview
 " Use ack instead of grep
 set grepprg=ack
 
+set statusline=%<%f\ %h%m%r%=%-30.([ft=%{&ft}][fo=%{&fo}]\ %l,%c%V%)\ %P
+
 " Go to last position in file
 au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \   exe "normal g`\"" |
             \ endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key bindings
