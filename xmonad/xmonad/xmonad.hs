@@ -77,8 +77,10 @@ home       = "/home/mfischer"
 screenlock = "xscreensaver-command -lock"
 consolekit = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
 upower     = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" /org/freedesktop/UPower org.freedesktop.UPower."
+dmenu      = "dmenu_run -fn 'xft:Sans:size=8' -nb '#e0e0e0' -nf '#000000' -sb '#f0b050' -sf '#000000'"
 
-myKeys = [("C-M1-l",                    spawn (screenlock))
+myKeys = [("M-p",                       spawn (dmenu))
+         ,("C-M1-l",                    spawn (screenlock))
          ,("C-S-M1-l",                  spawn (screenlock))
          ,("C-S-M1-h",                  spawn (consolekit ++ "Stop"))
          ,("C-S-M1-r",                  spawn (consolekit ++ "Restart"))
