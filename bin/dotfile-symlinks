@@ -6,11 +6,12 @@ for dir in $(ls $DOTFILES); do
     REL_DOTFILES=.dotfiles
     unset PREFIX
     [[ $dir == "bin" ]] && continue
-    [[ $dir == "awesome" ]]  && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
-    [[ $dir == "gtk3" ]]     && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
-    [[ $dir == "qtile" ]]    && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
-    [[ $dir == "taffybar" ]] && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
-    [[ $dir == "zathura" ]]  && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "awesome" ]]    && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "gtk3" ]]       && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "qtile" ]]      && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "taffybar" ]]   && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "volumeicon" ]] && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "zathura" ]]    && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
 	for file in $(ls $DOTFILES/$dir); do
         if [[ -z $PREFIX ]]; then
             SOURCE=~/.$file
