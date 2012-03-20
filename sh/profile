@@ -37,6 +37,27 @@ if [ -d /etc/profile.d/ ]; then
 fi
 
 #----------------------------------------------------------------------------
+# Helper functions
+#----------------------------------------------------------------------------
+have_prog() {
+    command -v "$@" >/dev/null 2>&1
+}
+
+try_start() {
+    have_prog "$1" && "$@"
+}
+
+try_start_bg() {
+    have_prog "$1" && exec "$@" & disown
+}
+
+try_start_bg_delay() {
+    sleep_secs=$1
+    shift
+    have_prog "$1" && eval "sleep ${sleep_secs} && exec $@" & disown
+}
+
+#----------------------------------------------------------------------------
 # Local initialization
 #----------------------------------------------------------------------------
 [ -e ~/.profile.local ] && . ~/.profile.local || true
