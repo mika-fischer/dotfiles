@@ -4,6 +4,7 @@
 #----------------------------------------------------------------------------
 
 [ -d "$HOME/soft/bin" ] &&      export PATH="$HOME/soft/bin:$PATH"
+[ -d "$HOME/.cabal/bin" ] &&    export PATH="$HOME/.cabal/bin:$PATH"
 [ -d "$HOME/soft/lib" ] &&      export LIB="$HOME/soft/lib:$LIB"
 [ -d "$HOME/soft/include" ] &&  export INCLUDE="$HOME/soft/include:$INCLUDE"
 [ -d "$HOME/soft/python" ] &&   export PYTHONPATH="$PYTHONPATH:$HOME/soft/python"
