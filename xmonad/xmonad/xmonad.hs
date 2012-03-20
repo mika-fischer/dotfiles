@@ -7,6 +7,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
@@ -70,6 +71,7 @@ myLogHook target = dbusLogWithPP target $ taffybarPP
     }
 
 myStartupHook = do
+    setWMName "LG3D"
 --    spawn "trayer --edge bottom --align right --widthtype pixel --width 100 --heighttype pixel --height 19 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0xe0e0e0 --distance -1 --expand true"
     spawn "taffybar"
 
