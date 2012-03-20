@@ -1,6 +1,8 @@
 import Data.Monoid
+import DBus.Client.Simple
 import System.Exit
 import System.IO
+import System.Taffybar.XMonadLog(dbusLog)
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -12,7 +14,8 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 main = do
-    barpipe <- spawnPipe statusbar
+    -- barpipe <- spawnPipe statusbar
+    client <- connectSession
     xmonad $ defaultConfig {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -24,7 +27,7 @@ main = do
         layoutHook         = avoidStruts $ smartBorders $ myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook barpipe,
+        logHook            = dbusLog client,
         startupHook        = myStartupHook
     } `additionalKeysP` myKeys
 
@@ -33,7 +36,7 @@ myTerminal           = "urxvt"
 myFocusFollowsMouse  = False
 myBorderWidth        = 2
 myModMask            = mod4Mask
-myWorkspaces         = ["1:web","2:shell","3:code","4","5","6","7","8:media","9:chat"]
+myWorkspaces         = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#e0e0e0"
 myFocusedBorderColor = "#f0b050"
 
@@ -56,11 +59,20 @@ myEventHook = docksEventHook
 
 statusbar = "xmobar"
 myLogHook barpipe = dynamicLogWithPP $ xmobarPP
-    { ppOutput  = hPutStrLn barpipe
+    { ppOutput          = hPutStrLn barpipe
+    , ppCurrent         = xmobarColor "#000000" "#f0b050" . pad
+    , ppHidden          = xmobarColor "#000000" "#e0e0e0" . pad
+    , ppHiddenNoWindows = xmobarColor "#c0c0c0" "#e0e0e0" . pad
+    , ppUrgent          = xmobarColor "#000000" "#ff0000" . pad
+    , ppVisible         = wrap "(" ")"
+    , ppTitle           = shorten 60
+    , ppSep             = " :: "
+    , ppWsSep           = ""
     }
 
 myStartupHook = do
-    spawn "trayer --edge top --align right --widthtype request --heighttype pixel --height 6 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x000000 --distance -1 --expand true"
+--    spawn "trayer --edge bottom --align right --widthtype pixel --width 100 --heighttype pixel --height 19 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0xe0e0e0 --distance -1 --expand true"
+    spawn "taffybar"
 
 home       = "/home/mfischer"
 screenlock = "xscreensaver-command -lock"
