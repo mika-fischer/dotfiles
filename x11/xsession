@@ -1,91 +1,88 @@
 #!/bin/bash
 
+if ! shopt -q login_shell; then
+    echo "Restarting $0 as login shell script"
+    exec bash -l $0 "$@"
+fi
+
 # ConsoleKit
-if [ -z "$XDG_SESSION_COOKIE" ] && [ -x /usr/bin/ck-launch-session ]; then
+if [ -z "$XDG_SESSION_COOKIE" ] && have_prog ck-launch-session; then
     PREPEND="$PREPEND ck-launch-session"
 fi
 
 # GPG/SSH agent
-if [ -z "$SSH_AUTH_SOCK" ] && [ -x /usr/bin/ssh-agent ]; then
+if [ -z "$SSH_AUTH_SOCK" ] && have_prog ssh-agent; then
     PREPEND="$PREPEND ssh-agent"
 fi
 
 # DBus
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && [ -x /usr/bin/dbus-launch ]; then
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && have_prog dbus-launch; then
     PREPEND="$PREPEND dbus-launch --exit-with-session"
 fi
 
 # If we have to prepend something, restart
 if [ -z "$XSESSION_RESTARTED" ]; then
     export XSESSION_RESTARTED=1
-    if shopt -q login_shell; then
-        exec $PREPEND bash $0 "$@"
-    else
-        exec $PREPEND bash -l $0 "$@"
-    fi
+    exec $PREPEND bash $0 "$@"
 fi
 
 # X resources
-[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+echo "Loading Xresources"
+[ -f ~/.Xresources ] && try_start xrdb -merge ~/.Xresources
 
 # Keyboard setup
+echo "Setting up input devices"
 # US-Intl. AltGr layout, Caps is Ctrl, Menu is Compose
-setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
+try_start setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
 # Make useless <> key useful
-xmodmap -e "keycode 94 = Super_L Super_L Super_L"
-xmodmap -e "add mod4 = Super_L"
+try_start xmodmap -e "keycode 94 = Super_L Super_L Super_L"
+try_start xmodmap -e "add mod4 = Super_L"
 # Fix stupid xlock killer anti-feature
-xmodmap -e "keycode 63 = KP_Multiply NoSymbol KP_Multiply NoSymbol"
-xmodmap -e "keycode 106 = KP_Divide NoSymbol KP_Divide NoSymbol"
+try_start xmodmap -e "keycode 63 = KP_Multiply NoSymbol KP_Multiply NoSymbol"
+try_start xmodmap -e "keycode 106 = KP_Divide NoSymbol KP_Divide NoSymbol"
 
 # Other X settings
-xset b off
-xset dpms 300 600 900
-xset r rate 200 40
-xset s off
+try_start xset b off
+try_start xset dpms 300 600 900
+try_start xset r rate 200 40
+try_start xset s off
 if [[ -n $LAPTOP ]]; then
-    xset m 2 0
+    try_start xset m 2 0
 else
-    xset m 1 0
+    try_start xset m 1 0
 fi
 
 # Add SSH key
 if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
     [ -z "$SSH_ASKPASS" ] && [ -x /usr/lib/openssh/ssh-askpass ] && export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass
-    [ -n "$SSH_ASKPASS" ] && (sleep 1 && ssh-add ~/.ssh/id_rsa < /dev/null) &
+    [ -n "$SSH_ASKPASS" ] && try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
 fi
 
 # Hide mouse cursor
-[ -x /usr/bin/unclutter ]                   && /usr/bin/unclutter &
+try_start_bg unclutter
 
 # Screensaver/locker
-[ -x /usr/bin/xscreensaver ]                && /usr/bin/xscreensaver -nosplash &
+try_start_bg xscreensaver -nosplash
 
 # Media automounting
-[ -x /usr/bin/udiskie ]                     && /usr/bin/udiskie &
-[ -x /usr/bin/mount-tray ]                  && /usr/bin/mount-tray &
+try_start_bg udiskie
+try_start_bg mount-tray
 
 # Wifi
-[ -x /usr/bin/wicd-gtk ]                    && /usr/bin/wicd-gtk &
+try_start_bg wicd-gtk
 
 # Battery
-[ -x /usr/bin/batti ]                       && /usr/bin/batti &
+try_start_bg batti
+
+# Volume control
+try_start_bg volumeicon
 
 # Other applications
-[ -x /usr/bin/gstm ]                        && (sleep 2 && /usr/bin/gstm) &
-[ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
+try_start_bg_delay 2 gstm
+try_start_bg_delay 2 SpiderOak
 
 # Window manager
-command -v xmonad >/dev/null                && exec xmonad
-
-# Window manager
-[ -x /usr/bin/qtile ]                       && exec qtile
-
-# Window manager
-[ -x /usr/bin/awesome ]                     && exec awesome
-
-# Window manager
-[ -x /usr/bin/i3 ]                          && exec i3
-
-# Fallback to xterm
-[ -x /usr/bin/xterm ]                       && exec xterm
+echo "Starting window manager"
+for i in xmonad qtile i3 awesome xterm; do
+    have_prog $i && exec $i
+done
