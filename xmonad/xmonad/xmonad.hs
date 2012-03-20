@@ -2,7 +2,7 @@ import Data.Monoid
 import DBus.Client.Simple
 import System.Exit
 import System.IO
-import System.Taffybar.XMonadLog(dbusLog)
+import System.Taffybar.XMonadLog
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -27,7 +27,7 @@ main = do
         layoutHook         = avoidStruts $ smartBorders $ myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = dbusLog client,
+        logHook            = myLogHook client,
         startupHook        = myStartupHook
     } `additionalKeysP` myKeys
 
@@ -58,12 +58,11 @@ myManageHook = composeOne
 myEventHook = docksEventHook
 
 statusbar = "xmobar"
-myLogHook barpipe = dynamicLogWithPP $ xmobarPP
-    { ppOutput          = hPutStrLn barpipe
-    , ppCurrent         = xmobarColor "#000000" "#f0b050" . pad
-    , ppHidden          = xmobarColor "#000000" "#e0e0e0" . pad
-    , ppHiddenNoWindows = xmobarColor "#c0c0c0" "#e0e0e0" . pad
-    , ppUrgent          = xmobarColor "#000000" "#ff0000" . pad
+myLogHook target = dbusLogWithPP target $ taffybarPP
+    { ppCurrent         = taffybarColor "#000000" "#f0b050" . pad
+    , ppHidden          = taffybarColor "#000000" "" . pad
+    , ppHiddenNoWindows = taffybarColor "#c0c0c0" "" . pad
+    , ppUrgent          = taffybarColor "#000000" "#ff0000" . pad
     , ppVisible         = wrap "(" ")"
     , ppTitle           = shorten 60
     , ppSep             = " :: "
