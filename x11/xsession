@@ -76,7 +76,7 @@ fi
 [ -x /usr/bin/SpiderOak ]                   && (sleep 2 && /usr/bin/SpiderOak) &
 
 # Window manager
-[ -x /usr/bin/xmonad ]                      && exec xmonad
+command -v xmonad >/dev/null                && exec xmonad
 
 # Window manager
 [ -x /usr/bin/qtile ]                       && exec qtile
