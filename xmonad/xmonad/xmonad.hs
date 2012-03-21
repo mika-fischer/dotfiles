@@ -5,6 +5,7 @@ import System.IO
 import System.Taffybar.XMonadLog
 import XMonad
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -30,7 +31,7 @@ main = do
         layoutHook         = avoidStruts $ smartBorders $ myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook client,
+        logHook            = myLogHook client <+> fadeInactiveLogHook 0.85,
         startupHook        = myStartupHook
     } `additionalKeysP` myKeys
 

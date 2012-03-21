@@ -58,6 +58,9 @@ if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
     [ -n "$SSH_ASKPASS" ] && try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
 fi
 
+# xcompmgr
+try_start_bg xcompmgr -cfC -D 5
+
 # Hide mouse cursor
 try_start_bg unclutter
 
