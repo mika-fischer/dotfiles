@@ -61,6 +61,9 @@ fi
 # xcompmgr
 try_start_bg xcompmgr -cfC -D 5
 
+# Wallpapers
+$HOME/bin/wallpaper.sh & disown
+
 # Hide mouse cursor
 try_start_bg unclutter
 
