@@ -8,6 +8,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
@@ -17,7 +18,8 @@ import qualified Data.Map        as M
 main = do
     -- barpipe <- spawnPipe statusbar
     client <- connectSession
-    xmonad $ defaultConfig {
+    xmonad $ withUrgencyHook NoUrgencyHook
+           $ defaultConfig {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
@@ -82,6 +84,8 @@ upower     = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\"
 dmenu      = "dmenu_run -fn 'xft:Sans:size=8' -nb '#e0e0e0' -nf '#000000' -sb '#f0b050' -sf '#000000'"
 
 myKeys = [("M-p",                       spawn (dmenu))
+         ,("M-u",                       focusUrgent)
+         ,("M-S-u",                     clearUrgents)
          ,("C-M1-l",                    spawn (screenlock))
          ,("C-S-M1-l",                  spawn (screenlock))
          ,("C-S-M1-h",                  spawn (consolekit ++ "Stop"))
