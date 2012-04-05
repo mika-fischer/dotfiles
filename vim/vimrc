@@ -79,7 +79,7 @@ set completeopt=menuone,menu,longest,preview
 " Use ack instead of grep
 set grepprg=ack
 
-set statusline=%<%f\ %h%m%r%=%-30.([ft=%{&ft}][fo=%{&fo}]\ %l,%c%V%)\ %P
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-30.([ft=%{&ft}][fo=%{&fo}]\ %l,%c%V%)\ %P
 
 " Go to last position in file
 au BufReadPost *
