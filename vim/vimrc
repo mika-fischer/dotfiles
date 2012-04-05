@@ -94,6 +94,7 @@ au BufReadPost *
 
 " Use space bar as leader
 let mapleader=" "
+let maplocalleader=" "
 
 " Disable arrow keys and navigation keys
 nnoremap <up>       <nop>
@@ -179,6 +180,9 @@ let loaded_matchparen = 1
 " Latex suite
 " Prevent latex suite from stealing C-j in normal mode
 nnoremap <M-1> <Plug>IMAP_JumpForward
+
+" ATP
+let g:atp_Python = 'python2'
 
 " NERDTree
 nnoremap <leader>nt :NERDTree 

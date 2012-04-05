@@ -58,3 +58,6 @@
 [submodule "vim/vim/bundle/pathogen"]
 	path = vim/vim/bundle/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim/vim/bundle/automaticlatexplugin"]
+	path = vim/vim/bundle/automaticlatexplugin
+	url = https://github.com/vim-scripts/AutomaticLaTexPlugin.git
