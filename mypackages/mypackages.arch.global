@@ -1,0 +1,160 @@
+# Package groups
+group: base
+group: base-devel
+group: gstreamer0.10-plugins
+group: libreoffice
+group: multilib-devel
+group: texlive-most
+group: xorg
+
+# Packages
+abs
+alsa-oss
+alsa-utils
+archlinux-wallpaper
+aria2
+asciidoc
+aspell-en
+aspell-de
+autofs
+bash-completion
+cdrkit
+clang
+clusterssh
+cmake
+cpufrequtils
+ctags
+cups
+dnsutils
+doxygen
+duplicity
+dwdiff
+ethtool
+firefox
+flashplugin
+gajim
+gdb
+ghc
+ghostscript
+gimp
+git
+gnome-icon-theme-extras
+gnome-themes-standard
+gnu-netcat
+gsfonts
+gtk-engines
+gv
+gvim
+hdparm
+imagemagick
+iperf
+iptraf-ng
+ipython
+irssi
+jre7-openjdk
+keepassx
+lib32-libpulse
+lib32-mpg123
+lib32-nvidia-utils
+libreoffice-de
+lm_sensors
+ltrace
+moreutils
+mplayer
+msmtp
+namcap
+nfsidmap
+nfs-utils
+ntfs-3g
+ntp
+nvidia
+opencl-nvidia
+opencv
+openssh
+openvpn
+pacman-contrib
+paprefs
+pavucontrol
+pulseaudio
+pulseaudio-alsa
+pwgen
+python2-numpy
+python2-psutil
+python2-pyqt
+python-musicbrainz2
+python-numpy
+python-pip
+rdesktop
+rsync
+rxvt-unicode
+skype
+sox
+sshfs
+strace
+subversion
+sudo
+swig
+sxiv
+systemd
+systemd-arch-units
+systemd-tools
+thunar
+tig
+tk
+tmux
+truecrypt
+ttf-dejavu
+ttf-liberation
+tumbler
+udisks
+unclutter
+unzip
+upower
+uucp
+valgrind
+vlc
+volumeicon
+wine
+wine_gecko
+wmctrl
+wmname
+x11-ssh-askpass
+xchat
+xdotool
+xorg-server-utils
+xorg-xfontsel
+xorg-xinit
+xsel
+xterm
+zathura
+zathura-djvu
+zathura-pdf-poppler
+zenity
+zip
+zsh
+
+# To check
+consolekit
+
+aur: acroread
+aur: dmenu-xft
+aur: labelnation
+aur: lib32-gtk-engines
+aur: lib32-libvdpau
+aur: lightdm
+aur: lightdm-gtk-greeter
+aur: mendeleydesktop
+aur: mount-tray
+aur: package-query
+aur: pacman-color
+aur: python2-pyflakes
+aur: python2-pysqueezecenter
+aur: python3-imaging
+aur: spideroak
+aur: spotify-beta
+aur: squeezeslave
+aur: tango-icon-theme
+aur: ttf-ms-fonts
+aur: url-utils
+aur: yaourt
+aur: zsh-yaourt
