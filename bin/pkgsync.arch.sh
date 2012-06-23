@@ -92,7 +92,7 @@ case $opt in
     remove-orphans)
         remove_orphans
         ;;
-    opt)
+    sync)
         install_groups
         install_official_packages
         install_aur_packages
