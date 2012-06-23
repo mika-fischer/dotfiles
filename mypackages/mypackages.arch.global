@@ -11,6 +11,7 @@ group: xorg
 abs
 alsa-oss
 alsa-utils
+amd-ucode
 archlinux-wallpaper
 aria2
 asciidoc
@@ -47,6 +48,7 @@ gv
 gvim
 hdparm
 imagemagick
+intel-ucode
 iperf
 iptraf-ng
 ipython
