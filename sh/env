@@ -11,6 +11,7 @@ export VISUAL=vim
 export FULLNAME="Mika Fischer"
 export EMAIL="mika.fischer@zoopnet.de"
 export LC_MESSAGES=C
+export LC_COLLATE=C
 export GIT_CEILING_DIRECTORIES="/home"
 
 # Java fixes
