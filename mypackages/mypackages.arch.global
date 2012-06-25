@@ -19,6 +19,8 @@ aspell-en
 aspell-de
 autofs
 bash-completion
+bwm-ng
+cabal-install
 cdrkit
 clang
 clusterssh
@@ -26,6 +28,7 @@ cmake
 cpufrequtils
 ctags
 cups
+cups-pdf
 dnsutils
 doxygen
 duplicity
@@ -33,6 +36,7 @@ dwdiff
 ethtool
 firefox
 flashplugin
+fuseiso
 gajim
 gdb
 ghc
@@ -42,11 +46,13 @@ git
 gnome-icon-theme-extras
 gnome-themes-standard
 gnu-netcat
+gnuplot
 gsfonts
 gtk-engines
 gv
 gvim
 hdparm
+htop
 imagemagick
 intel-ucode
 iperf
@@ -61,6 +67,7 @@ lib32-nvidia-utils
 libreoffice-de
 lm_sensors
 ltrace
+mercurial
 moreutils
 mplayer
 msmtp
@@ -70,6 +77,7 @@ nfs-utils
 ntfs-3g
 ntp
 nvidia
+opencl-headers
 opencl-nvidia
 opencv
 openssh
@@ -90,6 +98,7 @@ rdesktop
 rsync
 rxvt-unicode
 skype
+smartmontools
 sox
 sshfs
 strace
@@ -100,6 +109,7 @@ sxiv
 systemd
 systemd-arch-units
 systemd-tools
+tcpdump
 thunar
 tig
 tk
@@ -126,11 +136,13 @@ xdotool
 xorg-server-utils
 xorg-xfontsel
 xorg-xinit
+xscreensaver
 xsel
 xterm
 zathura
 zathura-djvu
 zathura-pdf-poppler
+zathura-ps
 zenity
 zip
 zsh
@@ -145,6 +157,7 @@ aur: lib32-gtk-engines
 aur: lib32-libvdpau
 aur: lightdm
 aur: lightdm-gtk-greeter
+aur: lsx
 aur: mendeleydesktop
 aur: mount-tray
 aur: package-query
