@@ -34,6 +34,7 @@ doxygen
 duplicity
 dwdiff
 ethtool
+ffmpeg
 firefox
 flashplugin
 fuseiso
@@ -53,30 +54,41 @@ gv
 gvim
 hdparm
 htop
+icedtea-web-java7
 imagemagick
 intel-ucode
+iotop
 iperf
+iptables
 iptraf-ng
 ipython
 irssi
+jdk7-openjdk
 jre7-openjdk
 keepassx
+lesspipe
+lftp
 lib32-libpulse
 lib32-mpg123
 lib32-nvidia-utils
 libreoffice-de
+linux-headers
 lm_sensors
 ltrace
+mencoder
 mercurial
 moreutils
 mplayer
 msmtp
+multipath-tools
 namcap
+net-tools
 nfsidmap
 nfs-utils
 ntfs-3g
 ntp
 nvidia
+openbsd-netcat
 opencl-headers
 opencl-nvidia
 opencv
@@ -88,9 +100,13 @@ pavucontrol
 pulseaudio
 pulseaudio-alsa
 pwgen
+python2-matplotlib
 python2-numpy
+python2-pip
 python2-psutil
 python2-pyqt
+python2-scipy
+python2-udiskie
 python-musicbrainz2
 python-numpy
 python-pip
@@ -170,7 +186,6 @@ aur: spotify-beta
 aur: squeezeslave
 aur: tango-icon-theme
 aur: ttf-ms-fonts
-aur: udiskie
 aur: url-utils
 aur: yaourt
 aur: zsh-yaourt
