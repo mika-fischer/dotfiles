@@ -66,3 +66,6 @@
 	path = vim/vim/bundle/automaticlatexplugin
 	url = https://github.com/vim-scripts/AutomaticLaTexPlugin.git
 	ignore = untracked
+[submodule "vim/vim/bundle/command-t"]
+	path = vim/vim/bundle/command-t
+	url = git://git.wincent.com/command-t.git

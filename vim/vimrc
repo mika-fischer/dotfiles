@@ -184,6 +184,9 @@ nnoremap <M-1> <Plug>IMAP_JumpForward
 " ATP
 let g:atp_Python = 'python2'
 
+" Command-T
+set wildignore+=build*/**
+
 " NERDTree
 nnoremap <leader>nt :NERDTree 
 nnoremap <leader>nb :NERDTreeBookmark 
