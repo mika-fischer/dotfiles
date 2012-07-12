@@ -3,6 +3,8 @@
 WALLPAPER_DIR="$HOME/share/wallpapers/used"
 DELAY="15m"
 
+set -e
+
 if ! [ -d "$WALLPAPER_DIR" ]; then
     echo "Wallpaper dir does not exist!"
     exit 1
