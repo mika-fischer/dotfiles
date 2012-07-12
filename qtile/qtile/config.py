@@ -24,6 +24,8 @@ keys = [
     # Window management
     Key([mod], "w",
         lazy.window.kill()),
+    Key([mod], "f",
+        lazy.window.toggle_floating()),
 
     # Layout management
     Key([mod], "Tab",
@@ -58,7 +60,7 @@ keys = [
     Key([mod], "Return",
         lazy.spawn(terminal)),
     Key([mod], 'r',
-        lazy.spawncmd(prompt=':')),
+        lazy.spawncmd(prompt='% ')),
 
 ]
 
@@ -73,24 +75,10 @@ mouse = [
         lazy.window.bring_to_front())
 ]
 
-groups = [
-    Group("1"),
-    Group("2"),
-    Group("3"),
-    Group("4"),
-    Group("5"),
-    Group("6"),
-    Group("7"),
-    Group("8"),
-    Group("9"),
-]
+groups = [ Group(str(i)) for i in range(1, 10) ]
 for group in groups:
-    keys.append(
-        Key([mod], group.name,
-            lazy.group[group.name].toscreen()))
-    keys.append(
-        Key([mod, "shift"], group.name,
-            lazy.window.togroup(group.name)))
+    keys.append(Key([mod],          group.name, lazy.group[group.name].toscreen()))
+    keys.append(Key([mod, "shift"], group.name, lazy.window.togroup(group.name)))
 
 layouts = [
     layout.MonadTall(),
@@ -124,10 +112,11 @@ screens = [
                         widget.GroupBox(
                             active="#000000",
                             inactive="#808080",
-                            borderwidth=1,
-                            padding=2,
-                            margin_x=1,
-                            margin_y=1,
+                            this_screen_border="#D09050",
+                            borderwidth=2,
+                            padding=3,
+                            margin_x=0,
+                            margin_y=0,
                             **widget_options),
                         widget.Sep(**sep_options),
                         widget.CurrentLayout(**widget_options),
