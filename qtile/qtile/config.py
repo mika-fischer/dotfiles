@@ -1,6 +1,8 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 from libqtile.manager import Click, Drag, Key, Screen, Group
 from libqtile.command import lazy
-from libqtile import layout, bar, widget
+from libqtile import layout, bar, widget, hook
 
 mod = "mod4"
 terminal = "urxvt"
@@ -92,15 +94,6 @@ for group in groups:
 layouts = [
     layout.MonadTall(),
     layout.Max(),
-    layout.Stack(stacks=2),
-    layout.Floating(auto_float_types=set([
-        'dialog',
-        'utility',
-        'notification',
-        'toolbar',
-        'splash',
-        ])
-    ),
 ]
 
 sepcolor = "#B0B0B0"
@@ -118,6 +111,14 @@ screens = [
                             padding=2,
                             margin_x=1,
                             margin_y=1,
+                            font="Sans",
+                            fontsize=12,
+                            background=bgcolor,
+                            foreground=fgcolor),
+                        widget.Sep(
+                            background=bgcolor,
+                            foreground=sepcolor),
+                        widget.CurrentLayout(
                             font="Sans",
                             fontsize=12,
                             background=bgcolor,
@@ -143,6 +144,12 @@ screens = [
                             fontsize=12,
                             background=bgcolor,
                             foreground=fgcolor),
+                        widget.Volume(
+                            font="Sans",
+                            fontsize=12,
+                            background=bgcolor,
+                            foreground=fgcolor,
+                            theme_path="/usr/share/icons/gnome/24x24/status"),
                         widget.CPUGraph(
                             width=50,
                             graph_color="30F030",
@@ -167,6 +174,13 @@ screens = [
                             margin_x=0,
                             margin_y=0,
                             line_width=1),
+                        widget.YahooWeather(
+                            font="Sans",
+                            fontsize=12,
+                            background=bgcolor,
+                            foreground=fgcolor,
+                            woeid=664942,
+                            format="{condition_temp} °{units_temperature}"),
                         widget.Clock(
                             "%a %b %d %H:%M",
                             font="Sans",
@@ -179,3 +193,11 @@ screens = [
                 ),
     ),
 ]
+
+@hook.subscribe.client_new
+def floating_dialogs(window):
+    dialog = window.window.get_wm_type() == 'dialog'
+    transient = window.window.get_wm_transient_for()
+    if dialog or transient:
+        window.floating = True
+
