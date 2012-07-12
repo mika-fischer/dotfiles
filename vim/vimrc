@@ -145,6 +145,8 @@ nnoremap <leader>r :redraw!<cr>
 nnoremap <leader>f zA<cr>
 nnoremap <silent><leader>w :if &fo=~'t' | setl fo-=t | else | setl fo+=t | endif<cr>
 
+nnoremap <silent><leader><leader> :CtrlP<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -185,7 +187,7 @@ nnoremap <M-1> <Plug>IMAP_JumpForward
 let g:atp_Python = 'python2'
 
 " Command-T
-set wildignore+=build*/**
+set wildignore+=*/build*/*
 
 " NERDTree
 nnoremap <leader>nt :NERDTree 
