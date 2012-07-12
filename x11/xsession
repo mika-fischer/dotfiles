@@ -89,6 +89,6 @@ try_start_bg_delay 2 SpiderOak
 
 # Window manager
 echo "Starting window manager"
-for i in xmonad qtile i3 awesome xterm; do
+for i in qtile xmonad i3 awesome xterm; do
     have_prog $i && exec $i
 done
