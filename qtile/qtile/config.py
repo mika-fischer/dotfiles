@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
 from libqtile.manager import Click, Drag, Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
@@ -100,6 +101,22 @@ sepcolor = "#B0B0B0"
 bgcolor = "#D0D0D0"
 fgcolor = "#000000"
 
+widget_options = dict(
+        font="Sans",
+        fontsize=12,
+        background=bgcolor,
+        foreground=fgcolor)
+sep_options = dict(
+        background=bgcolor,
+        foreground=sepcolor)
+graph_options = dict(
+        width=50,
+        border_width=1,
+        border_color=bgcolor,
+        margin_x=0,
+        margin_y=0,
+        line_width=1)
+
 screens = [
     Screen(
         bottom = bar.Bar(
@@ -111,92 +128,47 @@ screens = [
                             padding=2,
                             margin_x=1,
                             margin_y=1,
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor),
-                        widget.Sep(
-                            background=bgcolor,
-                            foreground=sepcolor),
-                        widget.CurrentLayout(
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor),
-                        widget.Sep(
-                            background=bgcolor,
-                            foreground=sepcolor),
-                        widget.Prompt(
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor),
-                        widget.WindowName(
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor),
-                        widget.Sep(
-                            background=bgcolor,
-                            foreground=sepcolor),
-                        widget.Systray(
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor),
+                            **widget_options),
+                        widget.Sep(**sep_options),
+                        widget.CurrentLayout(**widget_options),
+                        widget.Sep(**sep_options),
+                        widget.Prompt(**widget_options),
+                        widget.WindowName(**widget_options),
+                        widget.Sep(**sep_options),
+                        widget.Systray(**widget_options),
                         widget.Volume(
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor,
-                            theme_path="/usr/share/icons/gnome/24x24/status"),
+                            theme_path="/usr/share/icons/gnome/24x24/status",
+                            **widget_options),
                         widget.CPUGraph(
-                            width=50,
                             graph_color="30F030",
-                            border_width=2,
-                            border_color=bgcolor,
-                            margin_x=0,
-                            margin_y=0,
-                            line_width=1),
+                            fill_color="30F030",
+                            **graph_options),
                         widget.MemoryGraph(
-                            width=50,
                             graph_color="F030F0",
-                            border_width=2,
-                            border_color=bgcolor,
-                            margin_x=0,
-                            margin_y=0,
-                            line_width=1),
+                            fill_color="F030F0",
+                            **graph_options),
                         widget.NetGraph(
-                            width=50,
                             graph_color="F0F030",
-                            border_width=2,
-                            border_color=bgcolor,
-                            margin_x=0,
-                            margin_y=0,
-                            line_width=1),
+                            fill_color="F0F030",
+                            **graph_options),
                         widget.YahooWeather(
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor,
                             woeid=664942,
-                            format="{condition_temp} °{units_temperature}"),
+                            format="{condition_temp} °{units_temperature}",
+                            **widget_options),
+                        widget.Sep(**sep_options),
                         widget.Clock(
                             "%a %b %d %H:%M",
-                            font="Sans",
-                            fontsize=12,
-                            background=bgcolor,
-                            foreground=fgcolor),
+                            **widget_options),
                     ],
                     20,
-                    background="#D0D0D0",
+                    background=bgcolor,
                 ),
     ),
 ]
 
 @hook.subscribe.client_new
 def floating_dialogs(window):
-    dialog = window.window.get_wm_type() == 'dialog'
+    dialog    = window.window.get_wm_type() == 'dialog'
     transient = window.window.get_wm_transient_for()
     if dialog or transient:
         window.floating = True
