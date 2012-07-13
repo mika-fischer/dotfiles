@@ -1,84 +1,151 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+import os
 from libqtile.manager import Click, Drag, Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 
-mod = "mod4"
-terminal = "urxvt"
+terminal   = "urxvt"
+screenlock = "xscreensaver-command -lock"
+consolekit = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
+upower     = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" /org/freedesktop/UPower org.freedesktop.UPower."
+home       = os.environ['HOME']
+
+# Key bindings
+ctrl  = "control"
+shift = "shift"
+sup   = "mod4"
+alt   = "mod1"
 
 keys = [
     # QTile commands
-    Key([mod, "control"], "r",
+    Key([sup, shift], "r",
         lazy.restart()),
-    Key([mod, "control"], "q",
+    Key([sup, shift], "q",
         lazy.shutdown()),
 
+    # Session management
+    Key([ctrl, alt], "l",
+        lazy.spawn(screenlock)),
+    Key([ctrl, shift, alt], "l",
+        lazy.spawn(screenlock)),
+    Key([ctrl, shift, alt], "h",
+        lazy.spawn(consolekit + "Stop")),
+    Key([ctrl, shift, alt], "r",
+        lazy.spawn(consolekit + "Restart")),
+    Key([ctrl, shift, alt], "s",
+        lazy.spawn(upower + "Suspend" + " & " + screenlock)),
+    Key([ctrl, shift, alt], "d",
+        lazy.spawn(upower + "Hibernate" + " & " + screenlock)),
+    Key([], "XF86Sleep",
+        lazy.spawn(upower + "Suspend" + " & " + screenlock)),
+    Key([], "XF86Suspend",
+        lazy.spawn(upower + "Hibernate" + " & " + screenlock)),
+
     # Screen navigation
-    Key([mod], "h",
-        lazy.to_screen(1)),
-    Key([mod], "l",
-        lazy.to_screen(0)),
+    #Key([sup], "h",
+        #lazy.to_screen(1)),
+    #Key([sup], "l",
+        #lazy.to_screen(0)),
 
     # Window management
-    Key([mod], "w",
+    Key([sup, shift], "c",
         lazy.window.kill()),
-    Key([mod], "f",
+    Key([sup], "t",
         lazy.window.toggle_floating()),
+    #("M-u",                       focusUrgent)
+    #("M-S-u",                     clearUrgents)
 
     # Layout management
-    Key([mod], "Tab",
+    Key([sup], "space",
         lazy.nextlayout()),
-    Key([mod], "k",
+    Key([sup], "k",
         lazy.layout.up()),
-    Key([mod], "j",
+    Key([sup], "j",
         lazy.layout.down()),
-    Key([mod, "shift"], "k",
+    Key([sup, shift], "k",
         lazy.layout.shuffle_up()),
-    Key([mod, "shift"], "j",
+    Key([sup, shift], "j",
         lazy.layout.shuffle_down()),
-    Key([mod], "i",
+    Key([sup], "l",
         lazy.layout.grow()),
-    Key([mod], "m",
+    Key([sup], "h",
         lazy.layout.shrink()),
-    Key([mod], "n",
+    Key([sup], "n",
         lazy.layout.normalize()),
-    Key([mod], "o",
+    Key([sup], "o",
         lazy.layout.maximize()),
-    Key([mod, "shift"], "space",
+    Key([sup, shift], "space",
         lazy.layout.flip()),
 
-    Key([mod], "space",
-        lazy.layout.next()),
-    #Key([mod, "shift"], "space",
+    #Key([sup], "space",
+        #lazy.layout.next()),
+    #Key([sup, shift], "space",
         #lazy.layout.rotate()),
-    Key([mod, "shift"], "Return",
-        lazy.layout.toggle_split()),
+    #Key([sup, shift], "Return",
+        #lazy.layout.toggle_split()),
 
     # Lauchers
-    Key([mod], "Return",
+    Key([sup, shift], "Return",
         lazy.spawn(terminal)),
-    Key([mod], 'r',
+    Key([sup], 'p',
         lazy.spawncmd(prompt='% ')),
 
+    # Multimedia
+    Key([sup], 'equal',
+        lazy.spawn(home + "/bin/volume.sh up")),
+    Key([sup], 'minus',
+        lazy.spawn(home + "/bin/volume.sh down")),
+    Key([sup], '0',
+        lazy.spawn(home + "/bin/volume.sh mute")),
+    Key([], 'XF86AudioRaiseVolume',
+        lazy.spawn(home + "/bin/volume.sh up")),
+    Key([], 'XF86AudioLowerVolume',
+        lazy.spawn(home + "/bin/volume.sh down")),
+    Key([], 'XF86AudioMute',
+        lazy.spawn(home + "/bin/volume.sh mute")),
+    Key([sup], "F7",
+        lazy.spawn(home + "/bin/media.sh prev")),
+    Key([sup], "F8",
+        lazy.spawn(home + "/bin/media.sh next")),
+    Key([sup], "F9",
+        lazy.spawn(home + "/bin/media.sh toggle_play")),
+    Key([sup], "F10",
+        lazy.spawn(home + "/bin/media.sh toggle")),
+    Key([sup], "F11",
+        lazy.spawn(home + "/bin/media.sh volume_down")),
+    Key([sup], "F12",
+        lazy.spawn(home + "/bin/media.sh volume_up")),
+    Key([], "XF86AudioPrev",
+        lazy.spawn(home + "/bin/media.sh prev")),
+    Key([], "XF86AudioNext",
+        lazy.spawn(home + "/bin/media.sh next")),
+    Key([], "XF86AudioPlay",
+        lazy.spawn(home + "/bin/media.sh toggle_play")),
+    Key([sup], "XF86AudioMute",
+        lazy.spawn(home + "/bin/media.sh toggle")),
+    Key([sup], "XF86AudioLowerVolume",
+        lazy.spawn(home + "/bin/media.sh volume_down")),
+    Key([sup], "XF86AudioRaiseVolume",
+        lazy.spawn(home + "/bin/media.sh volume_up")),
 ]
 
 mouse = [
-    Drag([mod], "Button1",
+    Drag([sup], "Button1",
         lazy.window.set_position_floating(),
         start=lazy.window.get_position()),
-    Drag([mod], "Button3",
+    Drag([sup], "Button3",
         lazy.window.set_size_floating(),
         start=lazy.window.get_size()),
-    Click([mod], "Button2",
+    Click([sup], "Button2",
         lazy.window.bring_to_front())
 ]
 
 groups = [ Group(str(i)) for i in range(1, 10) ]
 for group in groups:
-    keys.append(Key([mod],          group.name, lazy.group[group.name].toscreen()))
-    keys.append(Key([mod, "shift"], group.name, lazy.window.togroup(group.name)))
+    keys.append(Key([sup],        group.name, lazy.group[group.name].toscreen()))
+    keys.append(Key([sup, shift], group.name, lazy.window.togroup(group.name)))
 
 layouts = [
     layout.MonadTall(),
