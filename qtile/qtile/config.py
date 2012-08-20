@@ -54,6 +54,8 @@ keys = [
         lazy.window.kill()),
     Key([sup], "t",
         lazy.window.toggle_floating()),
+    Key([sup], "f",
+        lazy.window.toggle_fullscreen()),
     #("M-u",                       focusUrgent)
     #("M-S-u",                     clearUrgents)
 
