@@ -152,6 +152,7 @@ for group in groups:
 layouts = [
     layout.MonadTall(),
     layout.Max(),
+    layout.Floating(),
 ]
 
 sepcolor = "#B0B0B0"
