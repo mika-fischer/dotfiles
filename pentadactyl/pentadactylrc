@@ -1,5 +1,5 @@
-noremap <F12> :set go!=T<CR>
-noremap <C-t> :tabopen 
+map -builtin <F12> :set go!=T<CR>
+map -builtin <C-t> :tabopen 
 
 set passkeys+='https?://mail.google.com/mail/':aAbcdefFghHiIjklLmnNopqrRsStTuUvwxyz*/?`!#[]{}.&
 set passkeys+='https?://www.google.com/reader/view':jkoOJKnpNPXfu/Amv?
