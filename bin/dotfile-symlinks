@@ -7,6 +7,7 @@ for dir in $(ls $DOTFILES); do
     unset PREFIX
     [[ $dir == "bin" ]] && continue
     [[ $dir == "awesome" ]]    && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
+    [[ $dir == "fontconfig" ]] && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
     [[ $dir == "gtk3" ]]       && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
     [[ $dir == "qtile" ]]      && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
     [[ $dir == "taffybar" ]]   && PREFIX=~/.config && REL_DOTFILES=../.dotfiles
