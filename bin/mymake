@@ -39,6 +39,7 @@ MODULE_DIRS="$HOME/src"
 BUILD_DEBUG=
 BUILD_RELEASE=1
 BUILD_MODULES=
+BUILD_TOOL=make
 
 ###############################################################################
 # Configuration file
@@ -62,6 +63,18 @@ elif [[ "$1" == "release" ]]; then
     BUILD_DEBUG=
     BUILD_RELEASE=1
     shift
+fi
+
+###############################################################################
+# Build tool stuff
+###############################################################################
+if [[ $BUILD_TOOL -eq "ninja" ]]; then
+    CMAKE_GENERATOR="Ninja"
+elif [[ $BUILD_TOOL -eq "make" ]]; then
+    CMAKE_GENERATOR="Unix Makefiles"
+else
+    echo "Unknown BUILD_TOOL $BUILD_TOOL"
+    exit 1
 fi
 
 # Modules
@@ -157,20 +170,22 @@ for mod in $BUILD_MODULES; do
         BUILD_DIR=${BUILD_B}release
         if [[ ! -e $BUILD_DIR ]]; then
             ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+                -G "$CMAKE_GENERATOR" \
                 -DCMAKE_BUILD_TYPE:STRING=Release $CMAKE_OPTS \
                 $SRC_DIR )
         fi
-        ( cd $BUILD_DIR && make $EXTRA_OPTS "$@" )
+        ( cd $BUILD_DIR && $BUILD_TOOL $EXTRA_OPTS "$@" )
     fi
 
     if [[ -n "$BUILD_DEBUG" ]]; then
         BUILD_DIR=${BUILD_B}debug
         if [[ ! -e $BUILD_DIR ]]; then
             ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+                -G "$CMAKE_GENERATOR" \
                 -DCMAKE_BUILD_TYPE:STRING=Debug $CMAKE_OPTS \
                 $SRC_DIR )
         fi
-        ( cd $BUILD_DIR && make $EXTRA_OPTS "$@" )
+        ( cd $BUILD_DIR && $BUILD_TOOL $EXTRA_OPTS "$@" )
     fi
 done
 
