@@ -15,6 +15,7 @@
 	sf = submodule foreach
 	psu = !git pull && git su
 	psur = !git pull && git sur
+	pma = !git co master && git pull
 
 [merge]
 	tool = vimdiff
