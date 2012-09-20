@@ -68,9 +68,9 @@ fi
 ###############################################################################
 # Build tool stuff
 ###############################################################################
-if [[ $BUILD_TOOL -eq "ninja" ]]; then
+if [[ $BUILD_TOOL == "ninja" ]]; then
     CMAKE_GENERATOR="Ninja"
-elif [[ $BUILD_TOOL -eq "make" ]]; then
+elif [[ $BUILD_TOOL == "make" ]]; then
     CMAKE_GENERATOR="Unix Makefiles"
 else
     echo "Unknown BUILD_TOOL $BUILD_TOOL"
