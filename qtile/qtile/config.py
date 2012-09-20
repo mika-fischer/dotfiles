@@ -152,8 +152,12 @@ for group in groups:
 layouts = [
     layout.MonadTall(),
     layout.Max(),
-    layout.Floating(),
 ]
+
+floating_layout = layout.Floating(
+        border_width            = 0,
+        max_border_width        = 0,
+        fullscreen_border_width = 0)
 
 sepcolor = "#B0B0B0"
 bgcolor = "#D0D0D0"
