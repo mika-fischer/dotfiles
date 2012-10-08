@@ -30,10 +30,16 @@ for line in lines:
 fl = [len(i) for i in header]
 for k,v in common.items():
     for i in range(len(fl)-1):
-        fl[i] = max(fl[i], len(v[i]))
+        if i == 0:
+            fl[i] = max(fl[i], len(v[i]))
+        else:
+            fl[i] = max(fl[i], len(v[i]) + 1)
 for toks in other:
     for i in range(len(fl)-1):
-        fl[i] = max(fl[i], len(toks[i]))
+        if i == 0:
+            fl[i] = max(fl[i], len(toks[i]))
+        else:
+            fl[i] = max(fl[i], len(toks[i]) + 1)
 
 def pl(toks):
     print("%s %s %s %s %s %s" % (toks[0].ljust(fl[0]), toks[1].rjust(fl[1]), toks[2].rjust(fl[2]), toks[3].rjust(fl[3]), toks[4].rjust(fl[4]), toks[5]))
