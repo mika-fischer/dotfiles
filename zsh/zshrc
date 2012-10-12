@@ -127,7 +127,7 @@ function settitle
 }
 function my_preexec
 {
-    settitle "${~1:gs/%/%%}"
+    settitle "${~1//%/%%}"
 }
 function my_precmd
 {
