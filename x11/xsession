@@ -48,6 +48,8 @@ try_start xset r rate 200 40
 try_start xset s off
 if [[ -n $LAPTOP ]]; then
     try_start xset m 2 0
+    try_start xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 8 1
+    try_start xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 8 2
 else
     try_start xset m 1 0
 fi
