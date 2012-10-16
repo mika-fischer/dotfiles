@@ -70,7 +70,6 @@ lesspipe
 lftp
 lib32-libpulse
 lib32-mpg123
-lib32-nvidia-utils
 libreoffice-de
 linux-headers
 lm_sensors
@@ -87,10 +86,8 @@ nfsidmap
 nfs-utils
 ntfs-3g
 ntp
-nvidia
 openbsd-netcat
 opencl-headers
-opencl-nvidia
 opencv
 openssh
 openvpn
