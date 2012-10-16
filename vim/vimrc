@@ -10,9 +10,13 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
+" Override non-UTF-8 locale
+scriptencoding utf-8
+set encoding=utf-8
+
 " Listchars
 set list
-set listchars=tab:Â»Â·,trail:Â·
+set listchars=tab:»·,trail:·
 
 " Always keep n lines visible above and below the cursor
 set scrolloff=3
