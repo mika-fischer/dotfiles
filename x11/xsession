@@ -80,7 +80,7 @@ try_start_bg udiskie
 try_start_bg mount-tray
 
 # Wifi
-try_start_bg wicd-gtk
+try_start_bg wicd-gtk --tray
 
 # Battery
 try_start_bg batti
