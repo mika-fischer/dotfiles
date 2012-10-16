@@ -23,7 +23,10 @@ fi
 # If we have to prepend something, restart
 if [ -z "$XSESSION_RESTARTED" ]; then
     export XSESSION_RESTARTED=1
+    echo "Restarting $0: $PREPEND bash $0 $@"
     exec $PREPEND bash $0 "$@"
+else
+    echo "No need to restart $0"
 fi
 
 # X resources
