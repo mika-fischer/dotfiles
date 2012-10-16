@@ -230,10 +230,23 @@ screens = [
     ),
 ]
 
-@hook.subscribe.client_new
-def floating_dialogs(window):
-    dialog    = window.window.get_wm_type() == 'dialog'
-    transient = window.window.get_wm_transient_for()
-    if dialog or transient:
-        window.floating = True
+float_windows = set([
+    "x11-ssh-askpass"
+    ])
 
+def should_be_floating(w):
+    if w.get_wm_type() == 'dialog':
+        return True
+    if bool(w.get_wm_transient_for()):
+        return True
+    wm_class = w.get_wm_class()
+    if not isinstance(wm_class, tuple):
+        wm_class = (wm_class, )
+    for cls in wm_class:
+        if cls.lower() in float_windows:
+            return True
+
+@hook.subscribe.client_new
+def dialogs(window):
+    if should_be_floating(window.window):
+        window.floating = True
