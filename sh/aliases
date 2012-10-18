@@ -15,7 +15,11 @@ alias ss='sudo -s'
 alias se='sudoedit'
 alias sc='sudo systemctl'
 
+alias jc='journalctl'
+
 alias y='yaourt'
+alias ydep='yaourt -D --asdeps'
+alias yexp='yaourt -D --asexplicit'
 
 #----------------------------------------------------------------------------
 # Local aliases
