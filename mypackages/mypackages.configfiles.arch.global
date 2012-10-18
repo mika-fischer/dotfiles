@@ -1,0 +1,12 @@
+boot/grub/grub.cfg
+etc/crypttab
+etc/cups/classes.conf
+etc/cups/printers.conf
+etc/cups/subscriptions.conf
+etc/fstab
+etc/group
+etc/gshadow
+etc/passwd
+etc/resolv.conf
+etc/shadow
+etc/shells
