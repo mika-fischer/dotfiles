@@ -15,6 +15,19 @@
 [[ -e ~/.shrc ]] && source ~/.shrc || true
 
 #----------------------------------------------------------------------------
+# Version and feature tests
+#----------------------------------------------------------------------------
+autoload -Uz is-at-least
+function_exists () {
+    local -a files
+    # This expands occurrences of $1 anywhere in $fpath,
+    # removing files that don't exist.
+    files=(${^fpath}/$1(N))
+    # Success if any files exist.
+    (( ${#files} ))
+}
+
+#----------------------------------------------------------------------------
 # Shell options
 #----------------------------------------------------------------------------
 # Changing directories
@@ -24,8 +37,9 @@ setopt complete_in_word
 # Expansion and globbing
 setopt extendedglob nomatch
 # History
-setopt hist_ignore_dups hist_expire_dups_first hist_fcntl_lock \
+setopt hist_ignore_dups hist_expire_dups_first \
        hist_find_no_dups hist_ignore_space hist_no_store inc_append_history
+is-at-least 4.3.9 && setopt hist_fcntl_lock
 # Initialisation
 # Input/Output
 setopt correct no_flow_control
@@ -105,6 +119,8 @@ ${P_VCS}\
 %F{red}${P_STATUS}\
 %b%f%# "
 
+is-at-least 4.3.9 || PS1="${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}${P_VCS}${P_STATUS}%# "
+
 function zle-line-init zle-keymap-select {
     RPS1="${${KEYMAP/vicmd/}/(main|viins)/-- INSERT --}"
     RPS2=$RPS1
@@ -138,7 +154,7 @@ function my_precmd
 # Hooks
 #----------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
-add-zsh-hook precmd vcs_info
+function_exists vcs_info && add-zsh-hook precmd vcs_info
 add-zsh-hook precmd my_precmd
 add-zsh-hook preexec my_preexec
 
