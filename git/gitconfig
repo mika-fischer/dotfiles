@@ -25,6 +25,7 @@
 
 [http]
 	sslVerify = false
+	postBuffer = 10000000
 
 [tig "bind"]
 	generic = P !git push
