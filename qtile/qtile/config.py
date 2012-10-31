@@ -8,8 +8,6 @@ from libqtile import layout, bar, widget, hook
 
 terminal   = "urxvt"
 screenlock = "xscreensaver-command -lock"
-consolekit = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
-upower     = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" /org/freedesktop/UPower org.freedesktop.UPower."
 home       = os.environ['HOME']
 
 # Key bindings
@@ -31,17 +29,17 @@ keys = [
     Key([ctrl, shift, alt], "l",
         lazy.spawn(screenlock)),
     Key([ctrl, shift, alt], "h",
-        lazy.spawn(consolekit + "Stop")),
+        lazy.spawn("systemctl poweroff")),
     Key([ctrl, shift, alt], "r",
-        lazy.spawn(consolekit + "Restart")),
+        lazy.spawn("systemctl reboot")),
     Key([ctrl, shift, alt], "s",
-        lazy.spawn(upower + "Suspend" + " & " + screenlock)),
+        lazy.spawn(screenlock + " & systemctl suspend")),
     Key([ctrl, shift, alt], "d",
-        lazy.spawn(upower + "Hibernate" + " & " + screenlock)),
+        lazy.spawn(screenlock + " & systemctl hibernate")),
     Key([], "XF86Sleep",
-        lazy.spawn(upower + "Suspend" + " & " + screenlock)),
+        lazy.spawn(screenlock + " & systemctl suspend")),
     Key([], "XF86Suspend",
-        lazy.spawn(upower + "Hibernate" + " & " + screenlock)),
+        lazy.spawn(screenlock + " & systemctl hibernate")),
 
     # Screen navigation
     #Key([sup], "h",
