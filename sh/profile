@@ -56,6 +56,18 @@ try_start_bg_delay() {
     have_prog "$1" && eval "sleep ${sleep_secs} && exec $@" & disown
 }
 
+append_path() {
+    if [[ -d "$1" ]]; then
+        export PATH="$PATH:$1"
+    fi
+}
+
+prepend_path() {
+    if [[ -d "$1" ]]; then
+        export PATH="$1:$PATH"
+    fi
+}
+
 #----------------------------------------------------------------------------
 # Local initialization
 #----------------------------------------------------------------------------
