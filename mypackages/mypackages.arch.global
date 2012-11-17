@@ -1,10 +1,7 @@
 # Package groups
 group: base
 group: base-devel
-group: gstreamer0.10-plugins
-group: libreoffice
 group: multilib-devel
-group: texlive-most
 group: xorg
 
 # Packages
@@ -25,7 +22,6 @@ cdrkit
 clang
 clusterssh
 cmake
-cpufrequtils
 ctags
 cups
 cups-pdf
@@ -103,8 +99,6 @@ python2-pip
 python2-psutil
 python2-pyqt
 python2-scipy
-python2-udiskie
-python-musicbrainz2
 python-numpy
 python-pip
 rdesktop
@@ -120,7 +114,6 @@ sudo
 swig
 sxiv
 systemd
-systemd-arch-units
 systemd-tools
 tcpdump
 thunar
@@ -160,19 +153,12 @@ zenity
 zip
 zsh
 
-# To check
-consolekit
-
 aur: acroread
-aur: dmenu-xft
-aur: labelnation
 aur: lib32-gtk-engines
 aur: lib32-libvdpau
-aur: lightdm
-aur: lightdm-gtk-greeter
-aur: lsx
 aur: mendeleydesktop
 aur: mount-tray
+aur: ninja
 aur: package-query
 aur: pacman-color
 aur: python2-pyflakes
@@ -180,9 +166,7 @@ aur: python2-pysqueezecenter
 aur: python3-imaging
 aur: spideroak
 aur: spotify-beta
-aur: squeezeslave
 aur: tango-icon-theme
 aur: ttf-ms-fonts
-aur: url-utils
 aur: yaourt
 aur: zsh-yaourt
