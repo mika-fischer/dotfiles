@@ -54,10 +54,6 @@
 	path = awesome/awesome/vicious
 	url = http://git.sysphere.org/vicious
 	ignore = untracked
-[submodule "awesome/awesome/menubar"]
-	path = awesome/awesome/menubar
-	url = https://github.com/alexander-yakushev/menubar.git
-	ignore = untracked
 [submodule "vim/vim/bundle/pathogen"]
 	path = vim/vim/bundle/pathogen
 	url = https://github.com/tpope/vim-pathogen.git

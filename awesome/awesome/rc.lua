@@ -1,39 +1,39 @@
--- {{{ Important variables
-local home          = os.getenv("HOME")
-local altkey        = "Mod1"
-local modkey        = "Mod4"
-local shiftkey      = "Shift"
-local ctrlkey       = "Control"
-local terminal      = "urxvt"
-local editor        = "vim"
+-- {{{ Libraries
+-- Standard awesome library
+local gears = require("gears")
+local awful = require("awful")
+awful.rules = require("awful.rules")
+require("awful.autofocus")
+-- Widget and layout library
+local wibox = require("wibox")
+-- Theme handling library
+local beautiful = require("beautiful")
+-- Notification library
+naughty = require("naughty")
+menubar = require("menubar")
+vicious = require("vicious")
 -- }}}
 
--- {{{ Libraries
-require("awful")
-require("awful.autofocus")
-require("awful.rules")
-require("beautiful")
-beautiful.init(home .. "/.config/awesome/themes/zoop/theme.lua")
-require("naughty")
-require("vicious")
-require("menubar")
---- }}}
-
-menubar.cache_entries = true
-menubar.app_folders = { "/usr/share/applications/" }
-
--- {{{ Shortcuts
+-- {{{ Important variables
+local home     = os.getenv("HOME")
+local altkey   = "Mod1"
+local modkey   = "Mod4"
+local shiftkey = "Shift"
+local ctrlkey  = "Control"
+local terminal = "urxvt"
+local editor   = "vim"
 local exec          = awful.util.spawn
 local sexec         = awful.util.spawn_with_shell
 local editor_cmd    = terminal .. " -e " .. editor
-local lock_cmd      = "slimlock"
-local consolekit    = "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" "
-                      .. "/org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager."
-local upower        = "dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" "
-                      .. "/org/freedesktop/UPower org.freedesktop.UPower."
+local lock_cmd      = "xscreensaver-command -lock"
+-- }}}
+
+menubar.cache_entries = true
+menubar.app_folders = { "/usr/share/applications/" }
+beautiful.init(home .. "/.config/awesome/themes/zoop/theme.lua")
 
 -- {{{ Layouts
-layouts =
+local layouts =
 {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
@@ -61,23 +61,19 @@ end
 
 -- {{{ Wibox
 
-spacer       = widget({ type = "textbox"})
-spacer.width = 2
+spacer = wibox.widget.textbox()
+spacer.fit = function(widget, w, h) return 2, h end
 
 mytextclock = awful.widget.textclock()
-mysystray = widget({ type = "systray" })
+mysystray   = wibox.widget.systray()
 
-require("volume")
-
-graph_width = 50
-graph_bg    = "#000000"
+local graph_width = 50
+local graph_bg    = "#000000"
 
 cpuwidget = awful.widget.graph()
 cpuwidget:set_width(graph_width)
 cpuwidget:set_background_color(graph_bg)
-cpuwidget:set_color("#FF4040")
-cpuwidget:set_gradient_colors({ "#FF4040", "#FFFF40", "#40FF40" })
-cpuwidget:set_gradient_angle(0)
+cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#ff4040" }, { 0.5, "#FFFF40" }, { 1, "#40FF40" } } })
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 1)
 
 memwidget = awful.widget.graph()
@@ -94,39 +90,54 @@ mytaglist   = {}
 mytasklist  = {}
 
 for s = 1, screen.count() do
-    mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+    -- Create a promptbox for each screen
+    mypromptbox[s] = awful.widget.prompt()
+    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
+    -- We need one layoutbox per screen.
     mylayoutbox[s] = awful.widget.layoutbox(s)
-    mytaglist[s]   = awful.widget.taglist(s, awful.widget.taglist.label.all)
-    mytasklist[s]  = awful.widget.tasklist(function(c) return awful.widget.tasklist.label.currenttags(c, s) end)
 
+    -- Create a taglist widget
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all)
+
+    -- Create a tasklist widget
+    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags)
+
+    -- Create the wibox
     mywibox[s] = awful.wibox({ position = "bottom", screen = s })
-    mywibox[s].widgets = {
-        {
-            mytaglist[s],
-            mypromptbox[s],
-            layout = awful.widget.layout.horizontal.leftright
-        },
-        mylayoutbox[s],
-        s == 1 and mytextclock or nil,
-        s == 1 and spacer or nil,
-        s == 1 and volume_widget.widget or nil,
-        s == 1 and spacer or nil,
-        s == 1 and memwidget.widget or nil,
-        s == 1 and spacer or nil,
-        s == 1 and cpuwidget.widget or nil,
-        s == 1 and spacer or nil,
-        s == 1 and mysystray or nil,
-        mytasklist[s],
-        layout = awful.widget.layout.horizontal.rightleft
-    }
+
+    -- Widgets that are aligned to the left
+    local left_layout = wibox.layout.fixed.horizontal()
+    left_layout:add(mytaglist[s])
+    left_layout:add(mypromptbox[s])
+    left_layout:add(spacer)
+
+    -- Widgets that are aligned to the right
+    local right_layout = wibox.layout.fixed.horizontal()
+    if s == 1 then
+        right_layout:add(spacer)
+        right_layout:add(mysystray)
+        right_layout:add(spacer)
+        right_layout:add(cpuwidget)
+        right_layout:add(spacer)
+        right_layout:add(memwidget)
+        right_layout:add(spacer)
+        right_layout:add(mytextclock)
+        right_layout:add(mylayoutbox[s])
+    end
+
+    -- Now bring it all together (with the tasklist in the middle)
+    local layout = wibox.layout.align.horizontal()
+    layout:set_left(left_layout)
+    layout:set_middle(mytasklist[s])
+    layout:set_right(right_layout)
+
+    mywibox[s]:set_widget(layout)
 end
 -- }}}
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-    awful.key({ modkey,           }, "n", awful.tag.viewnext),
-    awful.key({ modkey,           }, "p", awful.tag.viewprev),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -138,7 +149,6 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "s", function () menubar.show() end),
 
     -- Layout manipulation
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
@@ -177,46 +187,47 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Standard programs
-    awful.key({ modkey }, "Return",                 function () exec(terminal) end),
+    awful.key({ modkey,          shiftkey }, "Return", function () exec(terminal) end),
 
     -- Session control
-    awful.key({ modkey,          shiftkey }, "r",   awesome.restart),
-    awful.key({ modkey, ctrlkey, shiftkey }, "q",   awesome.quit),
-    awful.key({ modkey, ctrlkey, shiftkey }, "l",   function () exec(lock_cmd) end),
-    awful.key({ }, "XF86ScreenSaver",               function () exec(lock_cmd) end),
+    awful.key({ modkey,          shiftkey }, "r", awesome.restart),
+    awful.key({ modkey,          shiftkey }, "q", awesome.quit),
+    awful.key({ altkey, ctrlkey, shiftkey }, "l", function () exec(lock_cmd) end),
+    awful.key({ }, "XF86ScreenSaver",             function () exec(lock_cmd) end),
 
     -- Power control
-    awful.key({ modkey, ctrlkey, shiftkey }, "h",   function () exec(consolekit .. "Stop") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "r",   function () exec(consolekit .. "Restart") end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "s",   function () sexec(upower .. "Suspend"   .. "&" .. lock_cmd) end),
-    awful.key({ modkey, ctrlkey, shiftkey }, "d",   function () sexec(upower .. "Hibernate" .. "&" .. lock_cmd) end),
-    awful.key({ }, "XF86Sleep",                     function () sexec(upower .. "Suspend"   .. "&" .. lock_cmd) end),
-    awful.key({ }, "XF86Suspend",                   function () sexec(upower .. "Hibernate" .. "&" .. lock_cmd) end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "h", function () exec("systemctl poweroff")                  end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "r", function () exec("systemctl restart")                   end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "s", function () sexec(lock_cmd .. " & systemctl suspend")   end),
+    awful.key({ }, "XF86Sleep",                   function () sexec(lock_cmd .. " & systemctl suspend")   end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "d", function () sexec(lock_cmd .. " & systemctl hibernate") end),
+    awful.key({ }, "XF86Suspend",                 function () sexec(lock_cmd .. " & systemctl hibernate") end),
 
     -- Multimedia
-    awful.key({ modkey,                   }, "=",   function () exec(home .. "/bin/volume.sh up") end),
-    awful.key({ modkey,                   }, "-",   function () exec(home .. "/bin/volume.sh down") end),
-    awful.key({ modkey,                   }, "0",   function () exec(home .. "/bin/volume.sh mute") end),
-    awful.key({ }, "XF86AudioRaiseVolume",          function () exec(home .. "/bin/volume.sh up") end),
-    awful.key({ }, "XF86AudioLowerVolume",          function () exec(home .. "/bin/volume.sh down") end),
-    awful.key({ }, "XF86AudioMute",                 function () exec(home .. "/bin/volume.sh mute") end),
+    awful.key({ modkey }, "=",                    function () exec(home .. "/bin/volume.sh up")   end),
+    awful.key({        }, "XF86AudioRaiseVolume", function () exec(home .. "/bin/volume.sh up")   end),
+    awful.key({ modkey }, "-",                    function () exec(home .. "/bin/volume.sh down") end),
+    awful.key({        }, "XF86AudioLowerVolume", function () exec(home .. "/bin/volume.sh down") end),
+    awful.key({ modkey }, "0",                    function () exec(home .. "/bin/volume.sh mute") end),
+    awful.key({        }, "XF86AudioMute",        function () exec(home .. "/bin/volume.sh mute") end),
 
-    -- Squeezebox
-    awful.key({ modkey,                   }, "F7",  function () exec(home .. "/bin/squeezebox.sh prev") end),
-    awful.key({ modkey,                   }, "F8",  function () exec(home .. "/bin/squeezebox.sh next") end),
-    awful.key({ modkey,                   }, "F9",  function () exec(home .. "/bin/squeezebox.sh toggle_play") end),
-    awful.key({ modkey,                   }, "F10", function () exec(home .. "/bin/squeezebox.sh toggle") end),
-    awful.key({ modkey,                   }, "F11", function () exec(home .. "/bin/squeezebox.sh volume_down") end),
-    awful.key({ modkey,                   }, "F12", function () exec(home .. "/bin/squeezebox.sh volume_up") end),
-    awful.key({ modkey }, "XF86AudioPrev",          function () exec(home .. "/bin/squeezebox.sh prev") end),
-    awful.key({ modkey }, "XF86AudioNext",          function () exec(home .. "/bin/squeezebox.sh next") end),
-    awful.key({ modkey }, "XF86AudioPlay",          function () exec(home .. "/bin/squeezebox.sh toggle_play") end),
-    awful.key({ modkey }, "XF86AudioRaiseVolume",   function () exec(home .. "/bin/volume.sh up") end),
-    awful.key({ modkey }, "XF86AudioLowerVolume",   function () exec(home .. "/bin/volume.sh down") end),
-    awful.key({ modkey }, "XF86AudioMute",          function () exec(home .. "/bin/volume.sh mute") end),
+    -- Media players (Squeezebox, Spotify)
+    awful.key({ modkey }, "F7",                   function () exec(home .. "/bin/media.sh prev")        end),
+    awful.key({ modkey }, "XF86AudioPrev",        function () exec(home .. "/bin/media.sh prev")        end),
+    awful.key({ modkey }, "F8",                   function () exec(home .. "/bin/media.sh next")        end),
+    awful.key({ modkey }, "XF86AudioNext",        function () exec(home .. "/bin/media.sh next")        end),
+    awful.key({ modkey }, "F9",                   function () exec(home .. "/bin/media.sh toggle_play") end),
+    awful.key({ modkey }, "XF86AudioPlay",        function () exec(home .. "/bin/media.sh toggle_play") end),
+    awful.key({ modkey }, "F10",                  function () exec(home .. "/bin/media.sh toggle")      end),
+    awful.key({ modkey }, "XF86AudioMute",        function () exec(home .. "/bin/media.sh toggle")      end),
+    awful.key({ modkey }, "F11",                  function () exec(home .. "/bin/media.sh volume_down") end),
+    awful.key({ modkey }, "XF86AudioLowerVolume", function () exec(home .. "/bin/media.sh volume_down") end),
+    awful.key({ modkey }, "F12",                  function () exec(home .. "/bin/media.sh volume_up")   end),
+    awful.key({ modkey }, "XF86AudioRaiseVolume", function () exec(home .. "/bin/media.sh volume_up")   end),
 
     -- Prompt
-    awful.key({ modkey }, "r",                      function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey }, "p", function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey }, "s", function () menubar.show() end),
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run({ prompt = "Run Lua code: " },
@@ -226,12 +237,11 @@ globalkeys = awful.util.table.join(
               end)
 )
 
--- Default client window keybindings
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
+    awful.key({ modkey,           }, "Return", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
@@ -246,7 +256,7 @@ clientkeys = awful.util.table.join(
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
 for s = 1, screen.count() do
-   keynumber = math.min(9, math.max(#tags[s], keynumber));
+   keynumber = math.min(9, math.max(#tags[s], keynumber))
 end
 
 -- Bind all key numbers to tags.
@@ -297,11 +307,11 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = true,
+                     focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "urxvt" },
-      properties = { size_hints_honot = false } },
+      properties = { size_hints_honor = false } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
@@ -331,15 +341,8 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.add_signal("manage", function (c, startup)
-    -- Add a titlebar
-    -- awful.titlebar.add(c, { modkey = modkey })
-
+client.connect_signal("manage", function(c, startup)
     if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
-
         -- Put windows in a smart way, only if they does not set an initial position.
         if not c.size_hints.user_position and not c.size_hints.program_position then
             awful.placement.no_overlap(c)
@@ -348,6 +351,26 @@ client.add_signal("manage", function (c, startup)
     end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus  end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
+    local clients = awful.client.visible(s)
+    local layout  = awful.layout.getname(awful.layout.get(s))
+
+    if #clients > 0 then -- Fine grained borders and floaters control
+        for _, c in pairs(clients) do
+            -- Floaters always have borders
+            if awful.client.floating.get(c) or layout == "floating" then
+                c.border_width = beautiful.border_width
+            -- No borders with only one visible client
+            elseif #clients == 1 or layout == "max" then
+                clients[1].border_width = 0
+            else
+                c.border_width = beautiful.border_width
+            end
+        end
+    end
+end)
+     end
 -- }}}
