@@ -318,7 +318,7 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "urxvt" },
+    { rule = { class = "URxvt" },
       properties = { size_hints_honor = false } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
