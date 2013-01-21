@@ -1,32 +1,27 @@
 #!/bin/bash
 
+# Make sure we're a login shell so that /etc/profile gets included
 if ! shopt -q login_shell; then
-    echo "Restarting $0 as login shell script"
-    exec bash -l $0 "$@"
-fi
-
-# ConsoleKit
-if [ -z "$XDG_SESSION_COOKIE" ] && have_prog ck-launch-session; then
-    PREPEND="$PREPEND ck-launch-session"
+    APPEND="-l"
 fi
 
 # GPG/SSH agent
 if [ -z "$SSH_AUTH_SOCK" ] && have_prog ssh-agent; then
-    PREPEND="$PREPEND ssh-agent"
+    PREPEND+=" ssh-agent"
 fi
 
 # DBus
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && have_prog dbus-launch; then
-    PREPEND="$PREPEND dbus-launch --exit-with-session"
+    PREPEND+=" dbus-launch --exit-with-session"
 fi
 
-# If we have to prepend something, restart
+# If we have to append or prepend something, restart ourselves
 if [ -z "$XSESSION_RESTARTED" ]; then
-    export XSESSION_RESTARTED=1
-    echo "Restarting $0: $PREPEND bash $0 $@"
-    exec $PREPEND bash $0 "$@"
-else
-    echo "No need to restart $0"
+    if [ -n "$PREPEND" ] || [ -n "$APPEND" ]; then
+        export XSESSION_RESTARTED=1
+        echo "Restarting $0: $PREPEND bash $APPEND $0 $@"
+        exec $PREPEND bash $APPEND $0 "$@"
+    fi
 fi
 
 # X resources
