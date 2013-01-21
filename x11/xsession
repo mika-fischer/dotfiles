@@ -89,12 +89,8 @@ try_start_bg_delay 2 SpiderOak
 
 # Window manager
 echo "Starting window manager"
-if [ -e $HOME/src/apps/qtile/bin/qtile-session ]; then
-    exec python2 $HOME/src/apps/qtile/bin/qtile-session
-fi
-if [ -e $HOME/src/apps/qtile/qtile ]; then
-    exec python2 $HOME/src/apps/qtile/qtile
-fi
-for i in qtile-session qtile xmonad i3 awesome xterm; do
+
+for i in awesome qtile-session qtile xmonad i3 xterm; do
+    echo Trying $i
     have_prog $i && exec $i
 done
