@@ -76,11 +76,19 @@ cpuwidget:set_background_color(graph_bg)
 cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#ff4040" }, { 0.5, "#FFFF40" }, { 1, "#40FF40" } } })
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 1)
 
+cpulayout = wibox.layout.mirror()
+cpulayout:set_reflection({ vertical = true })
+cpulayout:set_widget(cpuwidget)
+
 memwidget = awful.widget.graph()
 memwidget:set_width(graph_width)
 memwidget:set_background_color(graph_bg)
 memwidget:set_color("#4040FF")
 vicious.register(memwidget, vicious.widgets.mem, "$1", 1)
+
+memlayout = wibox.layout.mirror()
+memlayout:set_reflection({ vertical = true })
+memlayout:set_widget(memwidget)
 
 -- Create a wibox for each screen and add it
 mywibox     = {}
@@ -117,9 +125,9 @@ for s = 1, screen.count() do
         right_layout:add(spacer)
         right_layout:add(mysystray)
         right_layout:add(spacer)
-        right_layout:add(cpuwidget)
+        right_layout:add(cpulayout)
         right_layout:add(spacer)
-        right_layout:add(memwidget)
+        right_layout:add(memlayout)
         right_layout:add(spacer)
         right_layout:add(mytextclock)
         right_layout:add(mylayoutbox[s])
