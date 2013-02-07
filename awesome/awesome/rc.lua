@@ -205,7 +205,7 @@ globalkeys = awful.util.table.join(
 
     -- Power control
     awful.key({ altkey, ctrlkey, shiftkey }, "h", function () exec("systemctl poweroff")                  end),
-    awful.key({ altkey, ctrlkey, shiftkey }, "r", function () exec("systemctl restart")                   end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "r", function () exec("systemctl reboot")                    end),
     awful.key({ altkey, ctrlkey, shiftkey }, "s", function () sexec(lock_cmd .. " & systemctl suspend")   end),
     awful.key({ }, "XF86Sleep",                   function () sexec(lock_cmd .. " & systemctl suspend")   end),
     awful.key({ altkey, ctrlkey, shiftkey }, "d", function () sexec(lock_cmd .. " & systemctl hibernate") end),
