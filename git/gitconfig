@@ -19,6 +19,11 @@
 
 [merge]
 	tool = vimdiff
+	guitool = meld
+
+[diff]
+	tool = vimdiff
+	guitool = meld
 
 [push]
 	default = simple
