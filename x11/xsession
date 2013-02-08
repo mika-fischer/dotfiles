@@ -52,6 +52,9 @@ else
     try_start xset m 1 0
 fi
 
+# Fix gdm enabling accessibilty features
+try_start xkbset -a
+
 # Add SSH key
 if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
     [ -z "$SSH_ASKPASS" ] && [ -x /usr/lib/openssh/ssh-askpass ] && export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass
