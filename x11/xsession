@@ -1,8 +1,16 @@
 #!/bin/bash
 
+log() {
+    echo "$@" | tee -a ~/.xsession.log
+}
+
+log "--------------------------------------------------------------------------------"
+log "XSession starting at $(date)"
+
 # Make sure we're a login shell so that /etc/profile gets included
 if ! shopt -q login_shell; then
-    APPEND="-l"
+    log "Restarting $0: bash -l $0 $@"
+    exec bash -l $0 "$@"
 fi
 
 # GPG/SSH agent
@@ -15,21 +23,22 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && have_prog dbus-launch; then
     PREPEND+=" dbus-launch --exit-with-session"
 fi
 
+log "PREPEND: $PREPEND"
+log "XSESSION_RESTARTED: $XSESSION_RESTARTED"
+
 # If we have to append or prepend something, restart ourselves
-if [ -z "$XSESSION_RESTARTED" ]; then
-    if [ -n "$PREPEND" ] || [ -n "$APPEND" ]; then
-        export XSESSION_RESTARTED=1
-        echo "Restarting $0: $PREPEND bash $APPEND $0 $@"
-        exec $PREPEND bash $APPEND $0 "$@"
-    fi
+if [ -z "$XSESSION_RESTARTED" ] && [ -n "$PREPEND" ]; then
+    export XSESSION_RESTARTED=1
+    log "Restarting $0: $PREPEND bash -l $0 $@"
+    exec $PREPEND bash -l $0 "$@"
 fi
 
 # X resources
-echo "Loading Xresources"
+log "Loading Xresources"
 [ -f ~/.Xresources ] && try_start xrdb -merge ~/.Xresources
 
 # Keyboard setup
-echo "Setting up input devices"
+log "Setting up input devices"
 # US-Intl. AltGr layout, Caps is Ctrl, Menu is Compose
 try_start setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
 # Make useless <> key useful
@@ -91,9 +100,9 @@ try_start_bg_delay 2 gstm
 try_start_bg_delay 2 SpiderOak
 
 # Window manager
-echo "Starting window manager"
+log "Starting window manager"
 
 for i in awesome qtile-session qtile xmonad i3 xterm; do
-    echo Trying $i
+    log Trying $i
     have_prog $i && exec $i
 done
