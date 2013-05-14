@@ -44,8 +44,8 @@ xterm*color15: #A0A0A0
 URxvt.font:         xft:DejaVu Sans Mono:size=8
 URxvt.letterSpace:  -1
 URxvt.reverseVideo: false
-URxvt.foreground:   Black
-URxvt.background:   White
+URxvt.foreground:   #000000
+URxvt.background:   #FFFFFF
 URxvt.scrollBar:    false
 URxvt.visualBell:   false
 URxvt.urgentOnBell: true
@@ -74,7 +74,7 @@ URxvt.pasteCommand:    xsel -ob
 
 ! Transparency
 URxvt.transparent:  false
-URxvt.tintColor:    White
+URxvt.tintColor:    #FFFFFF
 !URxvt.shading:      5
 URxvt.shading:      190
 
