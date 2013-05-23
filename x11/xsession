@@ -70,6 +70,9 @@ if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
     [ -n "$SSH_ASKPASS" ] && try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
 fi
 
+# PulseAudio server
+try_start_bg start-pulseaudio-x11
+
 # xcompmgr
 try_start_bg xcompmgr -cfC -D 5
 
@@ -88,12 +91,16 @@ try_start_bg mount-tray
 
 # Wifi
 try_start_bg wicd-gtk --tray
+try_start_bg nm-applet
 
 # Battery
 try_start_bg batti
 
 # Volume control
 try_start_bg volumeicon
+
+# Dropbox
+try_start_bg dropboxd
 
 # Other applications
 try_start_bg_delay 2 gstm
