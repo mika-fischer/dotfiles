@@ -124,14 +124,14 @@ for s = 1, screen.count() do
     if s == 1 then
         right_layout:add(spacer)
         right_layout:add(mysystray)
-        right_layout:add(spacer)
-        right_layout:add(cpulayout)
-        right_layout:add(spacer)
-        right_layout:add(memlayout)
-        right_layout:add(spacer)
-        right_layout:add(mytextclock)
-        right_layout:add(mylayoutbox[s])
     end
+    right_layout:add(spacer)
+    right_layout:add(cpulayout)
+    right_layout:add(spacer)
+    right_layout:add(memlayout)
+    right_layout:add(spacer)
+    right_layout:add(mytextclock)
+    right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
