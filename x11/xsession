@@ -99,12 +99,11 @@ try_start_bg batti
 # Volume control
 try_start_bg volumeicon
 
-# Dropbox
-try_start_bg dropboxd
+# OwnCloud
+try_start_bg owncloud
 
 # Other applications
 try_start_bg_delay 2 gstm
-try_start_bg_delay 2 SpiderOak
 
 # Window manager
 log "Starting window manager"
