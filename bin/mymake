@@ -70,6 +70,10 @@ fi
 ###############################################################################
 if [[ $BUILD_TOOL == "ninja" ]]; then
     CMAKE_GENERATOR="Ninja"
+elif [[ $BUILD_TOOL == "ninja4eclipse" ]]; then
+    BUILD_TOOL=ninja
+    CMAKE_GENERATOR="Eclipse CDT4 - Ninja"
+    CMAKE_EXTRA_OPTS="-D CMAKE_CXX_COMPILER_ID:STRING=GNU -D CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++"
 elif [[ $BUILD_TOOL == "make" ]]; then
     CMAKE_GENERATOR="Unix Makefiles"
 else
@@ -170,6 +174,7 @@ for mod in $BUILD_MODULES; do
         BUILD_DIR=${BUILD_B}release
         if [[ ! -e $BUILD_DIR ]]; then
             ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+                $CMAKE_EXTRA_OPTS \
                 -G "$CMAKE_GENERATOR" \
                 -DCMAKE_BUILD_TYPE:STRING=Release $CMAKE_OPTS \
                 $SRC_DIR )
@@ -181,6 +186,7 @@ for mod in $BUILD_MODULES; do
         BUILD_DIR=${BUILD_B}debug
         if [[ ! -e $BUILD_DIR ]]; then
             ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+                $CMAKE_EXTRA_OPTS \
                 -G "$CMAKE_GENERATOR" \
                 -DCMAKE_BUILD_TYPE:STRING=Debug $CMAKE_OPTS \
                 $SRC_DIR )
