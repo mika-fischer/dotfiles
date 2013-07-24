@@ -90,6 +90,14 @@ memlayout = wibox.layout.mirror()
 memlayout:set_reflection({ vertical = true })
 memlayout:set_widget(memwidget)
 
+weatherwidget = wibox.widget.textbox()
+weathertooltip = awful.tooltip({ objects = { weatherwidget }, })
+vicious.register(weatherwidget, vicious.widgets.weather,
+                function (widget, args)
+                    weathertooltip:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
+                    return args["{tempc}"] .. "°C"
+                end, 1800, "EDSB")
+
 -- Create a wibox for each screen and add it
 mywibox     = {}
 mypromptbox = {}
@@ -129,6 +137,8 @@ for s = 1, screen.count() do
     right_layout:add(cpulayout)
     right_layout:add(spacer)
     right_layout:add(memlayout)
+    right_layout:add(spacer)
+    right_layout:add(weatherwidget)
     right_layout:add(spacer)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
