@@ -3,3 +3,5 @@
 /.cproject
 /.clang_complete
 /.settings
+*.pyc
+__pycache__
