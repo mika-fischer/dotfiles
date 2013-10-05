@@ -164,7 +164,7 @@ nnoremap <silent><leader><leader> :CtrlP<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme zoop
+colorscheme solarized
 if has("gui_running")
     set guioptions+=c
     set guioptions-=m

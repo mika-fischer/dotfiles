@@ -30,7 +30,7 @@ local lock_cmd      = "xscreensaver-command -lock"
 
 menubar.cache_entries = true
 menubar.app_folders = { "/usr/share/applications/" }
-beautiful.init(home .. "/.config/awesome/themes/zoop/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/themes/zoop/theme.lua")
 
 -- {{{ Layouts
 local layouts =
