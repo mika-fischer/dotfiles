@@ -18,6 +18,7 @@
 	pma = !git co master && git pull
 
 [merge]
+	conflictstyle = diff3
 	tool = vimdiff
 	guitool = meld
 
