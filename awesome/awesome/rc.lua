@@ -96,7 +96,7 @@ vicious.register(weatherwidget, vicious.widgets.weather,
                 function (widget, args)
                     weathertooltip:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
                     return args["{tempc}"] .. "°C"
-                end, 1800, "EDSB")
+                end, 600, "EDSB")
 
 -- Create a wibox for each screen and add it
 mywibox     = {}
