@@ -5,6 +5,12 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
 " Override non-UTF-8 locale
 scriptencoding utf-8
 set encoding=utf-8

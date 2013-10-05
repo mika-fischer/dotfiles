@@ -6,3 +6,6 @@
 	path = awesome/awesome/vicious
 	url = http://git.sysphere.org/vicious
 	ignore = untracked
+[submodule "vim/vim/bundle/vundle"]
+	path = vim/vim/bundle/vundle
+	url = https://github.com/gmarik/vundle.git
