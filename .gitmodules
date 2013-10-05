@@ -1,51 +1,3 @@
-[submodule "vim/vim/bundle/nerdtree"]
-	path = vim/vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-	ignore = untracked
-[submodule "vim/vim/bundle/nerdcommenter"]
-	path = vim/vim/bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-	ignore = untracked
-[submodule "vim/vim/bundle/fugitive"]
-	path = vim/vim/bundle/fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-	ignore = untracked
-[submodule "vim/vim/bundle/lusty"]
-	path = vim/vim/bundle/lusty
-	url = https://github.com/sjbach/lusty.git
-	ignore = untracked
-[submodule "vim/vim/bundle/pydoc/plugin"]
-	path = vim/vim/bundle/pydoc/plugin
-	url = https://github.com/fs111/pydoc.vim.git
-	ignore = untracked
-[submodule "vim/vim/bundle/clang-complete"]
-	path = vim/vim/bundle/clang-complete
-	url = https://github.com/Rip-Rip/clang_complete.git
-	ignore = untracked
-[submodule "vim/vim/bundle/quickfixsigns"]
-	path = vim/vim/bundle/quickfixsigns
-	url = https://github.com/vim-scripts/quickfixsigns.git
-	ignore = untracked
-[submodule "vim/vim/bundle/bufexplorer"]
-	path = vim/vim/bundle/bufexplorer
-	url = https://github.com/vim-scripts/bufexplorer.zip.git
-	ignore = untracked
-[submodule "vim/vim/bundle/doxygen-toolkit"]
-	path = vim/vim/bundle/doxygen-toolkit
-	url = https://github.com/vim-scripts/DoxygenToolkit.vim.git
-	ignore = untracked
-[submodule "vim/vim/bundle/taglist"]
-	path = vim/vim/bundle/taglist
-	url = https://github.com/vim-scripts/taglist.vim.git
-	ignore = untracked
-[submodule "vim/vim/bundle/yankring"]
-	path = vim/vim/bundle/yankring
-	url = https://github.com/vim-scripts/YankRing.vim.git
-	ignore = untracked
-[submodule "vim/vim/bundle/pyflakes-vim"]
-	path = vim/vim/bundle/pyflakes-vim
-	url = https://github.com/kevinw/pyflakes-vim.git
-	ignore = untracked
 [submodule "urxvt/urxvt/ext/urxvt-perls"]
 	path = urxvt/urxvt/ext/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls.git
@@ -53,32 +5,4 @@
 [submodule "awesome/awesome/vicious"]
 	path = awesome/awesome/vicious
 	url = http://git.sysphere.org/vicious
-	ignore = untracked
-[submodule "vim/vim/bundle/pathogen"]
-	path = vim/vim/bundle/pathogen
-	url = https://github.com/tpope/vim-pathogen.git
-	ignore = untracked
-[submodule "vim/vim/bundle/automaticlatexplugin"]
-	path = vim/vim/bundle/automaticlatexplugin
-	url = https://github.com/vim-scripts/AutomaticLaTexPlugin.git
-	ignore = untracked
-[submodule "vim/vim/bundle/command-t"]
-	path = vim/vim/bundle/command-t
-	url = git://git.wincent.com/command-t.git
-	ignore = untracked
-[submodule "vim/vim/bundle/surround"]
-	path = vim/vim/bundle/surround
-	url = https://github.com/tpope/vim-surround.git
-	ignore = untracked
-[submodule "vim/vim/bundle/repeat"]
-	path = vim/vim/bundle/repeat
-	url = https://github.com/tpope/vim-repeat.git
-	ignore = untracked
-[submodule "vim/vim/bundle/snipmate"]
-	path = vim/vim/bundle/snipmate
-	url = https://github.com/msanders/snipmate.vim.git
-	ignore = untracked
-[submodule "vim/vim/bundle/ctrlp"]
-	path = vim/vim/bundle/ctrlp
-	url = https://github.com/kien/ctrlp.vim.git
 	ignore = untracked
