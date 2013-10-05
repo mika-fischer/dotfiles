@@ -2,6 +2,7 @@
 /.project
 /.cproject
 /.clang_complete
+/.pydevproject
 /.settings
 *.pyc
 __pycache__
