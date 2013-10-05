@@ -74,7 +74,7 @@ fi
 try_start_bg start-pulseaudio-x11
 
 # xcompmgr
-try_start_bg xcompmgr -cfC -D 5
+try_start_bg compton --vsync opengl
 
 # Wallpapers
 $HOME/bin/wallpaper.sh & disown
