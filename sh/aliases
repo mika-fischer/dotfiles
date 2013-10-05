@@ -21,6 +21,11 @@ alias y='yaourt'
 alias ydep='yaourt -D --asdeps'
 alias yexp='yaourt -D --asexplicit'
 
+alias apti='sudo apt-get install'
+alias apts='apt-cache search'
+alias aptu='sudo apt-get upgrade'
+alias aptdu='sudo apt-get dist-upgrade'
+
 #----------------------------------------------------------------------------
 # Local aliases
 #----------------------------------------------------------------------------
