@@ -98,6 +98,25 @@ vicious.register(weatherwidget, vicious.widgets.weather,
                     return args["{tempc}"] .. "°C"
                 end, 600, "EDSB")
 
+-- Keyboard map indicator and changer
+kbdcfg = {}
+kbdcfg.cmd = "setxkbmap"
+kbdcfg.options = "-option ctrl:nocaps -option compose:menu"
+kbdcfg.layout = { { "cm", "us", "colemak" }, { "us", "us", "altgr-intl" }, { "de", "de", "nodeadkeys" } }
+kbdcfg.current = 3
+kbdcfg.widget = wibox.widget.textbox()
+kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][1] .. " ")
+kbdcfg.switch = function ()
+    kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+    local t = kbdcfg.layout[kbdcfg.current]
+    kbdcfg.widget:set_text(" " .. t[1] .. " ")
+    os.execute(kbdcfg.cmd .. " -layout " .. t[2] .. " -variant " .. t[3] .. " " .. kbdcfg.options )
+end
+kbdcfg.widget:buttons(
+    awful.util.table.join(awful.button({ }, 1, function () kbdcfg.switch() end))
+)
+kbdcfg.switch()
+
 -- Create a wibox for each screen and add it
 mywibox     = {}
 mypromptbox = {}
@@ -133,6 +152,8 @@ for s = 1, screen.count() do
         right_layout:add(spacer)
         right_layout:add(mysystray)
     end
+    right_layout:add(spacer)
+    right_layout:add(kbdcfg.widget)
     right_layout:add(spacer)
     right_layout:add(cpulayout)
     right_layout:add(spacer)
