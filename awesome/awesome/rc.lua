@@ -101,7 +101,7 @@ vicious.register(weatherwidget, vicious.widgets.weather,
 -- Keyboard map indicator and changer
 kbdcfg = {}
 kbdcfg.cmd = "setxkbmap"
-kbdcfg.options = "-option ctrl:nocaps -option compose:menu"
+kbdcfg.options = "-option caps:backspace -option compose:menu"
 kbdcfg.layout = { { "cm", "us", "colemak" }, { "us", "us", "altgr-intl" }, { "de", "de", "nodeadkeys" } }
 kbdcfg.current = 3
 kbdcfg.widget = wibox.widget.textbox()

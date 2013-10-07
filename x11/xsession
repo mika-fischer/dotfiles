@@ -40,7 +40,7 @@ log "Loading Xresources"
 # Keyboard setup
 log "Setting up input devices"
 # US-Intl. AltGr layout, Caps is Ctrl, Menu is Compose
-try_start setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
+try_start setxkbmap -layout us -variant altgr-intl -option caps:backspace -option compose:menu
 # Make useless <> key useful
 try_start xmodmap -e "keycode 94 = Super_L Super_L Super_L"
 try_start xmodmap -e "add mod4 = Super_L"
