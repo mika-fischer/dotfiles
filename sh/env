@@ -15,7 +15,6 @@ export LC_COLLATE=C
 export GIT_CEILING_DIRECTORIES="/home"
 
 # Java fixes
-export _JAVA_AWT_WM_NONREPARENTING="1"
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 
 #----------------------------------------------------------------------------
