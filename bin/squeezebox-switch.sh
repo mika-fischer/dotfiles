@@ -2,7 +2,7 @@
 
 CURFILE="$HOME/.mysqueezebox"
 NAME=$(basename $0)
-PSC_BIN="pysqueezecenter"
+PSC_BIN="pylms"
 
 current=$(cat $CURFILE 2>/dev/null)
 
