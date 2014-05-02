@@ -102,7 +102,7 @@ vicious.register(weatherwidget, vicious.widgets.weather,
 kbdcfg = {}
 kbdcfg.cmd = "setxkbmap"
 kbdcfg.options = "-option caps:backspace -option compose:menu"
-kbdcfg.layout = { { "cm", "us", "colemak" }, { "us", "us", "altgr-intl" }, { "de", "de", "nodeadkeys" } }
+kbdcfg.layout = { { "us", "us", "altgr-intl" }, { "cm", "us", "colemak" }, { "de", "de", "nodeadkeys" } }
 kbdcfg.current = 3
 kbdcfg.widget = wibox.widget.textbox()
 kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][1] .. " ")
