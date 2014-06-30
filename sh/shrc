@@ -5,6 +5,8 @@
 
 stty -ixon -ixoff
 
+[[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && . /usr/bin/virtualenvwrapper_lazy.sh
+
 #----------------------------------------------------------------------------
 # Local initialization
 #----------------------------------------------------------------------------

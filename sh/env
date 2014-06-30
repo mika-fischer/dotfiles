@@ -13,6 +13,7 @@ export EMAIL="mika.fischer@zoopnet.de"
 export LC_MESSAGES=C
 export LC_COLLATE=C
 export GIT_CEILING_DIRECTORIES="/home"
+export WORKON_HOME=~/.virtualenvs
 
 # Java fixes
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
