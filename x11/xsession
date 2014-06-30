@@ -107,6 +107,9 @@ try_start_bg_delay 2 gstm
 
 # Window manager
 log "Starting window manager"
+if [ -n "$1" ]; then
+    have_prog $1 && exec $1
+fi
 
 for i in awesome qtile-session qtile xmonad i3 xterm; do
     log Trying $i
