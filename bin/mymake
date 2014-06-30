@@ -74,6 +74,9 @@ elif [[ $BUILD_TOOL == "ninja4eclipse" ]]; then
     BUILD_TOOL=ninja
     CMAKE_GENERATOR="Eclipse CDT4 - Ninja"
     CMAKE_EXTRA_OPTS="-D CMAKE_CXX_COMPILER_ID:STRING=GNU -D CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++"
+elif [[ $BUILD_TOOL == "ninja4codeblocks" ]]; then
+    BUILD_TOOL=ninja
+    CMAKE_GENERATOR="CodeBlocks - Ninja"
 elif [[ $BUILD_TOOL == "make" ]]; then
     CMAKE_GENERATOR="Unix Makefiles"
 else
