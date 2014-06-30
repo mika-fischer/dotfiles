@@ -26,14 +26,10 @@
 	tool = vimdiff
 	guitool = meld
 
-[push]
-	default = simple
-
 [status]
 	submodulesummary = true
 
 [http]
-	sslVerify = false
 	postBuffer = 100000000
 
 [tig "bind"]
