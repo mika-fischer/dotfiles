@@ -100,7 +100,7 @@ try_start_bg batti
 try_start_bg volumeicon
 
 # OwnCloud
-try_start_bg owncloud
+try_start_bg_delay 10 owncloud
 
 # Other applications
 try_start_bg_delay 2 gstm
