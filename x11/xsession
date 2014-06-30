@@ -86,7 +86,7 @@ try_start_bg unclutter
 try_start_bg xscreensaver -nosplash
 
 # Media automounting
-try_start_bg udiskie
+try_start_bg udiskie --tray
 try_start_bg mount-tray
 
 # Wifi
