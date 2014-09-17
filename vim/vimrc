@@ -24,6 +24,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-eunuch'
+Bundle 'sjl/gundo.vim'
 
 " Override non-UTF-8 locale
 scriptencoding utf-8
@@ -163,6 +164,8 @@ nnoremap <leader>f zA<cr>
 nnoremap <silent><leader>w :if &fo=~'t' | setl fo-=t | else | setl fo+=t | endif<cr>
 
 nnoremap <silent><leader><leader> :CtrlP<cr>
+
+nnoremap <leader>u :GundoToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
