@@ -25,13 +25,13 @@ class App(object):
 
     def run(self):
         for fn in sorted(listdir(self.dotfiles_dir)):
-            if fn.startswith('.'):
-                continue
+            if fn.startswith('.'): continue
             self.handlers[fn](fn)
 
     def handle_default(self, dn):
         """ dn/fn -> ~/.fn """
         for fn in sorted(listdir(join(self.dotfiles_dir, dn))):
+            if fn.startswith('.'): continue
             self.symlink(join(self.dotfiles_dir, dn, fn),
                          join(self.home_dir, '.' + fn))
 
@@ -47,6 +47,7 @@ class App(object):
         self.ensure_directory_exists(self.bin_dir)
 
         for fn in sorted(listdir(join(self.dotfiles_dir, dn))):
+            if fn.startswith('.'): continue
             self.symlink(join(self.dotfiles_dir, dn, fn),
                          join(self.home_dir, dn, fn))
 
