@@ -2,8 +2,11 @@
 
 from __future__ import print_function
 from collections import defaultdict
+import ctypes
 from os import listdir, makedirs, symlink, unlink
-from os.path import abspath, dirname, exists, expanduser, isabs, isdir, islink, join, relpath
+from os.path import (abspath, basename, dirname, exists, expanduser, isabs,
+        isdir, islink, join, relpath)
+import platform
 from sys import argv
 
 XDG_CONFIG_DIRS = ('awesome', 'fontconfig', 'gtk3', 'qtile', 'taffybar',
@@ -72,6 +75,9 @@ class App(object):
         rel_target = relpath(target, dirname(link))
         #print('{} -> {}'.format(link, rel_target))
         symlink(rel_target, link)
+        if platform.system() == 'Windows':
+            if basename(link).startswith('.'):
+                ctypes.windll.kernel32.SetFileAttributesW(link, 2)
 
 
 if __name__ == '__main__':
