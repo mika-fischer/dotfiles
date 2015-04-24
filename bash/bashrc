@@ -128,7 +128,7 @@ if [[ $EUID == 0 || $UID == 0 ]]; then
 else
     USER_COLOR=$GREEN
 fi
-[[ ! $USER =~ (mfischer|mika) ]] && P_USER="$USER"
+[[ $USER == mfischer || $USER == mika ]] || P_USER="$USER"
 [[ -n $SSH_CONNECTION ]]         && P_HOST="$HOSTNAME"
 [[ -n $P_USER && -n $P_HOST ]]   && P_AT="@"
 [[ -n $P_USER || -n $P_HOST ]]   && P_COLON=":"
