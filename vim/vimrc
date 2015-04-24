@@ -180,6 +180,8 @@ if has("gui_running")
     set guioptions-=T
     if has("gui_gtk2")
         set guifont=Monospace\ 8
+    elseif has("gui_win32")
+        set guifont=Consolas:h10
     endif
 else
     set titlestring=[%t]%(\%m%r%)
