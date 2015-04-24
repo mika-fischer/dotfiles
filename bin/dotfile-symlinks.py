@@ -3,14 +3,21 @@
 from __future__ import print_function
 from collections import defaultdict
 import ctypes
-from os import listdir, makedirs, symlink, unlink
+from os import listdir, makedirs, unlink
 from os.path import (abspath, basename, dirname, exists, expanduser, isabs,
         isdir, islink, join, relpath)
 import platform
-from sys import argv
+from sys import argv, exit
+try:
+    from os import symlink
+except ImportError:
+    print('Python 3.3 is needed under Windows')
+    exit(1)
+
 
 XDG_CONFIG_DIRS = ('awesome', 'fontconfig', 'gtk3', 'qtile', 'taffybar',
                    'volumeicon', 'zathura')
+
 
 class App(object):
     def __init__(self, home_dir=None):
@@ -81,6 +88,5 @@ class App(object):
 
 
 if __name__ == '__main__':
-    # Check if python version is >= 3.3 on Windows
     app = App(home_dir=(argv[1] if len(argv) > 1 else None))
     app.run()
