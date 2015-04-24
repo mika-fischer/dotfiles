@@ -170,6 +170,7 @@ nnoremap <leader>u :GundoToggle<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set background=light
 colorscheme solarized
 if has("gui_running")
     set guioptions+=c
