@@ -41,5 +41,8 @@
 	fontdiff = -family \"DejaVu Sans Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
 	spellingdictionary = en_US
 
+[push]
+	default = simple
+
 [include]
     path = ~/.gitconfig.local
