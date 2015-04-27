@@ -1,10 +1,21 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! Colors
+!! Color palette
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Solarized color scheme for the X Window System
 ! http://ethanschoonover.com/solarized
 
-! Common
+! Background (dark)
+#define S_base03  #002b36
+#define S_base02  #073642
+! Content
+#define S_base01  #586e75
+#define S_base00  #657b83
+#define S_base0   #839496
+#define S_base1   #93a1a1
+! Background (light)
+#define S_base2   #eee8d5
+#define S_base3   #fdf6e3
+! Accents
 #define S_yellow  #b58900
 #define S_orange  #cb4b16
 #define S_red     #dc322f
@@ -14,55 +25,52 @@
 #define S_cyan    #2aa198
 #define S_green   #859900
 
-! Dark
-!#define S_base03  #002b36
-!#define S_base02  #073642
-!#define S_base01  #586e75
-!#define S_base00  #657b83
-!#define S_base0   #839496
-!#define S_base1   #93a1a1
-!#define S_base2   #eee8d5
-!#define S_base3   #fdf6e3
 
-! Light
-#define S_base03  #fdf6e3
-#define S_base02  #eee8d5
-#define S_base01  #93a1a1
-#define S_base00  #839496
-#define S_base0   #657b83
-#define S_base1   #586e75
-#define S_base2   #073642
-#define S_base3   #002b36
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! Common configuration
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Behavior
+*reverseVideo: false
+*scrollBar:    false
+*visualBell:   false
+! Color
+*background:   S_base3
+*foreground:   S_base00
+*fadeColor:    S_base3
+*cursorColor:  S_base01
+! black
+*color0:       S_base02
+*color8:       S_base03
+! red
+*color1:       S_red
+*color9:       S_orange
+! green
+*color2:       S_green
+*color10:      S_base01
+! yellow
+*color3:       S_yellow
+*color11:      S_base00
+! blue
+*color4:       S_blue
+*color12:      S_base0
+! magenta
+*color5:       S_magenta
+*color13:      S_violet
+! cyan
+*color6:       S_cyan
+*color14:      S_base1
+! white
+*color7:       S_base2
+*color15:      S_base3
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! XTerm
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-xterm*scrollBar:              false
-xterm*termName:               xterm-256color
-xterm*faceName:               DejaVu Sans Mono:size=8
-
-xterm*background:             S_base03
-xterm*foreground:             S_base0
-xterm*fadeColor:              S_base03
-xterm*cursorColor:            S_base1
-xterm*pointerColorBackground: S_base01
-xterm*pointerColorForeground: S_base1
-xterm*color0:                 S_base02
-xterm*color1:                 S_red
-xterm*color2:                 S_green
-xterm*color3:                 S_yellow
-xterm*color4:                 S_blue
-xterm*color5:                 S_magenta
-xterm*color6:                 S_cyan
-xterm*color7:                 S_base2
-xterm*color8:                 S_base03
-xterm*color9:                 S_orange
-xterm*color10:                S_base01
-xterm*color11:                S_base00
-xterm*color12:                S_base0
-xterm*color13:                S_violet
-xterm*color14:                S_base1
-xterm*color15:                S_base3
+xterm*faceName:     Monospace:size=8
+xterm*boldColors:   false
+xterm*bellIsUrgent: true
+xterm*termName:     xterm-256color
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -72,43 +80,9 @@ URxvt.font:            xft:Monospace:size=8
 URxvt.letterSpace:     -1
 URxvt.intensityStyles: false
 URxvt.reverseVideo:    false
-URxvt.scrollBar:       false
-URxvt.visualBell:      false
 URxvt.urgentOnBell:    true
 URxvt.iso14755:        false
 URxvt.iso14755_52:     false
-
-! Colors
-URxvt.background:             S_base03
-URxvt.foreground:             S_base0
-URxvt.fadeColor:              S_base03
-URxvt.cursorColor:            S_base1
-URxvt.pointerColorBackground: S_base01
-URxvt.pointerColorForeground: S_base1
-! black
-URxvt.color0:                 S_base02
-URxvt.color8:                 S_base03
-! red
-URxvt.color1:                 S_red
-URxvt.color9:                 S_orange
-! green
-URxvt.color2:                 S_green
-URxvt.color10:                S_base01
-! yellow
-URxvt.color3:                 S_yellow
-URxvt.color11:                S_base00
-! blue
-URxvt.color4:                 S_blue
-URxvt.color12:                S_base0
-! magenta
-URxvt.color5:                 S_magenta
-URxvt.color13:                S_violet
-! cyan
-URxvt.color6:                 S_cyan
-URxvt.color14:                S_base1
-! white
-URxvt.color7:                 S_base2
-URxvt.color15:                S_base3
 
 ! Plugins
 URxvt.perl-lib:        .urxvt/perl
@@ -129,6 +103,7 @@ URxvt.keysym.M-v:      perl:clipboard:paste
 URxvt.keysym.M-C-v:    perl:clipboard:paste_escaped
 URxvt.copyCommand:     xsel -ib
 URxvt.pasteCommand:    xsel -ob
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! Fonts
