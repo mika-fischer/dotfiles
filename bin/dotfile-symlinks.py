@@ -46,16 +46,15 @@ class App(object):
                          join(self.home_dir, '.' + fn))
 
     def handle_xdg_config(self, dn):
-        """ dn -> ~/.config/dn """
+        """ dn/fn -> ~/.config/fn """
         self.ensure_directory_exists(self.xdg_config_dir)
-
-        self.symlink(join(self.dotfiles_dir, dn),
-                     join(self.xdg_config_dir, dn))
+        for fn in sorted(listdir(join(self.dotfiles_dir, dn))):
+            self.symlink(join(self.dotfiles_dir, dn, fn),
+                         join(self.xdg_config_dir, fn))
 
     def handle_bin(self, dn):
         """ dn/fn -> ~/bin/fn """
         self.ensure_directory_exists(self.bin_dir)
-
         for fn in sorted(listdir(join(self.dotfiles_dir, dn))):
             if fn.startswith('.'): continue
             self.symlink(join(self.dotfiles_dir, dn, fn),
