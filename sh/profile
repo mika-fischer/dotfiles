@@ -12,7 +12,6 @@
 [ -x "/bin/dircolors" ]      && eval "$(dircolors -b)"
 [ -x "/usr/bin/lesspipe" ] &&   export LESSOPEN="|/usr/bin/lesspipe %s"
 export LESS="-FSRX"
-export GREP_OPTIONS="--color=auto"
 
 #----------------------------------------------------------------------------
 # System initialization
