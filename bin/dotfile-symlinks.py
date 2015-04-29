@@ -34,6 +34,8 @@ class App(object):
         self.handlers['bin'] = self.handle_bin
 
     def run(self):
+        if basename(self.dotfiles_dir).startswith('.'):
+            self.hide_file(self.dotfiles_dir)
         for fn in sorted(listdir(self.dotfiles_dir)):
             if fn.startswith('.'): continue
             self.handlers[fn](fn)
@@ -60,15 +62,17 @@ class App(object):
             self.symlink(join(self.dotfiles_dir, dn, fn),
                          join(self.home_dir, dn, fn))
 
-    @staticmethod
-    def ensure_directory_exists(dn):
+    @classmethod
+    def ensure_directory_exists(cls, dn):
         if not exists(dn):
             makedirs(dn)
+        if basename(dn).startswith('.'):
+            cls.hide_file(dn)
         if not isdir(dn):
             raise Exception('{} is not a directory!'.format(dn))
 
-    @staticmethod
-    def symlink(target, link):
+    @classmethod
+    def symlink(cls, target, link):
         assert isabs(target)
         assert isabs(link)
 
@@ -81,10 +85,13 @@ class App(object):
         rel_target = relpath(target, dirname(link))
         #print('{} -> {}'.format(link, rel_target))
         symlink(rel_target, link)
-        if platform.system() == 'Windows':
-            if basename(link).startswith('.'):
-                ctypes.windll.kernel32.SetFileAttributesW(link, 2)
+        if basename(link).startswith('.'):
+            cls.hide_file(link)
 
+    @staticmethod
+    def hide_file(path):
+        if platform.system() == 'Windows':
+            ctypes.windll.kernel32.SetFileAttributesW(path, 2)
 
 if __name__ == '__main__':
     app = App(home_dir=(argv[1] if len(argv) > 1 else None))
