@@ -36,8 +36,7 @@ set -e
 # Default values
 ###############################################################################
 MODULE_DIRS="$HOME/src"
-BUILD_DEBUG=
-BUILD_RELEASE=1
+BUILD_TYPE=release
 BUILD_MODULES=
 BUILD_TOOL=make
 
@@ -51,19 +50,18 @@ fi
 ###############################################################################
 # Command line parsing
 ###############################################################################
-if [[ "$1" == "both" ]]; then
-    BUILD_DEBUG=1
-    BUILD_RELEASE=1
+case $1 in release|debug|relwithdebinfo|minsizerel)
+    BUILD_TYPE=$1
     shift
-elif [[ "$1" == "debug" ]]; then
-    BUILD_DEBUG=1
-    BUILD_RELEASE=
-    shift
-elif [[ "$1" == "release" ]]; then
-    BUILD_DEBUG=
-    BUILD_RELEASE=1
-    shift
-fi
+    ;;
+esac
+
+case $BUILD_TYPE in
+    release)        CMAKE_BUILD_TYPE="Release" ;;
+    debug)          CMAKE_BUILD_TYPE="Debug" ;;
+    relwithdebinfo) CMAKE_BUILD_TYPE="RelWithDebInfo" ;;
+    minsizerel)     CMAKE_BUILD_TYPE="MinSizeRel" ;;
+esac
 
 ###############################################################################
 # Build tool stuff
@@ -143,8 +141,10 @@ if [[ -z "$BUILD_MODULES" ]]; then
     done
 fi
 
+echo "$@"
+
 if [[ -z "$BUILD_MODULES" ]]; then
-    echo "Usage: ${0##*/} [debug|release|both] [project1 project2 ...] [make options]"
+    echo "Usage: ${0##*/} [release|debug|relwithdebinfo|...] [project1 project2 ...] [make options]"
     echo "Error: No project was found. Please provide one on the command line or"
     echo "       call this script from within a source directory"
     exit 1
@@ -154,10 +154,7 @@ fi
 # Building
 ###############################################################################
 
-echo -ne "Building: $BUILD_MODULES ["
-[[ -n $BUILD_DEBUG   ]] && echo -ne " debug"
-[[ -n $BUILD_RELEASE ]] && echo -ne " release"
-echo " ]"
+echo -ne "Building: $BUILD_MODULES [$BUILD_TYPE]"
 
 for mod in $BUILD_MODULES; do
     VAR=$(eval echo ${mod//[.-]/_}_PATH)
@@ -173,28 +170,13 @@ for mod in $BUILD_MODULES; do
         BUILD_B=$BUILD_BASE/$mod/
     fi
 
-    if [[ -n "$BUILD_RELEASE" ]]; then
-        BUILD_DIR=${BUILD_B}release
-        if [[ ! -e $BUILD_DIR ]]; then
-            ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
-                $CMAKE_EXTRA_OPTS \
-                -G "$CMAKE_GENERATOR" \
-                -DCMAKE_BUILD_TYPE:STRING=Release $CMAKE_OPTS \
-                $SRC_DIR )
-        fi
-        ( cd $BUILD_DIR && $BUILD_TOOL $EXTRA_OPTS "$@" )
+    BUILD_DIR=${BUILD_B}${BUILD_TYPE}
+    if [[ ! -e $BUILD_DIR ]]; then
+        ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
+            $CMAKE_EXTRA_OPTS \
+            -G "$CMAKE_GENERATOR" \
+            -DCMAKE_BUILD_TYPE:STRING=$CMAKE_BUILD_TYPE $CMAKE_OPTS \
+            $SRC_DIR )
     fi
-
-    if [[ -n "$BUILD_DEBUG" ]]; then
-        BUILD_DIR=${BUILD_B}debug
-        if [[ ! -e $BUILD_DIR ]]; then
-            ( mkdir -p $BUILD_DIR && cd $BUILD_DIR && cmake \
-                $CMAKE_EXTRA_OPTS \
-                -G "$CMAKE_GENERATOR" \
-                -DCMAKE_BUILD_TYPE:STRING=Debug $CMAKE_OPTS \
-                $SRC_DIR )
-        fi
-        ( cd $BUILD_DIR && $BUILD_TOOL $EXTRA_OPTS "$@" )
-    fi
+    ( cd $BUILD_DIR && $BUILD_TOOL $EXTRA_OPTS "$@" )
 done
-
