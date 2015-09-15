@@ -154,7 +154,7 @@ fi
 # Building
 ###############################################################################
 
-echo -ne "Building: $BUILD_MODULES [$BUILD_TYPE]"
+echo "Building: $BUILD_MODULES [$BUILD_TYPE]"
 
 for mod in $BUILD_MODULES; do
     VAR=$(eval echo ${mod//[.-]/_}_PATH)
