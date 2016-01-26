@@ -41,7 +41,7 @@ alias qwerty='setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -opti
 alias qwertz='setxkbmap -layout de -variant nodeadkeys -option ctrl:nocaps -option compose:menu'
 
 [ -e /local/mass/mfischer/miniconda/bin/activate ]   && alias aa='. /local/mass/mfischer/miniconda/bin/activate'
-[ -e /local/mass/mfischer/miniconda/bin/deactivate ] && alias ad='. /local/mass/mfischer/miniconda/bin/deactivate'
+[ -e /local/mass/mfischer/miniconda/bin/deactivate ] && alias ad='. /local/mass/mfischer/miniconda/bin/activate root && . /local/mass/mfischer/miniconda/bin/deactivate'
 alias ipynb='ipython notebook --no-browser --ip=0.0.0.0'
 
 #----------------------------------------------------------------------------
