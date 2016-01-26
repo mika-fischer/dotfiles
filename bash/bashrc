@@ -134,6 +134,7 @@ fi
 [[ -n $P_USER || -n $P_HOST ]]   && P_COLON=":"
 
 PS1="\
+${YELLOW}\${P_CONDA}\
 ${USER_COLOR}${P_USER}\
 ${GREEN}${P_AT}\
 ${CYAN}${P_HOST}\
@@ -148,6 +149,12 @@ function my_prompt_command
     # Exit code of last command
     local RC=$?
     [[ $RC -ne 0 ]] && P_STATUS="($RC)" || P_STATUS=""
+
+    if [[ -n $CONDA_DEFAULT_ENV ]]; then
+        P_CONDA="[$CONDA_DEFAULT_ENV${MAGENTA}]"
+    else
+        P_CONDA=""
+    fi
 
     # Git branch display
     if declare -F __git_ps1 >/dev/null 2>&1; then P_VCS=$(__git_ps1 "[%s]"); fi

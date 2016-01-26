@@ -109,7 +109,9 @@ autoload -Uz vcs_info
                                         local P_PATH="%30<...<%~%<<"
                                         local P_VCS="\${vcs_info_msg_0_}"
                                         local P_STATUS="%(?..(%?%))"
+                                        local P_CONDA="\${conda_info_msg}"
 PS1="\
+${P_CONDA}\
 %(#.%F{red}%B.%F{green})${P_USER}\
 %b%F{green}${P_AT}\
 %F{cyan}${P_HOST}\
@@ -119,7 +121,7 @@ ${P_VCS}\
 %F{red}${P_STATUS}\
 %b%f%# "
 
-is-at-least 4.3.9 || PS1="${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}${P_VCS}${P_STATUS}%# "
+is-at-least 4.3.9 || PS1="${P_CONDA}${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}${P_VCS}${P_STATUS}%# "
 
 function zle-line-init zle-keymap-select {
     RPS1="${${KEYMAP/vicmd/}/(main|viins)/-- INSERT --}"
@@ -149,12 +151,21 @@ function my_precmd
 {
     settitle "${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}"
 }
+function set_conda_info_msg
+{
+    if [[ -n $CONDA_DEFAULT_ENV ]]; then
+        conda_info_msg="%b%F{magenta}[%F{yellow}$CONDA_DEFAULT_ENV%F{magenta}]%f"
+    else
+        conda_info_msg=""
+    fi
+}
 
 #----------------------------------------------------------------------------
 # Hooks
 #----------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
 function_exists vcs_info && add-zsh-hook precmd vcs_info
+add-zsh-hook precmd set_conda_info_msg
 add-zsh-hook precmd my_precmd
 add-zsh-hook preexec my_preexec
 
