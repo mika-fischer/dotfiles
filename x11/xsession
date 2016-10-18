@@ -1,44 +1,6 @@
 #!/bin/bash
 
-log() {
-    echo "$@" | tee -a ~/.xsession.log
-}
-
-log "--------------------------------------------------------------------------------"
-log "XSession starting at $(date)"
-
-# Make sure we're a login shell so that /etc/profile gets included
-if ! shopt -q login_shell; then
-    log "Restarting $0: bash -l $0 $@"
-    exec bash -l $0 "$@"
-fi
-
-# GPG/SSH agent
-if [ -z "$SSH_AUTH_SOCK" ] && have_prog ssh-agent; then
-    PREPEND+=" ssh-agent"
-fi
-
-# DBus
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && have_prog dbus-launch; then
-    PREPEND+=" dbus-launch --exit-with-session"
-fi
-
-log "PREPEND: $PREPEND"
-log "XSESSION_RESTARTED: $XSESSION_RESTARTED"
-
-# If we have to append or prepend something, restart ourselves
-if [ -z "$XSESSION_RESTARTED" ] && [ -n "$PREPEND" ]; then
-    export XSESSION_RESTARTED=1
-    log "Restarting $0: $PREPEND bash -l $0 $@"
-    exec $PREPEND bash -l $0 "$@"
-fi
-
-# X resources
-log "Loading Xresources"
-[ -f ~/.Xresources ] && try_start xrdb -merge ~/.Xresources
-
 # Keyboard setup
-log "Setting up input devices"
 # US-Intl. AltGr layout, Caps is Ctrl, Menu is Compose
 try_start setxkbmap -layout us -variant altgr-intl -option caps:backspace -option compose:menu
 # Make useless <> key useful
@@ -50,31 +12,12 @@ try_start xmodmap -e "keycode 106 = KP_Divide NoSymbol KP_Divide NoSymbol"
 
 # Other X settings
 try_start xset b off
-try_start xset dpms 300 600 900
+try_start xset +dpms dpms 300 600 900
 try_start xset r rate 200 40
 try_start xset s off
-if [[ -n $LAPTOP ]]; then
-    try_start xset m 2 0
-    try_start xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 8 1
-    try_start xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 8 2
-else
-    try_start xset m 1 0
-fi
 
 # Fix gdm enabling accessibilty features
 try_start xkbset -a
-
-# Add SSH key
-if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
-    [ -z "$SSH_ASKPASS" ] && [ -x /usr/lib/openssh/ssh-askpass ] && export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass
-    [ -n "$SSH_ASKPASS" ] && try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
-fi
-
-# PulseAudio server
-try_start_bg start-pulseaudio-x11
-
-# xcompmgr
-try_start_bg compton --vsync opengl
 
 # Wallpapers
 $HOME/bin/wallpaper.sh & disown
@@ -87,31 +30,17 @@ try_start_bg xscreensaver -nosplash
 
 # Media automounting
 try_start_bg udiskie --tray
-try_start_bg mount-tray
 
 # Wifi
-try_start_bg wicd-gtk --tray
 try_start_bg nm-applet
 
 # Battery
-try_start_bg batti
+try_start_bg cbatticon
 
 # Volume control
 try_start_bg volumeicon
 
+try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
+
 # OwnCloud
 try_start_bg_delay 10 owncloud
-
-# Other applications
-try_start_bg_delay 2 gstm
-
-# Window manager
-log "Starting window manager"
-if [ -n "$1" ]; then
-    have_prog $1 && exec $1
-fi
-
-for i in awesome qtile-session qtile xmonad i3 xterm; do
-    log Trying $i
-    have_prog $i && exec $i
-done
