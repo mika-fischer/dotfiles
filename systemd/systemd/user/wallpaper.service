@@ -1,0 +1,9 @@
+[Unit]
+Description=Set random wallpaper
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/bin/feh --bg-fill "$(find -L $HOME/share/wallpapers/used -type f \\( -name '*.jpg' -o -name '*.png' \\) -print0 | shuf -n1 -z | xargs -0 echo)"'
+
+[Install]
+WantedBy=default.target

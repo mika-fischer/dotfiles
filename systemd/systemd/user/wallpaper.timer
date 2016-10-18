@@ -1,0 +1,10 @@
+[Unit]
+Description=Random wallpaper with feh
+
+[Timer]
+OnActiveSec=5s
+OnUnitActiveSec=15m
+Unit=wallpaper.service
+
+[Install]
+WantedBy=default.target
