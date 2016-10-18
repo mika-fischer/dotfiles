@@ -242,6 +242,10 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey, ctrlkey, shiftkey }, "d", function () sexec(lock_cmd .. " & systemctl hibernate") end),
     awful.key({ }, "XF86Suspend",                 function () sexec(lock_cmd .. " & systemctl hibernate") end),
 
+    -- Screen backlight
+    awful.key({ }, "XF86MonBrightnessUp",   function () exec("xbacklight +10") end),
+    awful.key({ }, "XF86MonBrightnessDown", function () exec("xbacklight -10") end),
+
     -- Multimedia
     awful.key({ modkey }, "=",                    function () exec(home .. "/bin/volume.sh up")   end),
     awful.key({        }, "XF86AudioRaiseVolume", function () exec(home .. "/bin/volume.sh up")   end),
