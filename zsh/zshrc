@@ -138,18 +138,19 @@ function settitle
 {
     case $TERM in
     xterm*|rxvt*|gnome*|konsole*)
-        print -Pn "\e]0;${@}\007";;
+        echo -ne "\e]0;${@}\007";;
     screen*)
-        print -Pn "\ek${@}\e\\";;
+        echo -ne "\ek${@}\e\\";;
     esac
 }
 function my_preexec
 {
-    settitle "${~1//%/%%}"
+    settitle "${1}"
 }
 function my_precmd
 {
-    settitle "${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}"
+    local expanded=$(print -Pn "${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}")
+    settitle "${expanded}"
 }
 function set_conda_info_msg
 {
