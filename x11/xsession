@@ -20,7 +20,7 @@ try_start xset s off
 try_start xkbset -a
 
 # Wallpapers
-$HOME/bin/wallpaper.sh & disown
+systemctl --user start wallpaper
 
 # Hide mouse cursor
 try_start_bg unclutter
