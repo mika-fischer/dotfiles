@@ -25,7 +25,7 @@ local editor   = "vim"
 local exec          = awful.util.spawn
 local sexec         = awful.util.spawn_with_shell
 local editor_cmd    = terminal .. " -e " .. editor
-local lock_cmd      = "xscreensaver-command -lock"
+local lock_cmd      = "i3lock"
 -- }}}
 
 menubar.cache_entries = true
@@ -235,12 +235,12 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86ScreenSaver",             function () exec(lock_cmd) end),
 
     -- Power control
-    awful.key({ altkey, ctrlkey, shiftkey }, "h", function () exec("systemctl poweroff")                  end),
-    awful.key({ altkey, ctrlkey, shiftkey }, "r", function () exec("systemctl reboot")                    end),
-    awful.key({ altkey, ctrlkey, shiftkey }, "s", function () sexec(lock_cmd .. " & systemctl suspend")   end),
-    awful.key({ }, "XF86Sleep",                   function () sexec(lock_cmd .. " & systemctl suspend")   end),
-    awful.key({ altkey, ctrlkey, shiftkey }, "d", function () sexec(lock_cmd .. " & systemctl hibernate") end),
-    awful.key({ }, "XF86Suspend",                 function () sexec(lock_cmd .. " & systemctl hibernate") end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "h", function () exec("systemctl poweroff")     end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "r", function () exec("systemctl reboot")       end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "s", function () exec("systemctl hybrid-sleep") end),
+    awful.key({ }, "XF86Sleep",                   function () exec("systemctl hybrid-sleep") end),
+    awful.key({ altkey, ctrlkey, shiftkey }, "d", function () exec("systemctl hibernate")    end),
+    awful.key({ }, "XF86Suspend",                 function () exec("systemctl hibernate")    end),
 
     -- Screen backlight
     awful.key({ }, "XF86MonBrightnessUp",   function () exec("xbacklight +10") end),
