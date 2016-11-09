@@ -1,6 +1,5 @@
 -- {{{ Libraries
 -- Standard awesome library
-local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
@@ -9,9 +8,9 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
-naughty = require("naughty")
-menubar = require("menubar")
-vicious = require("vicious")
+local menubar = require("menubar")
+local vicious = require("vicious")
+local lain = require("lain")
 -- }}}
 
 -- {{{ Important variables
@@ -90,13 +89,14 @@ memlayout = wibox.layout.mirror()
 memlayout:set_reflection({ vertical = true })
 memlayout:set_widget(memwidget)
 
-weatherwidget = wibox.widget.textbox()
-weathertooltip = awful.tooltip({ objects = { weatherwidget }, })
-vicious.register(weatherwidget, vicious.widgets.weather,
-                function (widget, args)
-                    weathertooltip:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
-                    return args["{tempc}"] .. "°C"
-                end, 600, "EDSB")
+weatherwidget = lain.widgets.weather({
+    city_id = 2892794,
+    settings = function()
+        descr = weather_now["weather"][1]["description"]:lower()
+        units = math.floor(weather_now["main"]["temp"])
+        weatherwidget:set_markup(" " .. units .. "°C ")
+    end
+})
 
 -- Keyboard map indicator and changer
 kbdcfg = {}
