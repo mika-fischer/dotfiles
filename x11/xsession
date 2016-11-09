@@ -34,9 +34,6 @@ try_start_bg udiskie --tray
 # Wifi
 try_start_bg nm-applet
 
-# Battery
-try_start_bg cbatticon
-
 # Volume control
 try_start_bg volumeicon
 
