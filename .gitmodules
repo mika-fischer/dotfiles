@@ -9,3 +9,6 @@
 [submodule "vim/vim/bundle/Vundle.vim"]
 	path = vim/vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "awesome/awesome/lain"]
+	path = awesome/awesome/lain
+	url = https://github.com/copycat-killer/lain
