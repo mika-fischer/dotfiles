@@ -43,6 +43,7 @@ alias qwertz='setxkbmap -layout de -variant nodeadkeys -option ctrl:nocaps -opti
 [ -e /local/mass/mfischer/miniconda/bin/activate ]   && alias aa='. /local/mass/mfischer/miniconda/bin/activate'
 [ -e /local/mass/mfischer/miniconda/bin/deactivate ] && alias ad='. /local/mass/mfischer/miniconda/bin/activate root && . /local/mass/mfischer/miniconda/bin/deactivate'
 alias ipynb='ipython notebook --no-browser --ip=0.0.0.0'
+alias jnb='jupyter notebook --no-browser --ip=0.0.0.0'
 
 #----------------------------------------------------------------------------
 # Local aliases
