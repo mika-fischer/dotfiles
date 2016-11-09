@@ -94,9 +94,19 @@ weatherwidget = lain.widgets.weather({
     settings = function()
         descr = weather_now["weather"][1]["description"]:lower()
         units = math.floor(weather_now["main"]["temp"])
-        weatherwidget:set_markup(" " .. units .. "°C ")
+        widget:set_markup(" " .. units .. "°C ")
     end
 })
+
+if awful.util.file_readable("/sys/class/power_supply/BAT1/capacity") then
+    batwidget = lain.widgets.bat({
+        battery = "BAT1",
+        settings = function()
+            perc = bat_now["perc"]
+            widget:set_markup(" " .. perc .. "% ")
+        end
+    })
+end
 
 -- Keyboard map indicator and changer
 kbdcfg = {}
@@ -160,6 +170,9 @@ for s = 1, screen.count() do
     right_layout:add(memlayout)
     right_layout:add(spacer)
     right_layout:add(weatherwidget)
+    if batwidget ~= nil then
+        right_layout:add(batwidget)
+    end
     right_layout:add(spacer)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
