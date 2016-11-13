@@ -1,8 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
-from libqtile.manager import Click, Drag, Key, Screen, Group
+from libqtile.config import Click, Drag, Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 
@@ -131,37 +131,29 @@ keys = [
         lazy.spawn(home + "/bin/media.sh volume_up")),
 ]
 
-mouse = [
-    Drag([sup], "Button1",
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position()),
-    Drag([sup], "Button3",
-        lazy.window.set_size_floating(),
-        start=lazy.window.get_size()),
-    Click([sup], "Button2",
-        lazy.window.bring_to_front())
-]
+groups = [Group(str(i)) for i in range(1, 10)]
 
-groups = [ Group(str(i)) for i in range(1, 10) ]
 for group in groups:
-    keys.append(Key([sup],        group.name, lazy.group[group.name].toscreen()))
-    keys.append(Key([sup, shift], group.name, lazy.window.togroup(group.name)))
+    # mod1 + group = switch to group
+    keys.append(
+        Key([sup], group.name, lazy.group[group.name].toscreen())
+    )
+
+    # mod1 + shift + group = switch to & move focused window to group
+    keys.append(
+        Key([sup, shift], group.name, lazy.window.togroup(group.name))
+    )
 
 layouts = [
     layout.MonadTall(),
     layout.Max(),
 ]
 
-floating_layout = layout.Floating(
-        border_width            = 0,
-        max_border_width        = 0,
-        fullscreen_border_width = 0)
-
 sepcolor = "#B0B0B0"
 bgcolor = "#D0D0D0"
 fgcolor = "#000000"
 
-widget_options = dict(
+widget_defaults = dict(
         font="Sans",
         fontsize=12,
         background=bgcolor,
@@ -179,54 +171,69 @@ graph_options = dict(
 
 screens = [
     Screen(
-        bottom = bar.Bar(
-                    [
-                        widget.GroupBox(
-                            active="#000000",
-                            inactive="#808080",
-                            this_current_screen_border="#F0B050",
-                            borderwidth=0,
-                            padding=3,
-                            margin_x=0,
-                            margin_y=0,
-                            highlight_method="block",
-                            **widget_options),
-                        widget.Sep(**sep_options),
-                        widget.CurrentLayout(**widget_options),
-                        widget.Sep(**sep_options),
-                        widget.Prompt(**widget_options),
-                        widget.WindowName(**widget_options),
-                        widget.Sep(**sep_options),
-                        widget.Systray(**widget_options),
-                        widget.Volume(
-                            theme_path="/usr/share/icons/gnome/24x24/status",
-                            **widget_options),
-                        widget.CPUGraph(
-                            graph_color="30F030",
-                            fill_color="30F030",
-                            **graph_options),
-                        widget.MemoryGraph(
-                            graph_color="F030F0",
-                            fill_color="F030F0",
-                            **graph_options),
-                        widget.NetGraph(
-                            graph_color="F0F030",
-                            fill_color="F0F030",
-                            **graph_options),
-                        widget.YahooWeather(
-                            woeid=664942,
-                            format="{condition_temp} °{units_temperature}",
-                            **widget_options),
-                        widget.Sep(**sep_options),
-                        widget.Clock(
-                            "%a %b %d %H:%M",
-                            **widget_options),
-                    ],
-                    20,
-                    background=bgcolor,
-                ),
+        bottom=bar.Bar(
+            [
+                widget.GroupBox(
+                    active="#000000",
+                    inactive="#808080",
+                    this_current_screen_border="#F0B050",
+                    borderwidth=0,
+                    padding=3,
+                    margin_x=0,
+                    margin_y=0,
+                    highlight_method="block"),
+                widget.Sep(),
+                widget.CurrentLayout(),
+                widget.Sep(),
+                widget.Prompt(),
+                widget.WindowName(),
+                widget.Sep(),
+                widget.Systray(),
+                widget.Volume(theme_path="/usr/share/icons/gnome/24x24/status"),
+                widget.CPUGraph(graph_color="30F030", fill_color="30F030"),
+                widget.MemoryGraph( graph_color="F030F0", fill_color="F030F0"),
+                widget.NetGraph(graph_color="F0F030", fill_color="F0F030"),
+                widget.YahooWeather(woeid=664942, format="{condition_temp} °{units_temperature}"),
+                widget.Sep(),
+                widget.Clock(format="%a %b %d %H:%M"),
+            ],
+            20,
+            background=bgcolor,
+        ),
     ),
 ]
+
+# Drag floating layouts.
+mouse = [
+    Drag([sup], "Button1", lazy.window.set_position_floating(),
+        start=lazy.window.get_position()),
+    Drag([sup], "Button3", lazy.window.set_size_floating(),
+        start=lazy.window.get_size()),
+    Click([sup], "Button2", lazy.window.bring_to_front())
+]
+
+dgroups_key_binder = None
+dgroups_app_rules = []
+main = None
+follow_mouse_focus = True
+bring_front_click = False
+cursor_warp = False
+floating_layout = layout.Floating(
+        border_width            = 0,
+        max_border_width        = 0,
+        fullscreen_border_width = 0)
+auto_fullscreen = True
+focus_on_window_activation = "smart"
+
+# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
+# string besides java UI toolkits; you can see several discussions on the
+# mailing lists, github issues, and other WM documentation that suggest setting
+# this string if your java app doesn't work correctly. We may as well just lie
+# and say that we're a working one by default.
+#
+# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
+# java that happens to be on java's whitelist.
+wmname = "LG3D"
 
 float_windows = set([
     "x11-ssh-askpass"

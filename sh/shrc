@@ -3,7 +3,9 @@
 # This file is read by ~/.zshrc and ~/.bashrc if the shell is interactive
 #----------------------------------------------------------------------------
 
-stty -ixon -ixoff
+try_start stty -ixon -ixoff
+
+[[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && . /usr/bin/virtualenvwrapper_lazy.sh
 
 #----------------------------------------------------------------------------
 # Local initialization

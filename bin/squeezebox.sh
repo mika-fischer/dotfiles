@@ -2,7 +2,7 @@
 
 NAME=$(basename $0)
 
-PSC_BIN="pysqueezecenter"
+PSC_BIN="pylms"
 
 if [ -z "$MYSQUEEZEBOXSERVER" ]; then
     echo "$NAME: Error: \$MYSQUEEZEBOXSERVER not defined!"

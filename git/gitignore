@@ -1,4 +1,9 @@
+/CMakeLists.txt.user
 /.project
 /.cproject
 /.clang_complete
+/.idea
+/.pydevproject
 /.settings
+*.pyc
+__pycache__

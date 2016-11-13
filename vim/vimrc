@@ -2,12 +2,31 @@
 " Options
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
-
-" Pathogen
-filetype off
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
 syntax on
+
+" Vundle
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'bling/vim-airline'
+Plugin 'gmarik/vundle'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+call vundle#end()
 filetype plugin indent on
 
 " Override non-UTF-8 locale
@@ -83,8 +102,6 @@ set completeopt=menuone,menu,longest,preview
 " Use ack instead of grep
 set grepprg=ack
 
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-30.([ft=%{&ft}][fo=%{&fo}]\ %l,%c%V%)\ %P
-
 " Go to last position in file
 au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -151,10 +168,13 @@ nnoremap <silent><leader>w :if &fo=~'t' | setl fo-=t | else | setl fo+=t | e
 
 nnoremap <silent><leader><leader> :CtrlP<cr>
 
+nnoremap <leader>u :GundoToggle<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme zoop
+set background=light
+colorscheme solarized
 if has("gui_running")
     set guioptions+=c
     set guioptions-=m
@@ -163,6 +183,8 @@ if has("gui_running")
     set guioptions-=T
     if has("gui_gtk2")
         set guifont=Monospace\ 8
+    elseif has("gui_win32")
+        set guifont=Consolas:h10
     endif
 else
     set titlestring=[%t]%(\%m%r%)
@@ -182,47 +204,3 @@ endif
 
 " Disable matchparen, as it's often slow
 let loaded_matchparen = 1
-
-" Latex suite
-" Prevent latex suite from stealing C-j in normal mode
-nnoremap <M-1> <Plug>IMAP_JumpForward
-
-" ATP
-let g:atp_Python = 'python2'
-
-" Command-T
-set wildignore+=*/build*/*
-
-" NERDTree
-nnoremap <leader>nt :NERDTree 
-nnoremap <leader>nb :NERDTreeBookmark 
-nnoremap <leader>nn :NERDTreeToggle<cr>
-nnoremap <leader>nf :NERDTreeFind<cr>
-let NERDTreeQuitOnOpen = 1
-
-" TagList
-nnoremap <leader>tt :TlistToggle<cr>
-let Tlist_GainFocus_On_ToggleOpen = 1
-
-" LustyJuggler + LustyExplorer
-let g:LustyExplorerSuppressRubyWarning = 1
-let g:LustyJugglerSuppressRubyWarning = 1
-
-" YankRing
-let g:yankring_history_file = '.vim_yankring_history'
-
-" PyFlakes
-let g:pyflakes_use_quickfix = 0
-
-" Clang-complete
-let g:clang_complete_auto = 1
-let g:clang_complete_copen = 1
-let g:clang_hl_errors = 1
-let g:clang_periodic_quickfix = 0
-let g:clang_snippets = 0
-" g:clang_conceal_snippets:
-let g:clang_exec = 'clang'
-let g:clang_user_options = ''
-let g:clang_auto_user_options = 'path, .clang_complete'
-let g:clang_use_library = 1
-let g:clang_library_path = '/usr/lib/llvm'

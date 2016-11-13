@@ -1,0 +1,11 @@
+[Unit]
+Description=Set random wallpaper
+
+[Service]
+Type=oneshot
+Environment="WALLPAPER_DIR=%h/share/wallpapers/used"
+Environment="WALLPAPER_COMMAND=/usr/bin/feh --bg-fill"
+ExecStart=/bin/sh -c 'find -L "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.png" \) -print0 | shuf -n1 -z | xargs -0 $WALLPAPER_COMMAND'
+
+[Install]
+WantedBy=default.target

@@ -1,42 +1,8 @@
 #!/bin/bash
 
-if ! shopt -q login_shell; then
-    echo "Restarting $0 as login shell script"
-    exec bash -l $0 "$@"
-fi
-
-# ConsoleKit
-if [ -z "$XDG_SESSION_COOKIE" ] && have_prog ck-launch-session; then
-    PREPEND="$PREPEND ck-launch-session"
-fi
-
-# GPG/SSH agent
-if [ -z "$SSH_AUTH_SOCK" ] && have_prog ssh-agent; then
-    PREPEND="$PREPEND ssh-agent"
-fi
-
-# DBus
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && have_prog dbus-launch; then
-    PREPEND="$PREPEND dbus-launch --exit-with-session"
-fi
-
-# If we have to prepend something, restart
-if [ -z "$XSESSION_RESTARTED" ]; then
-    export XSESSION_RESTARTED=1
-    echo "Restarting $0: $PREPEND bash $0 $@"
-    exec $PREPEND bash $0 "$@"
-else
-    echo "No need to restart $0"
-fi
-
-# X resources
-echo "Loading Xresources"
-[ -f ~/.Xresources ] && try_start xrdb -merge ~/.Xresources
-
 # Keyboard setup
-echo "Setting up input devices"
 # US-Intl. AltGr layout, Caps is Ctrl, Menu is Compose
-try_start setxkbmap -layout us -variant altgr-intl -option ctrl:nocaps -option compose:menu
+try_start setxkbmap -layout us -variant altgr-intl -option caps:backspace -option compose:menu
 # Make useless <> key useful
 try_start xmodmap -e "keycode 94 = Super_L Super_L Super_L"
 try_start xmodmap -e "add mod4 = Super_L"
@@ -46,60 +12,32 @@ try_start xmodmap -e "keycode 106 = KP_Divide NoSymbol KP_Divide NoSymbol"
 
 # Other X settings
 try_start xset b off
-try_start xset dpms 300 600 900
+try_start xset +dpms dpms 300 600 900
 try_start xset r rate 200 40
 try_start xset s off
-if [[ -n $LAPTOP ]]; then
-    try_start xset m 2 0
-    try_start xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 8 1
-    try_start xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 8 2
-else
-    try_start xset m 1 0
-fi
 
-# Add SSH key
-if [ -n "$SSH_AUTH_SOCK" ] && [ -e ~/.ssh/id_rsa ]; then
-    [ -z "$SSH_ASKPASS" ] && [ -x /usr/lib/openssh/ssh-askpass ] && export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass
-    [ -n "$SSH_ASKPASS" ] && try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
-fi
-
-# xcompmgr
-try_start_bg xcompmgr -cfC -D 5
+# Fix gdm enabling accessibilty features
+try_start xkbset -a
 
 # Wallpapers
-$HOME/bin/wallpaper.sh & disown
+systemctl --user start wallpaper
 
 # Hide mouse cursor
 try_start_bg unclutter
 
 # Screensaver/locker
-try_start_bg xscreensaver -nosplash
+try_start_bg xss-lock -- i3lock -n
 
 # Media automounting
-try_start_bg udiskie
-try_start_bg mount-tray
+try_start_bg udiskie --tray
 
 # Wifi
-try_start_bg wicd-gtk --tray
-
-# Battery
-try_start_bg batti
+try_start_bg nm-applet
 
 # Volume control
 try_start_bg volumeicon
 
-# Other applications
-try_start_bg_delay 2 gstm
-try_start_bg_delay 2 SpiderOak
+try_start_bg_delay 2 ssh-add ~/.ssh/id_rsa </dev/null
 
-# Window manager
-echo "Starting window manager"
-if [ -e $HOME/src/apps/qtile/bin/qtile-session ]; then
-    exec python2 $HOME/src/apps/qtile/bin/qtile-session
-fi
-if [ -e $HOME/src/apps/qtile/qtile ]; then
-    exec python2 $HOME/src/apps/qtile/qtile
-fi
-for i in qtile-session qtile xmonad i3 awesome xterm; do
-    have_prog $i && exec $i
-done
+# OwnCloud
+try_start_bg_delay 10 owncloud

@@ -18,16 +18,18 @@
 	pma = !git co master && git pull
 
 [merge]
+	conflictstyle = diff3
 	tool = vimdiff
+	guitool = meld
 
-[push]
-	default = simple
+[diff]
+	tool = vimdiff
+	guitool = meld
 
 [status]
 	submodulesummary = true
 
 [http]
-	sslVerify = false
 	postBuffer = 100000000
 
 [tig "bind"]
@@ -39,3 +41,8 @@
 	fontdiff = -family \"DejaVu Sans Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
 	spellingdictionary = en_US
 
+[push]
+	default = simple
+
+[include]
+    path = ~/.gitconfig.local

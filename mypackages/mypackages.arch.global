@@ -1,31 +1,30 @@
 # Package groups
 group: base
 group: base-devel
-group: gstreamer0.10-plugins
-group: libreoffice
-group: multilib-devel
-group: texlive-most
 group: xorg
 
 # Packages
 abs
+acpid
 alsa-oss
 alsa-utils
-amd-ucode
 archlinux-wallpaper
 aria2
 asciidoc
 aspell-en
 aspell-de
 autofs
+awesome
 bash-completion
+bind-tools
+btrfs-progs
 bwm-ng
 cabal-install
 cdrkit
 clang
+clang-tools-extra
 clusterssh
 cmake
-cpufrequtils
 ctags
 cups
 cups-pdf
@@ -34,6 +33,7 @@ doxygen
 duplicity
 dwdiff
 ethtool
+feh
 ffmpeg
 firefox
 flashplugin
@@ -48,13 +48,13 @@ gnome-icon-theme-extras
 gnome-themes-standard
 gnu-netcat
 gnuplot
+gparted
 gsfonts
 gtk-engines
 gv
 gvim
 hdparm
 htop
-icedtea-web-java7
 imagemagick
 intel-ucode
 iotop
@@ -63,6 +63,7 @@ iptables
 iptraf-ng
 ipython
 irssi
+i3lock
 jdk7-openjdk
 jre7-openjdk
 keepassx
@@ -70,8 +71,8 @@ lesspipe
 lftp
 lib32-libpulse
 lib32-mpg123
-libreoffice-de
 linux-headers
+linux-lts
 lm_sensors
 ltrace
 mencoder
@@ -79,21 +80,23 @@ mercurial
 moreutils
 mplayer
 msmtp
-multipath-tools
 namcap
 net-tools
 nfsidmap
 nfs-utils
+nodejs
+npm
 ntfs-3g
 ntp
-openbsd-netcat
 opencl-headers
 opencv
 openssh
 openvpn
+owncloud-client
 pacman-contrib
 paprefs
 pavucontrol
+powertop
 pulseaudio
 pulseaudio-alsa
 pwgen
@@ -103,14 +106,13 @@ python2-pip
 python2-psutil
 python2-pyqt
 python2-scipy
-python2-udiskie
-python-musicbrainz2
 python-numpy
 python-pip
+qtcreator
 rdesktop
 rsync
 rxvt-unicode
-skype
+sddm
 smartmontools
 sox
 sshfs
@@ -120,7 +122,6 @@ sudo
 swig
 sxiv
 systemd
-systemd-arch-units
 systemd-tools
 tcpdump
 thunar
@@ -131,14 +132,15 @@ truecrypt
 ttf-dejavu
 ttf-liberation
 tumbler
+udiskie
 udisks
-unclutter
 unzip
 upower
 uucp
 valgrind
 vlc
 volumeicon
+wget
 wine
 wine_gecko
 wmctrl
@@ -160,29 +162,16 @@ zenity
 zip
 zsh
 
-# To check
-consolekit
-
-aur: acroread
-aur: dmenu-xft
-aur: labelnation
-aur: lib32-gtk-engines
-aur: lib32-libvdpau
-aur: lightdm
-aur: lightdm-gtk-greeter
-aur: lsx
+aur: archlinux-themes-sddm
+aur: google-chrome
+aur: laptop-mode-tools
+aur: lostfiles
 aur: mendeleydesktop
-aur: mount-tray
+aur: ninja
 aur: package-query
-aur: pacman-color
-aur: python2-pyflakes
-aur: python2-pysqueezecenter
-aur: python3-imaging
-aur: spideroak
-aur: spotify-beta
-aur: squeezeslave
-aur: tango-icon-theme
+aur: spotify
 aur: ttf-ms-fonts
-aur: url-utils
+aur: unclutter-xfixes-git
+aur: update-pacman-mirrorlist
+aur: xss-lock
 aur: yaourt
-aur: zsh-yaourt

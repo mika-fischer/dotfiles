@@ -1,29 +1,15 @@
 #!/bin/bash
 
-send_key() {
-    for pid in $(pgrep -u mfischer -x spotify); do
-        for win in $(xdotool search --pid $pid 2>/dev/null); do
-            if xdotool getwindowname $win | grep -q "Linux Preview"; then
-                #echo "Sending $@ to window $win"
-                xdotool key --window $win "$@"
-                return
-            fi
-        done
-    done
-    echo "Spotify is not running!"
-    exit 1
-}
-
 playpause() {
-    send_key space
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 }
 
 prev() {
-    send_key Control_L+Left
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 }
 
 next() {
-    send_key Control_L+Right
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 }
 
 case $1 in
