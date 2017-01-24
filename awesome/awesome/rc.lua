@@ -52,10 +52,11 @@ local layouts =
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
-for s = 1, screen.count() do
+-- for s = 1, screen.count() do
+awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[2])
-end
+end)
 -- }}}
 
 -- {{{ Wibox
@@ -134,7 +135,8 @@ mylayoutbox = {}
 mytaglist   = {}
 mytasklist  = {}
 
-for s = 1, screen.count() do
+-- for s = 1, screen.count() do
+awful.screen.connect_for_each_screen(function(s)
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
@@ -184,7 +186,7 @@ for s = 1, screen.count() do
     layout:set_right(right_layout)
 
     mywibox[s]:set_widget(layout)
-end
+end)
 -- }}}
 
 -- {{{ Key bindings
@@ -311,9 +313,10 @@ clientkeys = awful.util.table.join(
 
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
-for s = 1, screen.count() do
+--for s = 1, screen.count() do
+awful.screen.connect_for_each_screen(function(s)
    keynumber = math.min(9, math.max(#tags[s], keynumber))
-end
+end)
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
@@ -405,7 +408,8 @@ end)
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus  end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
-for s = 1, screen.count() do
+-- for s = 1, screen.count() do
+awful.screen.connect_for_each_screen(function(s)
     screen[s]:connect_signal("arrange", function ()
         local clients = awful.client.visible(s)
         local tiled   = awful.client.tiled(s)
@@ -429,5 +433,5 @@ for s = 1, screen.count() do
             end
         end
     end)
-end
+end)
 -- }}}
