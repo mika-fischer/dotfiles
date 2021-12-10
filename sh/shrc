@@ -5,7 +5,9 @@
 
 try_start stty -ixon -ixoff
 
-[[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && . /usr/bin/virtualenvwrapper_lazy.sh
+[[ -f /usr/bin/virtualenvwrapper_lazy.sh ]]      && . /usr/bin/virtualenvwrapper_lazy.sh
+[[ -x /opt/homebrew/bin/brew ]]                  && eval "$(/opt/homebrew/bin/brew shellenv)"
+[[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && . "${HOME}/.iterm2_shell_integration.zsh"
 
 #----------------------------------------------------------------------------
 # Local initialization

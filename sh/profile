@@ -3,12 +3,9 @@
 # This file is read by login shells of bash and zsh (and maybe others).
 #----------------------------------------------------------------------------
 
-[ -d "$HOME/soft/bin" ] &&      export PATH="$HOME/soft/bin:$PATH"
-[ -d "$HOME/.cabal/bin" ] &&    export PATH="$HOME/.cabal/bin:$PATH"
-[ -d "$HOME/soft/lib" ] &&      export LIB="$HOME/soft/lib:$LIB"
-[ -d "$HOME/soft/include" ] &&  export INCLUDE="$HOME/soft/include:$INCLUDE"
-[ -d "$HOME/soft/python" ] &&   export PYTHONPATH="$PYTHONPATH:$HOME/soft/python"
-[ -d "$HOME/bin" ] &&           export PATH="$HOME/bin:$PATH"
+prepend_path "${HOME}/.cargo/bin"
+prepend_path "${HOME}/bin"
+
 [ -x "/bin/dircolors" ]      && eval "$(dircolors -b)"
 [ -x "/usr/bin/lesspipe" ] &&   export LESSOPEN="|/usr/bin/lesspipe %s"
 export LESS="-FSRX"

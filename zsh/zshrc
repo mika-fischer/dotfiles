@@ -123,13 +123,13 @@ ${P_VCS}\
 
 is-at-least 4.3.9 || PS1="${P_CONDA}${P_USER}${P_AT}${P_HOST}${P_COLON}${P_PATH}${P_VCS}${P_STATUS}%# "
 
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/}/(main|viins)/-- INSERT --}"
-    RPS2=$RPS1
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+# function zle-line-init zle-keymap-select {
+#     RPS1="${${KEYMAP/vicmd/}/(main|viins)/-- INSERT --}"
+#     RPS2=$RPS1
+#     zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
 #----------------------------------------------------------------------------
 # Helper functions
@@ -164,11 +164,15 @@ function set_conda_info_msg
 #----------------------------------------------------------------------------
 # Hooks
 #----------------------------------------------------------------------------
-autoload -Uz add-zsh-hook
-function_exists vcs_info && add-zsh-hook precmd vcs_info
-add-zsh-hook precmd set_conda_info_msg
-add-zsh-hook precmd my_precmd
-add-zsh-hook preexec my_preexec
+if [[ -x $(command -v starship) ]]; then
+    eval "$(starship init zsh)"
+else
+    autoload -Uz add-zsh-hook
+    function_exists vcs_info && add-zsh-hook precmd vcs_info
+    add-zsh-hook precmd set_conda_info_msg
+    add-zsh-hook precmd my_precmd
+    add-zsh-hook preexec my_preexec
+fi
 
 #----------------------------------------------------------------------------
 # Local zsh initialization
