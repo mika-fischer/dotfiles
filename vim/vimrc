@@ -16,7 +16,9 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'joshdick/onedark.vim'
 Plugin 'nvie/vim-flake8'
+Plugin 'rakr/vim-one'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -173,8 +175,8 @@ nnoremap <leader>u :GundoToggle<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme onedark
 if has("gui_running")
     set guioptions+=c
     set guioptions-=m
