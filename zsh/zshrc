@@ -164,15 +164,17 @@ function set_conda_info_msg
 #----------------------------------------------------------------------------
 # Hooks
 #----------------------------------------------------------------------------
-if [[ -x $(command -v starship) ]]; then
+autoload -Uz add-zsh-hook
+if [[ -x ${HOME}/src/rust/starship/target/debug/starship ]]; then
+    eval "$(${HOME}/src/rust/starship/target/debug/starship init zsh)"
+elif [[ -x $(command -v starship) ]]; then
     eval "$(starship init zsh)"
 else
-    autoload -Uz add-zsh-hook
     function_exists vcs_info && add-zsh-hook precmd vcs_info
     add-zsh-hook precmd set_conda_info_msg
-    add-zsh-hook precmd my_precmd
-    add-zsh-hook preexec my_preexec
 fi
+add-zsh-hook precmd my_precmd
+add-zsh-hook preexec my_preexec
 
 #----------------------------------------------------------------------------
 # Local zsh initialization
