@@ -1,0 +1,40 @@
+[cmake]
+disabled = true
+
+[conda]
+ignore_base = false
+
+[directory]
+truncation_length = 8
+truncation_symbol = "…/"
+style = "bold blue"
+
+[env_var]
+variable = "VIDEMO_VS_VERSION"
+symbol = ""
+style = "cyan bold"
+format = "[$symbol $env_value]($style) "
+
+[git_status]
+conflicted = "💥${count}"
+ahead      = "⇡${count}"
+behind     = "⇣${count}"
+diverged   = "⇣${behind_count}⇡${ahead_count}"
+untracked  = "?${count}"
+stashed    = "$${count}"
+modified   = "*${count}"
+staged     = "+${count}"
+renamed    = "»${count}"
+deleted    = "✘${count}"
+
+[hostname]
+ssh_only = false
+style = "bold green"
+
+[status]
+disabled = false
+symbol = "💥 "
+format = '[$symbol$status( $signal_name)]($style) '
+#map_symbol = true
+# format = "[$symbol$hex_status( \\[$text_status\\])]($style)"
+

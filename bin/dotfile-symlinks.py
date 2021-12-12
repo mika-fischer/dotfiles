@@ -15,8 +15,7 @@ except ImportError:
     exit(1)
 
 
-XDG_CONFIG_DIRS = ('awesome', 'fontconfig', 'gtk3', 'qtile', 'systemd',
-                   'taffybar', 'volumeicon', 'zathura')
+XDG_CONFIG_DIRS = ('starship', 'systemd')
 
 
 class App(object):
