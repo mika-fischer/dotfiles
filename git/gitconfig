@@ -2,6 +2,8 @@
 	name = Mika Fischer
 
 [core]
+	eol = lf
+	autocrlf = input
 	excludesfile = ~/.gitignore
 
 [color]
