@@ -1,5 +1,6 @@
 [user]
 	name = Mika Fischer
+	email = mika.fischer@zoopnet.de
 
 [core]
 	eol = lf
@@ -48,6 +49,9 @@
 
 [pull]
 	rebase = true
+
+[includeIf "gitdir:~/src/videmo/"]
+    path = ~/.gitconfig.videmo
 
 [include]
     path = ~/.gitconfig.local
