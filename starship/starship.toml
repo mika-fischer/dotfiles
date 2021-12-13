@@ -34,7 +34,4 @@ style = "bold green"
 [status]
 disabled = false
 symbol = "💥 "
-format = '[$symbol$status( $signal_name)]($style) '
-#map_symbol = true
-# format = "[$symbol$hex_status( \\[$text_status\\])]($style)"
-
+format = '[${symbol}${hex_status}( \[SIG${signal_name}\])( \[${ntstatus_name}\])]($style) '
