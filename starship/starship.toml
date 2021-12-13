@@ -16,16 +16,16 @@ style = "cyan bold"
 format = "[$symbol $env_value]($style) "
 
 [git_status]
-conflicted = "💥${count}"
-ahead      = "⇡${count}"
-behind     = "⇣${count}"
-diverged   = "⇣${behind_count}⇡${ahead_count}"
+conflicted = "‼${count}"
+ahead      = "⇑${count}"
+behind     = "⇓${count}"
+diverged   = "⇓${behind_count}⇑${ahead_count}"
 untracked  = "?${count}"
-stashed    = "$${count}"
-modified   = "*${count}"
-staged     = "+${count}"
-renamed    = "»${count}"
-deleted    = "✘${count}"
+stashed    = "□${count}"
+modified   = "●${count}"
+staged     = "▲${count}"
+renamed    = "⇒${count}"
+deleted    = "╳${count}"
 
 [hostname]
 ssh_only = false
