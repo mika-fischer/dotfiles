@@ -206,3 +206,5 @@ endif
 
 " Disable matchparen, as it's often slow
 let loaded_matchparen = 1
+
+let g:airline_powerline_fonts = 1
