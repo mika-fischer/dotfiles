@@ -1,3 +1,7 @@
+# Wait for https://github.com/starship/starship/pull/3375 to land
+# format = "$username$hostname${env_var.WSL_DISTRO_NAME}$all"
+format = "$username$hostname$env_var$all"
+
 [cmake]
 disabled = true
 
@@ -9,8 +13,12 @@ truncation_length = 8
 truncation_symbol = "…/"
 style = "bold blue"
 
-[env_var]
-variable = "VIDEMO_VS_VERSION"
+[env_var.WSL_DISTRO_NAME]
+symbol = ""
+style = "yellow bold"
+format = "[$symbol $env_value]($style) "
+
+[env_var.VIDEMO_VS_VERSION]
 symbol = ""
 style = "cyan bold"
 format = "[$symbol $env_value]($style) "
@@ -30,6 +38,7 @@ deleted    = "╳${count}"
 [hostname]
 ssh_only = false
 style = "bold green"
+format = "[$hostname]($style) "
 
 [status]
 disabled = false
