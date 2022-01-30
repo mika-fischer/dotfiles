@@ -13,24 +13,6 @@ export LESS="-FSRX"
 #----------------------------------------------------------------------------
 # System initialization
 #----------------------------------------------------------------------------
-if [ -d /etc/profile.d/ ]; then
-    if [[ -n "$ZSH_VERSION" ]] && [[ -o nomatch ]]; then
-        NOMATCH=1
-        set +o nomatch
-    fi
-    if [[ -n "$BASH_VERSION" ]] && [[ -o failglob ]]; then
-        FAILGLOB=1
-        set +o failglob
-    fi
-    for i in /etc/profile.d/*.sh; do
-        test -r "$i" && . "$i"
-    done
-    [[ -n "$NOMATCH"  ]] && set -o nomatch
-    [[ -n "$FAILGLOB" ]] && set -o failglob
-    unset NOMATCH
-    unset FAILGLOB
-fi
-
 if grep -q microsoft-standard /proc/version && ! (/usr/bin/ss -a | grep -q $SSH_AUTH_SOCK); then
     rm -f $SSH_AUTH_SOCK
     (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$HOME/.npiperelay/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >$HOME/.npiperelay/log 2>&1
