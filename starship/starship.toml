@@ -40,6 +40,9 @@ ssh_only = false
 style = "bold green"
 format = "[$hostname]($style) "
 
+[shell]
+disabled = false
+
 [status]
 disabled = false
 symbol = "💥 "
