@@ -15,9 +15,7 @@ export LC_COLLATE=C
 export GIT_CEILING_DIRECTORIES="/home"
 export WORKON_HOME=~/.virtualenvs
 
-if [ -e $XDG_RUNTIME_DIR/ssh-agent/agent_socket ]; then
-    export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent/agent_socket
-fi
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 
 # Java fixes
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'

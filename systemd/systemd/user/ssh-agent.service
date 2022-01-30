@@ -3,7 +3,7 @@ Description=ssh-agent
 
 [Service]
 ExecStartPre=/usr/bin/mkdir -p %t/ssh-agent
-ExecStart=/usr/bin/ssh-agent -d -a %t/ssh-agent/agent_socket
+ExecStart=/usr/bin/ssh-agent -d -a %t/ssh-agent.socket
 ExecStop=/usr/bin/ssh-agent -k
 
 [Install]
