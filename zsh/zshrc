@@ -67,7 +67,6 @@ bindkey -M vicmd "^R" history-incremental-search-backward
 bindkey -M vicmd "^S" history-incremental-search-forward
 bindkey -M vicmd "_" insert-last-word
 
-bindkey -M viins -r "^[OA" "^[OB" "^[OC" "^[OD" "^[[A" "^[[B" "^[[C" "^[[D"
 bindkey "^H" backward-delete-char "^?" backward-delete-char
 bindkey -M viins "^W" backward-kill-word
 bindkey -M viins "^R" history-incremental-search-backward
