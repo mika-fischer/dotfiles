@@ -13,7 +13,7 @@ export LESS="-FSRX"
 #----------------------------------------------------------------------------
 # System initialization
 #----------------------------------------------------------------------------
-if grep -q microsoft-standard /proc/version && ! (/usr/bin/ss -a | grep -q $SSH_AUTH_SOCK); then
+if [ -d /proc ] && grep -q microsoft-standard /proc/version && ! (/usr/bin/ss -a | grep -q $SSH_AUTH_SOCK); then
     rm -f $SSH_AUTH_SOCK
     (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$HOME/.npiperelay/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >$HOME/.npiperelay/log 2>&1
 fi
