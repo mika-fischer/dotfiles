@@ -13,9 +13,12 @@ export LESS="-FSRX"
 #----------------------------------------------------------------------------
 # System initialization
 #----------------------------------------------------------------------------
+# SSH agent forwarding for WSL2
 if [ -d /proc ] && grep -q microsoft-standard /proc/version && ! (/usr/bin/ss -a | grep -q $SSH_AUTH_SOCK); then
-    rm -f $SSH_AUTH_SOCK
-    (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$HOME/.npiperelay/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >$HOME/.npiperelay/log 2>&1
+    # https://github.com/mame/wsl2-ssh-agent/
+    eval $(${HOME}/bin/wsl2-ssh-agent)
+    # rm -f $SSH_AUTH_SOCK
+    # (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$HOME/.npiperelay/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >$HOME/.npiperelay/log 2>&1
 fi
 
 #----------------------------------------------------------------------------
