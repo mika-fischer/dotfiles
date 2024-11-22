@@ -15,7 +15,7 @@ except ImportError:
     exit(1)
 
 
-XDG_CONFIG_DIRS = ('starship', 'systemd')
+XDG_CONFIG_DIRS = ('nvim', 'starship', 'systemd')
 
 
 class App(object):
