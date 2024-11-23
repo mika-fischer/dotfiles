@@ -8,9 +8,6 @@ vim.cmd.syntax("on")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Lazy
-require("config.lazy")
-
 vim.cmd.filetype("plugin indent on")
 
 -- Override non-UTF-8 locale
@@ -93,39 +90,10 @@ vim.opt.grepprg = "rg"
             --\   exe "normal g`\"" |
             --\ endif
 
-
---------------------------------------------------------------------------------
--- Key bindings
---------------------------------------------------------------------------------
-
--- Disable arrow keys and navigation keys
-for _, key in ipairs({'<up>', '<down>', '<left>', '<right>', '<pageup>', '<pagedown>', '<home>', '<end>', '<insert>', '<delete>', '<f1>'}) do
-    for _, mode in ipairs({'n', 'i', 'v'}) do
-        vim.keymap.set(mode, key, '<nop>')
-    end
-end
-
--- Mappings
-vim.keymap.set('n', '<C-j>', '<nop>')
-vim.keymap.set('n', '<C-k>', '<nop>')
-vim.keymap.set('n', '<C-h>', '<C-w>w')
-vim.keymap.set('n', '<C-l>', '<C-w>W')
-vim.keymap.set('n', '<C-d>', '<C-w>q')
-
-vim.keymap.set('n', '<leader>h', ":noh<cr>")
-vim.keymap.set('n', '<leader>r', ":redraw!<cr>")
-vim.keymap.set('n', '<leader>f', "zA<cr>")
--- vim.keymap.set('n', '<silent><leader>w :if &fo=~'t' | setl fo-=t | else | setl fo+=t | endif<cr>
-
-vim.keymap.set('n', '<silent><leader><leader>', ":CtrlP<cr>")
-
-vim.keymap.set('n', '<leader>u', ":GundoToggle<cr>")
-
 --------------------------------------------------------------------------------
 -- Appearance
 --------------------------------------------------------------------------------
 vim.opt.background = dark
-vim.cmd.colorscheme("onedark_vivid")
 --if has("gui_running")
     --set guioptions+=c
     --set guioptions-=m
@@ -149,6 +117,38 @@ vim.opt.title = true
 --endif
 vim.g.have_nerd_font = true
 
+-- Lazy
+require("config.lazy")
+
+vim.cmd.colorscheme("onedark_vivid")
+
+--------------------------------------------------------------------------------
+-- Key bindings
+--------------------------------------------------------------------------------
+
+-- Disable arrow keys and navigation keys
+for _, key in ipairs({'<up>', '<down>', '<left>', '<right>', '<pageup>', '<pagedown>', '<home>', '<end>', '<insert>', '<delete>', '<f1>'}) do
+    for _, mode in ipairs({'n', 'i', 'v'}) do
+        vim.keymap.set(mode, key, '<nop>')
+    end
+end
+
+-- Mappings
+vim.keymap.set('n', '<C-j>', '<nop>')
+vim.keymap.set('n', '<C-k>', '<nop>')
+vim.keymap.set('n', '<C-h>', '<C-w>w')
+vim.keymap.set('n', '<C-l>', '<C-w>W')
+vim.keymap.set('n', '<C-d>', '<C-w>q')
+
+vim.keymap.set('n', '<leader>h', ":noh<cr>")
+vim.keymap.set('n', '<leader>r', ":redraw!<cr>")
+-- vim.keymap.set('n', '<leader>f', "zA<cr>")
+-- vim.keymap.set('n', '<silent><leader>w :if &fo=~'t' | setl fo-=t | else | setl fo+=t | endif<cr>
+
+vim.keymap.set('n', '<silent><leader><leader>', ":CtrlP<cr>")
+
+vim.keymap.set('n', '<leader>u', ":GundoToggle<cr>")
+
 --------------------------------------------------------------------------------
 -- Plugins
 --------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ vim.g.have_nerd_font = true
 loaded_matchparen = 1
 
 require('lualine').setup {
-  options = { theme = 'onedark' }
+    options = { theme = 'onedark' }
 }
 
 require('gitsigns').setup()
