@@ -14,8 +14,10 @@ except ImportError:
     print('Python 3.3 is needed under Windows')
     exit(1)
 
+WINDOWS = platform.system() == 'Windows'
 
 XDG_CONFIG_DIRS = ('nvim', 'starship', 'systemd')
+LOCAL_APPDATA_DIRS = ('nvim', )
 
 
 class App(object):
@@ -26,10 +28,14 @@ class App(object):
         self.dotfiles_dir = join(self.home_dir, '.dotfiles')
         self.bin_dir = join(self.home_dir, 'bin')
         self.xdg_config_dir = join(self.home_dir, '.config')
+        self.local_appdata_dir = join(self.home_dir, 'AppData', 'Local')
 
         self.handlers = defaultdict(lambda: self.handle_default)
         for d in XDG_CONFIG_DIRS:
             self.handlers[d] = self.handle_xdg_config
+        if WINDOWS:
+            for d in LOCAL_APPDATA_DIRS:
+                self.handlers[d] = self.handle_local_appdata
         self.handlers['bin'] = self.handle_bin
 
     def run(self):
@@ -52,6 +58,13 @@ class App(object):
         for fn in sorted(listdir(join(self.dotfiles_dir, dn))):
             self.symlink(join(self.dotfiles_dir, dn, fn),
                          join(self.xdg_config_dir, fn))
+
+    def handle_local_appdata(self, dn):
+        """ dn/fn -> ~/AppData/Local/fn """
+        self.ensure_directory_exists(self.local_appdata_dir)
+        for fn in sorted(listdir(join(self.dotfiles_dir, dn))):
+            self.symlink(join(self.dotfiles_dir, dn, fn),
+                         join(self.local_appdata_dir, fn))
 
     def handle_bin(self, dn):
         """ dn/fn -> ~/bin/fn """
