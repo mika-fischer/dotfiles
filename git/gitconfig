@@ -50,6 +50,9 @@
 [pull]
 	rebase = true
 
+[init]
+	defaultBranch = main
+
 [includeIf "gitdir:~/src/videmo/"]
     path = ~/.gitconfig.videmo
 
