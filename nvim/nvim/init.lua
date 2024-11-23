@@ -4,6 +4,10 @@
 vim.opt.compatible = false
 vim.cmd.syntax("on")
 
+-- Use space bar as leader (needs to be set before loading lazy)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Lazy
 require("config.lazy")
 
@@ -62,6 +66,7 @@ vim.opt.hlsearch = true
 
 -- Display line numbers
 vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- Terminal mouse support
 -- vim.opt.ttymouse = "xterm"
@@ -93,48 +98,12 @@ vim.opt.grepprg = "rg"
 -- Key bindings
 --------------------------------------------------------------------------------
 
--- Use space bar as leader
-mapleader = " "
-maplocalleader = " "
-
 -- Disable arrow keys and navigation keys
-vim.keymap.set('n', '<up>',       '<nop>')
-vim.keymap.set('n', '<down>',     '<nop>')
-vim.keymap.set('n', '<left>',     '<nop>')
-vim.keymap.set('n', '<right>',    '<nop>')
-vim.keymap.set('n', '<pageup>',   '<nop>')
-vim.keymap.set('n', '<pagedown>', '<nop>')
-vim.keymap.set('n', '<home>',     '<nop>')
-vim.keymap.set('n', '<end>',      '<nop>')
-vim.keymap.set('n', '<insert>',   '<nop>')
-vim.keymap.set('n', '<delete>',   '<nop>')
-
-vim.keymap.set('i', '<up>',       '<nop>')
-vim.keymap.set('i', '<down>',     '<nop>')
-vim.keymap.set('i', '<left>',     '<nop>')
-vim.keymap.set('i', '<right>',    '<nop>')
-vim.keymap.set('i', '<pageup>',   '<nop>')
-vim.keymap.set('i', '<pagedown>', '<nop>')
-vim.keymap.set('i', '<home>',     '<nop>')
-vim.keymap.set('i', '<end>',      '<nop>')
-vim.keymap.set('i', '<insert>',   '<nop>')
-vim.keymap.set('i', '<delete>',   '<nop>')
-
-vim.keymap.set('v', '<up>',       '<nop>')
-vim.keymap.set('v', '<down>',     '<nop>')
-vim.keymap.set('v', '<left>',     '<nop>')
-vim.keymap.set('v', '<right>',    '<nop>')
-vim.keymap.set('v', '<pageup>',   '<nop>')
-vim.keymap.set('v', '<pagedown>', '<nop>')
-vim.keymap.set('v', '<home>',     '<nop>')
-vim.keymap.set('v', '<end>',      '<nop>')
-vim.keymap.set('v', '<insert>',   '<nop>')
-vim.keymap.set('v', '<delete>',   '<nop>')
-
--- Disable F1 for help
-vim.keymap.set('i', '<f1>', '<nop>')
-vim.keymap.set('n', '<f1>', '<nop>')
-vim.keymap.set('v', '<f1>', '<nop>')
+for _, key in ipairs({'<up>', '<down>', '<left>', '<right>', '<pageup>', '<pagedown>', '<home>', '<end>', '<insert>', '<delete>', '<f1>'}) do
+    for _, mode in ipairs({'n', 'i', 'v'}) do
+        vim.keymap.set(mode, key, '<nop>')
+    end
+end
 
 -- Mappings
 vim.keymap.set('n', '<C-j>', '<nop>')
@@ -178,7 +147,7 @@ vim.opt.title = true
         --" let &titleold = fnamemodify(&shell, ":t")
     --endif
 --endif
-
+vim.g.have_nerd_font = true
 
 --------------------------------------------------------------------------------
 -- Plugins
@@ -190,4 +159,5 @@ require('lualine').setup {
   options = { theme = 'onedark' }
 }
 
+require('gitsigns').setup()
 
