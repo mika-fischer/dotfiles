@@ -14,7 +14,7 @@ alias dfl='df -x tmpfs -x devtmpfs -x nfs -x nfs4'
 alias grep='grep --color=auto'
 alias cgrep='grep --color=yes'
 
-alias vi='vim'
+alias vi='nvim'
 
 alias ss='sudo -s'
 alias se='sudoedit'
