@@ -34,6 +34,7 @@
 
 [http]
 	postBuffer = 100000000
+	cookiefile = ~/.gitcookies
 
 [tig "bind"]
 	generic = P !git push
